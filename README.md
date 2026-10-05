@@ -20,9 +20,25 @@
 | **Hydration**  | `83 %`                                     |
 | **Form**       | Pullman, mit Deckel gebacken — randlos     |
 | **Füllung**    | Mascarpone-Creme `50/50` + saisonale Frucht |
+| **Sorten**     | Tamago · Kiwi · Ichigo                     |
 | **Status**     | `in Entwicklung`                           |
 
 Wir ändern pro Backtag eine Variable und schreiben alles auf. Erst wenn die Krume stimmt, geht's raus.
+
+<br>
+
+### Erster Marktstand
+
+**Samstag, 10. Oktober · 09:00–13:00 · Sternenplatz, Wohlen**
+
+| Sando              |          | Kaffee                                   |          |
+| :----------------- | -------: | :--------------------------------------- | -------: |
+| Tamago <sub>Ei</sub>      | CHF 6.–  | Latte / Cappuccino                       | CHF 5.–  |
+| Kiwi <sub>Kiwi</sub>      | CHF 6.–  | Espresso                                 | CHF 4.–  |
+| Ichigo <sub>Erdbeere</sub> | CHF 6.– | Iced Latte                               | CHF 5.50 |
+|                    |          | Mont Blanc <sub>Espresso, Orangen-Sahne</sub> | CHF 7.–  |
+
+<sub>Allergene auf Anfrage.</sub>
 
 <br>
 

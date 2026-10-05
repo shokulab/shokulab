@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Shokulab — bald erhältlich</title>
-<meta name="description" content="Shokulab: japanisches Shokupan mit Schweizer Präzision. Bald auf Café-Theken und Wochenmärkten in der Region Aarau — jetzt für die Warteliste anmelden.">
+<meta name="description" content="shokulab: japanisches Shokupan mit Schweizer Präzision. Erster Marktstand am Samstag, 10. Oktober, Sternenplatz Wohlen — Sando und Kaffee. Jetzt für die Warteliste anmelden.">
 <meta name="theme-color" content="#F2DDDB">
 <link rel="canonical" href="https://shokulab.ch/">
 
@@ -136,6 +136,91 @@
     margin-bottom: 34px;
   }
 
+
+  .market {
+    margin-bottom: 30px;
+  }
+
+  .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .market-date {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  .market-where {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+
+  .menu {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    border-top: 1px solid var(--hairline);
+    padding-top: 18px;
+    margin-bottom: 8px;
+  }
+
+  .menu ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+
+  .menu li {
+    display: flex;
+    align-items: baseline;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  .menu li small {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-left: 6px;
+  }
+
+  .menu li::after {
+    content: "";
+    order: 1;
+    flex: 1;
+    min-width: 12px;
+    border-bottom: 1px dotted var(--hairline);
+    margin: 0 6px;
+    transform: translateY(-4px);
+  }
+
+  .menu li .price {
+    order: 2;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .menu .desc {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin-top: 3px;
+  }
+
+  .menu-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-bottom: 36px;
+  }
+
   form {
     display: flex;
     flex-direction: column;
@@ -164,6 +249,7 @@
 
   input[type="email"] {
     flex: 1;
+    min-width: 0;
     border: none;
     background: transparent;
     outline: none;
@@ -271,6 +357,34 @@
     </div>
 
     <div class="slogan">Scientifically good.</div>
+
+    <section class="market" aria-labelledby="market-label">
+      <div class="label" id="market-label">ERSTER MARKTSTAND</div>
+      <div class="market-date">Samstag, 10. Oktober</div>
+      <div class="market-where">09:00–13:00 · Sternenplatz, Wohlen</div>
+    </section>
+
+    <section class="menu" aria-label="Menü">
+      <div>
+        <div class="label">SANDO</div>
+        <ul>
+          <li>Tamago<small>Ei</small><span class="price">CHF 6.–</span></li>
+          <li>Kiwi<small>Kiwi</small><span class="price">CHF 6.–</span></li>
+          <li>Ichigo<small>Erdbeere</small><span class="price">CHF 6.–</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="label">KAFFEE</div>
+        <ul>
+          <li>Latte / Cappuccino<span class="price">CHF 5.–</span></li>
+          <li>Espresso<span class="price">CHF 4.–</span></li>
+          <li>Iced Latte<span class="price">CHF 5.50</span></li>
+          <li>Mont Blanc<span class="price">CHF 7.–</span></li>
+        </ul>
+        <span class="desc">Espresso, Orangen-Sahne</span>
+      </div>
+    </section>
+    <div class="menu-note">Allergene auf Anfrage</div>
 
     <form id="notify-form" action="https://formspree.io/f/mdeoqwnq" method="POST">
       <div class="field-row">
