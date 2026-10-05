@@ -29,6 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
   :root {
     --paper: #F2DDDB;
@@ -207,6 +208,98 @@
     margin-top: 8px;
   }
 
+
+  .fb { margin-top: 16px; display: flex; flex-direction: column; gap: 20px; }
+  .fb fieldset { border: none; padding: 0; margin: 0; min-width: 0; }
+  .fb legend {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    padding: 0;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips label { position: relative; }
+  .chips input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+  .chips span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0 16px;
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    background: var(--paper);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .chips span:hover { border-color: var(--accent); }
+  .chips input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .chips input:focus-visible + span { outline: 1.5px solid var(--accent); outline-offset: 3px; }
+  .chips.rating span { padding: 0; width: 44px; font-family: 'IBM Plex Mono', monospace; }
+  .scale-hint {
+    display: flex;
+    justify-content: space-between;
+    max-width: 252px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+  }
+  .fb textarea {
+    width: 100%;
+    min-height: 88px;
+    resize: vertical;
+    border: none;
+    border-bottom: 1.5px solid var(--ink);
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink);
+    padding: 6px 0;
+    outline: none;
+  }
+  .fb textarea::placeholder { color: #A17C77; }
+  .fb textarea:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 4px; }
+  .fb-send {
+    align-self: flex-start;
+    min-height: 44px;
+    padding: 0 22px;
+    border: none;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .fb-send:hover:not(:disabled) { background: var(--accent); }
+  .fb-send:disabled { opacity: 0.6; cursor: default; }
+  .fb-send:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; }
+  .fb-done {
+    display: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    margin-top: 14px;
+  }
+  .fb-done.show { display: block; }
+  .fallback { font-size: 12.5px !important; color: var(--ink-soft) !important; margin-top: 18px !important; }
+
   a.link {
     color: var(--ink);
     text-decoration: none;
@@ -292,16 +385,87 @@
     </div>
     <div class="allergen">Allergene auf Anfrage — frag uns am Stand.</div>
 
-    <div class="test">
-      <div class="label">TESTLAUF</div>
-      <p>Wir tüfteln noch an der Rezeptur. Was hat dir geschmeckt, was fehlt? Schreib uns an <a class="link" href="mailto:hello@shokulab.ch?subject=Feedback%20Wohlen">hello@shokulab.ch</a> oder auf Instagram <a class="link" href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">@shokulab.ch</a>.</p>
-    </div>
+    <section class="test" aria-labelledby="fb-title">
+      <div class="label" id="fb-title">TESTLAUF · DEIN FEEDBACK</div>
+      <p>Wir tüfteln noch an der Rezeptur. Sag uns in 20 Sekunden, was dir geschmeckt hat.</p>
+
+      <form class="fb" id="feedback-form" action="https://formspree.io/f/mdeoqwnq" method="POST">
+        <input type="hidden" name="form" value="feedback-wohlen">
+        <input type="hidden" name="_subject" value="Feedback Marktstand Wohlen">
+
+        <fieldset>
+          <legend>Lieblingssorte</legend>
+          <div class="chips">
+            <label><input type="radio" name="lieblingssorte" value="Ichigo"><span>Ichigo</span></label>
+            <label><input type="radio" name="lieblingssorte" value="Kiwi"><span>Kiwi</span></label>
+            <label><input type="radio" name="lieblingssorte" value="Tamago"><span>Tamago</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Wie gut war's?</legend>
+          <div class="chips rating">
+            <label><input type="radio" name="bewertung" value="1" aria-label="1 von 5"><span>1</span></label>
+            <label><input type="radio" name="bewertung" value="2" aria-label="2 von 5"><span>2</span></label>
+            <label><input type="radio" name="bewertung" value="3" aria-label="3 von 5"><span>3</span></label>
+            <label><input type="radio" name="bewertung" value="4" aria-label="4 von 5"><span>4</span></label>
+            <label><input type="radio" name="bewertung" value="5" aria-label="5 von 5"><span>5</span></label>
+          </div>
+          <div class="scale-hint" aria-hidden="true"><span>naja</span><span>sehr gut</span></div>
+        </fieldset>
+
+        <div>
+          <label for="fb-comment" class="label" style="display:block;color:var(--ink-soft);font-size:11.5px;margin-bottom:4px;">Was fehlt? (optional)</label>
+          <textarea id="fb-comment" name="kommentar" placeholder="z. B. süsser, mehr Frucht, andere Sorte …"></textarea>
+        </div>
+
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAE0MhNrj5Zp_jAq1" data-theme="light"></div>
+
+        <button type="submit" class="fb-send">Feedback senden</button>
+      </form>
+      <div class="fb-done" id="fb-done" role="status" aria-live="polite">Danke! Genau das hilft uns beim Tüfteln.</div>
+
+      <p class="fallback">Lieber direkt? <a class="link" href="mailto:hello@shokulab.ch?subject=Feedback%20Wohlen">hello@shokulab.ch</a> · <a class="link" href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">@shokulab.ch</a></p>
+    </section>
 
     <footer>
       <span class="slogan">Scientifically good.</span>
       <a href="/">← shokulab.ch</a>
     </footer>
   </main>
+
+<script>
+  (function () {
+    var form = document.getElementById('feedback-form');
+    var done = document.getElementById('fb-done');
+    var btn = form.querySelector('.fb-send');
+    var okText = done.textContent;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data = new FormData(form);
+      if (!data.get('lieblingssorte') && !data.get('bewertung') && !String(data.get('kommentar') || '').trim()) {
+        done.textContent = 'Wähl eine Sorte, gib eine Bewertung oder schreib uns kurz etwas.';
+        done.classList.add('show');
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = 'Senden …';
+      fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } })
+        .then(function (r) {
+          if (!r.ok) throw new Error('send failed');
+          form.style.display = 'none';
+          done.textContent = okText;
+          done.classList.add('show');
+        })
+        .catch(function () {
+          done.textContent = 'Das hat nicht geklappt. Versuch es nochmal oder schreib uns an hello@shokulab.ch';
+          done.classList.add('show');
+          btn.disabled = false;
+          btn.textContent = 'Feedback senden';
+        });
+    });
+  })();
+</script>
 
 </body>
 </html>
