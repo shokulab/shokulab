@@ -60,7 +60,8 @@ Für Cafés, Märkte und alle, die es als Erste erfahren wollen: **[auf die Wart
 
 ```text
 index.html        →  shokulab.ch        Coming soon + Markt-Pop-up
-menu.html         →  shokulab.ch/menu   Menü für den Marktstand
+menu.html         →  shokulab.ch/menu   Menü für den Marktstand + Feedback
+cafes.html        →  shokulab.ch/cafes  Für Cafés + Anfrageformular
 favicon.ico, icon-*.png, apple-touch-icon.png, site.webmanifest  →  Icons
 _headers          →  Sicherheits-Header
 .github/assets/   →  Bilder für dieses README
