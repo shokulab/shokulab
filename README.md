@@ -38,16 +38,17 @@ Wir ändern pro Backtag eine Variable und schreiben alles auf. Erst wenn die Kru
 | Ichigo <sub>Erdbeere</sub> | CHF 6.– | Iced Latte                               | CHF 5.50 |
 |                    |          | Mont Blanc <sub>Espresso, Orangen-Sahne</sub> | CHF 7.–  |
 
-<sub>Allergene auf Anfrage.</sub>
+<sub>Allergene auf Anfrage. Ganzes Menü: <a href="https://shokulab.ch/menu">shokulab.ch/menu</a></sub>
 
 <br>
 
-### Die Seite
+### Die Seiten
 
 <table>
   <tr>
-    <td width="74%"><a href="https://shokulab.ch"><img src=".github/assets/preview-desktop.png" alt="shokulab.ch auf dem Desktop"></a></td>
-    <td width="26%"><a href="https://shokulab.ch"><img src=".github/assets/preview-mobile.png" alt="shokulab.ch auf dem Handy"></a></td>
+    <td width="37%" valign="top"><a href="https://shokulab.ch"><img src=".github/assets/preview-home.png" alt="shokulab.ch — Coming soon mit Markt-Hinweis"></a><br><sub><b>/</b> — Coming soon, mit Markt-Pop-up bis Sa 13:00</sub></td>
+    <td width="37%" valign="top"><a href="https://shokulab.ch/menu"><img src=".github/assets/preview-menu.png" alt="shokulab.ch/menu — Menü"></a><br><sub><b>/menu</b> — Menü für den Marktstand</sub></td>
+    <td width="26%" valign="top"><a href="https://shokulab.ch"><img src=".github/assets/preview-mobile.png" alt="shokulab.ch auf dem Handy"></a><br><sub>Handy</sub></td>
   </tr>
 </table>
 
@@ -58,7 +59,8 @@ Für Cafés, Märkte und alle, die es als Erste erfahren wollen: **[auf die Wart
 ### Wie dieses Repo funktioniert
 
 ```text
-index.html        →  shokulab.ch   (Cloudflare Pages, kein Build-Schritt)
+index.html        →  shokulab.ch        Coming soon + Markt-Pop-up
+menu.html         →  shokulab.ch/menu   Menü für den Marktstand
 _headers          →  Sicherheits-Header für Cloudflare Pages
 .github/assets/   →  Bilder für dieses README
 ```
