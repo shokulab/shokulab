@@ -406,7 +406,7 @@
           <li>Oben auf <strong>Signatur kopieren</strong> klicken.</li>
           <li>Mail → Einstellungen → <strong>Signaturen</strong> → links das Konto wählen → <strong>+</strong>.</li>
           <li>Haken bei <strong>„Immer meine Standardschrift verwenden“</strong> entfernen.</li>
-          <li>Ins rechte Feld klicken, alles markieren (⌘A) und einfügen (⌘V).</li>
+          <li>Ins rechte Feld klicken, alles markieren (⌘A) und einfügen (⌘V). Danach Mail einmal beenden (⌘Q) und neu öffnen.</li>
         </ol>
 
         <h2>iPhone / iPad</h2>
@@ -439,29 +439,34 @@
       var name = esc($('f-name').value.trim()), role = esc($('f-role').value.trim()),
           mail = esc($('f-mail').value.trim()), tel = $('f-tel').value.trim();
       var telHref = tel.replace(/[^+\d]/g, '');
+      var F = 'font-family:Helvetica,Arial,sans-serif;';
       var a = 'color:#3D2F27;text-decoration:none;';
-      var lines = [];
-      lines.push('<a href="mailto:' + mail + '" style="' + a + '">' + mail + '</a>');
-      if (tel) lines.push('<a href="tel:' + telHref + '" style="' + a + '">' + esc(tel) + '</a>');
-      lines.push('<a href="https://shokulab.ch" style="' + a + '">shokulab.ch</a>');
-      return '<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:Helvetica,Arial,sans-serif;color:#3D2F27;">' +
-        '<tr>' +
-        '<td style="vertical-align:top;padding:2px 16px 0 0;border-right:2px solid #8B4A3C;">' +
-          '<a href="https://shokulab.ch" style="text-decoration:none;"><img src="https://shokulab.ch/email/wordmark.png" width="110" height="32" alt="shokulab" style="display:block;border:0;width:110px;height:32px;"></a>' +
-        '</td>' +
-        '<td style="vertical-align:top;padding:0 0 0 16px;font-size:13px;line-height:19px;">' +
-          '<div style="font-size:14px;font-weight:bold;color:#3D2F27;">' + name + '</div>' +
-          (role ? '<div style="color:#6E5747;">' + role + ' · shokulab</div>' : '') +
-          '<div style="margin-top:6px;color:#3D2F27;">' + lines.join(' &nbsp;·&nbsp; ') + '</div>' +
-          '<div style="margin-top:6px;font-size:11px;letter-spacing:1px;color:#8B4A3C;">SCIENTIFICALLY GOOD.</div>' +
-        '</td>' +
-        '</tr></table>';
+      var nw = function (inner) { return '<span style="white-space:nowrap;">' + inner + '</span>'; };
+      var sep = '<span style="color:#A07C77;">&nbsp;&nbsp;·&nbsp;&nbsp;</span>';
+      var personal = name && name.toLowerCase() !== 'shokulab';
+      var l1 = [nw('<a href="mailto:' + mail + '" style="' + a + '">' + mail + '</a>')];
+      if (tel) l1.push(nw('<a href="tel:' + telHref + '" style="' + a + '">' + esc(tel) + '</a>'));
+      var l2 = [nw('<a href="https://shokulab.ch" style="' + a + '">shokulab.ch</a>'),
+                nw('<a href="https://instagram.com/shokulab.ch" style="' + a + '">@shokulab.ch</a>')];
+      var out = '<div style="' + F + 'color:#3D2F27;border-left:2px solid #8B4A3C;padding:2px 0 2px 14px;margin:4px 0;font-size:13px;line-height:20px;">';
+      out += '<div style="' + F + 'font-size:20px;line-height:24px;font-weight:bold;letter-spacing:-0.3px;color:#3D2F27;">shokulab</div>';
+      if (personal) {
+        out += '<div style="' + F + 'margin-top:8px;font-size:14px;font-weight:bold;color:#3D2F27;">' + name + '</div>';
+        if (role) out += '<div style="' + F + 'color:#6E5747;">' + role + '</div>';
+      }
+      out += '<div style="' + F + 'margin-top:' + (personal ? '6' : '8') + 'px;">' + l1.join(sep) + '</div>';
+      out += '<div style="' + F + '">' + l2.join(sep) + '</div>';
+      out += '<div style="' + F + 'margin-top:6px;font-size:10px;letter-spacing:1.5px;color:#8B4A3C;">SCIENTIFICALLY GOOD.</div>';
+      out += '</div>';
+      return out;
     }
     function text() {
-      var t = [$('f-name').value.trim()];
-      if ($('f-role').value.trim()) t.push($('f-role').value.trim() + ' · shokulab');
-      t.push($('f-mail').value.trim() + ($('f-tel').value.trim() ? ' · ' + $('f-tel').value.trim() : '') + ' · shokulab.ch');
-      return t.join('\n');
+      var n = $('f-name').value.trim(), r = $('f-role').value.trim(), m = $('f-mail').value.trim(), t = $('f-tel').value.trim();
+      var lines = ['shokulab'];
+      if (n && n.toLowerCase() !== 'shokulab') { lines.push(n); if (r) lines.push(r); }
+      lines.push(m + (t ? ' · ' + t : ''));
+      lines.push('shokulab.ch · @shokulab.ch');
+      return lines.join('\n');
     }
     function render() { $('preview').innerHTML = html(); $('copied').textContent = ''; }
     ['f-name','f-role','f-mail','f-tel'].forEach(function (id) { $(id).addEventListener('input', render); });
