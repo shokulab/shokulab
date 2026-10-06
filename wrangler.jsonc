@@ -1,0 +1,14 @@
+{
+  // Cloudflare Worker serving shokulab.ch as static files
+  "name": "shokulab",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./",
+    "not_found_handling": "404-page"
+  },
+  // keep the existing custom domain attached on every deploy
+  "routes": [
+    { "pattern": "shokulab.ch", "custom_domain": true }
+  ],
+  "workers_dev": true
+}
