@@ -3,23 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Menü — shokulab</title>
-<meta name="description" content="Das Menü von shokulab am Wochenmarkt Wohlen: Sando aus japanischem Shokupan (Tamago, Kiwi, Ichigo) und Kaffee. Samstag, 10. Oktober, 09:00–13:00, Sternenplatz.">
+<title>Impressum — shokulab</title>
+<meta name="description" content="Impressum von shokulab, Schönenwerd.">
 <meta name="theme-color" content="#F2DDDB">
-<link rel="canonical" href="https://shokulab.ch/menu">
+<link rel="canonical" href="https://shokulab.ch/impressum">
 
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="shokulab">
-<meta property="og:title" content="Menü — shokulab am Wochenmarkt Wohlen">
-<meta property="og:description" content="Sando aus japanischem Shokupan und Kaffee. Samstag, 10. Oktober, 09:00–13:00, Sternenplatz Wohlen.">
-<meta property="og:url" content="https://shokulab.ch/menu">
-<meta property="og:locale" content="de_CH">
-<meta property="og:image" content="https://shokulab.ch/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="shokulab — Japanisches Shokupan, Schweizer Präzision. Scientifically good.">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://shokulab.ch/og-image.png">
 
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -28,7 +16,6 @@
 
 <link rel="preload" href="/fonts/space-grotesk-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts/fonts.css">
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
   :root {
     --paper: #F2DDDB;
@@ -331,140 +318,72 @@
   @media (prefers-reduced-motion: reduce) {
     .wrap { animation: none; }
   }
+
+  .points { list-style: none; display: flex; flex-direction: column; gap: 0; margin-bottom: 40px; border-top: 1px solid var(--hairline); }
+  .points li { display: grid; grid-template-columns: 40px 1fr; gap: 0 12px; padding: 16px 0; border-bottom: 1px solid var(--hairline); }
+  .points .n { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); padding-top: 4px; }
+  .points h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 18px; margin-bottom: 4px; }
+  .points p { font-size: 14.5px; line-height: 1.55; color: var(--ink-soft); }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field label { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: var(--ink-soft); }
+  .field input, .field textarea {
+    width: 100%; border: none; border-bottom: 1.5px solid var(--ink); background: transparent;
+    font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.5; color: var(--ink); padding: 6px 0; outline: none; border-radius: 0;
+  }
+  .field textarea { min-height: 96px; resize: vertical; }
+  .field input::placeholder, .field textarea::placeholder { color: #A17C77; }
+  .field input:focus-visible, .field textarea:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 4px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+
+  .legal h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px; margin: 34px 0 8px; }
+  .legal p, .legal li { font-size: 15px; line-height: 1.65; color: var(--ink); }
+  .legal p + p { margin-top: 10px; }
+  .legal ul { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+  .legal ul li { padding-left: 16px; position: relative; }
+  .legal ul li::before { content: "–"; position: absolute; left: 0; color: var(--accent); }
+  .legal a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--accent); }
+  .legal .soft { color: var(--ink-soft); font-size: 13.5px; }
+  .address { font-style: normal; font-size: 16px; line-height: 1.6; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); padding: 16px 0; margin-bottom: 8px; }
 </style>
 </head>
 <body>
 
   <main class="wrap">
-    <div class="mark"><a href="/">SHOKULAB</a> · MARKTSTAND · WOHLEN, CH</div>
+    <div class="mark"><a href="/">SHOKULAB</a> · IMPRESSUM</div>
 
-    <h1>Menü</h1>
+    <h1>Impressum</h1>
 
-    <p class="sub">Sando aus japanischem Shokupan, frisch gebacken — dazu Kaffee. Unser erster Marktstand und gleichzeitig unser erster Testlauf.</p>
+    <div class="legal">
+      <address class="address">
+        <strong>shokulab</strong><br>
+        Quang Minh Huynh<br>
+        Bahnhofstrasse 46b<br>
+        5012 Schönenwerd<br>
+        Schweiz
+      </address>
 
-    <div class="when">
-      <div class="when-date">Samstag, 10. Oktober</div>
-      <div class="when-where">09:00–13:00 · Sternenplatz, Wohlen</div>
+      <p>E-Mail: <a href="mailto:hello@shokulab.ch">hello@shokulab.ch</a><br>
+      Instagram: <a href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">@shokulab.ch</a></p>
+
+      <h2>Verantwortlich für den Inhalt</h2>
+      <p>Quang Minh Huynh, Adresse wie oben.</p>
+
+      <h2>Haftungsausschluss</h2>
+      <p>Wir prüfen die Inhalte dieser Website sorgfältig, übernehmen aber keine Gewähr für ihre Richtigkeit, Vollständigkeit und Aktualität. Angaben zu Sorten, Preisen, Daten und Marktständen können sich kurzfristig ändern.</p>
+      <p>Für Inhalte externer Websites, auf die wir verlinken, sind ausschliesslich deren Betreiber verantwortlich.</p>
+
+      <h2>Urheberrechte</h2>
+      <p>Texte, Bilder und Gestaltung dieser Website gehören shokulab. Eine Verwendung ausserhalb dieser Website braucht unsere vorherige schriftliche Zustimmung.</p>
+
+      <p class="soft" style="margin-top:28px;">Siehe auch: <a href="/datenschutz">Datenschutzerklärung</a></p>
     </div>
 
-    <section class="group" aria-labelledby="h-sando">
-      <h2 class="label" id="h-sando">SANDO</h2>
-      <ul>
-        <li>
-          <div class="row"><span class="name">Ichigo</span><span class="jp">Erdbeere</span><span class="dots"></span><span class="price">CHF 6.–</span></div>
-          <div class="desc">Frische Erdbeeren, Mascarpone-Creme</div>
-        </li>
-        <li>
-          <div class="row"><span class="name">Kiwi</span><span class="jp">Kiwi</span><span class="dots"></span><span class="price">CHF 6.–</span></div>
-          <div class="desc">Frische Kiwi, Mascarpone-Creme</div>
-        </li>
-        <li>
-          <div class="row"><span class="name">Tamago</span><span class="jp">Ei</span><span class="dots"></span><span class="price">CHF 6.–</span></div>
-        </li>
-      </ul>
-    </section>
-
-    <section class="group" aria-labelledby="h-kaffee">
-      <h2 class="label" id="h-kaffee">KAFFEE</h2>
-      <ul>
-        <li><div class="row"><span class="name">Latte / Cappuccino</span><span class="dots"></span><span class="price">CHF 5.–</span></div></li>
-        <li><div class="row"><span class="name">Espresso</span><span class="dots"></span><span class="price">CHF 4.–</span></div></li>
-        <li><div class="row"><span class="name">Iced Latte</span><span class="dots"></span><span class="price">CHF 5.50</span></div></li>
-        <li>
-          <div class="row"><span class="name">Mont Blanc</span><span class="dots"></span><span class="price">CHF 7.–</span></div>
-          <div class="desc">Espresso, Orangen-Sahne</div>
-        </li>
-      </ul>
-    </section>
-
-    <div class="spec">
-      <span>Yudane <b>15%</b></span>
-      <span>Hydration <b>83%</b></span>
-      <span>Pullman <b>randlos</b></span>
-    </div>
-    <div class="allergen">Allergene auf Anfrage — frag uns am Stand.</div>
-
-    <section class="test" aria-labelledby="fb-title">
-      <div class="label" id="fb-title">TESTLAUF · DEIN FEEDBACK</div>
-      <p>Wir tüfteln noch an der Rezeptur. Sag uns in 20 Sekunden, was dir geschmeckt hat.</p>
-
-      <form class="fb" id="feedback-form" action="https://formspree.io/f/mdeoqwnq" method="POST">
-        <input type="hidden" name="form" value="feedback-wohlen">
-        <input type="hidden" name="_subject" value="Feedback Marktstand Wohlen">
-
-        <fieldset>
-          <legend>Lieblingssorte</legend>
-          <div class="chips">
-            <label><input type="radio" name="lieblingssorte" value="Ichigo"><span>Ichigo</span></label>
-            <label><input type="radio" name="lieblingssorte" value="Kiwi"><span>Kiwi</span></label>
-            <label><input type="radio" name="lieblingssorte" value="Tamago"><span>Tamago</span></label>
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>Wie gut war's?</legend>
-          <div class="chips rating">
-            <label><input type="radio" name="bewertung" value="1" aria-label="1 von 5"><span>1</span></label>
-            <label><input type="radio" name="bewertung" value="2" aria-label="2 von 5"><span>2</span></label>
-            <label><input type="radio" name="bewertung" value="3" aria-label="3 von 5"><span>3</span></label>
-            <label><input type="radio" name="bewertung" value="4" aria-label="4 von 5"><span>4</span></label>
-            <label><input type="radio" name="bewertung" value="5" aria-label="5 von 5"><span>5</span></label>
-          </div>
-          <div class="scale-hint" aria-hidden="true"><span>naja</span><span>sehr gut</span></div>
-        </fieldset>
-
-        <div>
-          <label for="fb-comment" class="label" style="display:block;color:var(--ink-soft);font-size:11.5px;margin-bottom:4px;">Was fehlt? (optional)</label>
-          <textarea id="fb-comment" name="kommentar" placeholder="z. B. süsser, mehr Frucht, andere Sorte …"></textarea>
-        </div>
-
-        <div class="cf-turnstile" data-sitekey="0x4AAAAAAE0MhNrj5Zp_jAq1" data-theme="light"></div>
-
-        <button type="submit" class="fb-send">Feedback senden</button>
-      </form>
-      <div class="fb-done" id="fb-done" role="status" aria-live="polite">Danke! Genau das hilft uns beim Tüfteln.</div>
-
-      <p class="fallback">Lieber direkt? <a class="link" href="mailto:hello@shokulab.ch?subject=Feedback%20Wohlen">hello@shokulab.ch</a> · <a class="link" href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">@shokulab.ch</a></p>
-    </section>
-
-    <footer>
+    <footer style="margin-top:56px;">
       <span class="slogan">Scientifically good.</span>
-      <span><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="/">← shokulab.ch</a></span>
+      <a href="/">← shokulab.ch</a>
     </footer>
   </main>
-
-<script>
-  (function () {
-    var form = document.getElementById('feedback-form');
-    var done = document.getElementById('fb-done');
-    var btn = form.querySelector('.fb-send');
-    var okText = done.textContent;
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var data = new FormData(form);
-      if (!data.get('lieblingssorte') && !data.get('bewertung') && !String(data.get('kommentar') || '').trim()) {
-        done.textContent = 'Wähl eine Sorte, gib eine Bewertung oder schreib uns kurz etwas.';
-        done.classList.add('show');
-        return;
-      }
-      btn.disabled = true;
-      btn.textContent = 'Senden …';
-      fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } })
-        .then(function (r) {
-          if (!r.ok) throw new Error('send failed');
-          form.style.display = 'none';
-          done.textContent = okText;
-          done.classList.add('show');
-        })
-        .catch(function () {
-          done.textContent = 'Das hat nicht geklappt. Versuch es nochmal oder schreib uns an hello@shokulab.ch';
-          done.classList.add('show');
-          btn.disabled = false;
-          btn.textContent = 'Feedback senden';
-        });
-    });
-  })();
-</script>
 
 </body>
 </html>
