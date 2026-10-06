@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>E-Mail-Signatur — shokulab</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F2DDDB">
+
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="preload" href="/fonts/space-grotesk-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+  :root {
+    --paper: #F2DDDB;
+    --ink: #3D2F27;
+    --ink-soft: #6E5747;
+    --accent: #8B4A3C;
+    --hairline: #DDC3C0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+    padding: 72px 32px 56px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 64px;
+    width: 1px;
+    background: var(--hairline);
+  }
+
+  .wrap {
+    max-width: 520px;
+    width: 100%;
+    padding-left: 48px;
+    animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @media (max-width: 640px) {
+    body { padding: 48px 20px 40px; }
+    body::before { left: 28px; }
+    .wrap { padding-left: 24px; }
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .mark, .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+  }
+
+  .mark { margin-bottom: 26px; }
+  .mark a { color: inherit; text-decoration: none; }
+  .mark a:hover { text-decoration: underline; }
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: clamp(2.8rem, 9vw, 4rem);
+    line-height: 1;
+    letter-spacing: -0.015em;
+    margin-bottom: 18px;
+  }
+
+  .sub {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 40ch;
+    margin-bottom: 30px;
+  }
+
+  .when {
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    padding: 16px 0;
+    margin-bottom: 40px;
+  }
+
+  .when-date {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+  }
+
+  .when-where {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+
+  section.group { margin-bottom: 36px; }
+  section.group .label { margin-bottom: 14px; font-weight: 400; }
+
+  ul { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+
+  .row {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  .jp {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-left: 8px;
+  }
+
+  .dots {
+    flex: 1;
+    min-width: 16px;
+    border-bottom: 1px dotted var(--hairline);
+    margin: 0 10px;
+    transform: translateY(-5px);
+  }
+
+  .price {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+
+  .desc {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-top: 3px;
+  }
+
+  .spec {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--hairline);
+    padding-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    margin-bottom: 10px;
+  }
+
+  .spec b { color: var(--accent); font-weight: 500; }
+
+  .allergen {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin-bottom: 44px;
+  }
+
+  .test {
+    background: #F8E9E7;
+    border: 1px solid var(--hairline);
+    border-radius: 4px;
+    padding: 20px 22px;
+    margin-bottom: 48px;
+  }
+
+  .test p {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-top: 8px;
+  }
+
+
+  .fb { margin-top: 16px; display: flex; flex-direction: column; gap: 20px; }
+  .fb fieldset { border: none; padding: 0; margin: 0; min-width: 0; }
+  .fb legend {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    padding: 0;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips label { position: relative; }
+  .chips input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+  .chips span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0 16px;
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    background: var(--paper);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .chips span:hover { border-color: var(--accent); }
+  .chips input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .chips input:focus-visible + span { outline: 1.5px solid var(--accent); outline-offset: 3px; }
+  .chips.rating span { padding: 0; width: 44px; font-family: 'IBM Plex Mono', monospace; }
+  .scale-hint {
+    display: flex;
+    justify-content: space-between;
+    max-width: 252px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+  }
+  .fb textarea {
+    width: 100%;
+    min-height: 88px;
+    resize: vertical;
+    border: none;
+    border-bottom: 1.5px solid var(--ink);
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink);
+    padding: 6px 0;
+    outline: none;
+  }
+  .fb textarea::placeholder { color: #A17C77; }
+  .fb textarea:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 4px; }
+  .fb-send {
+    align-self: flex-start;
+    min-height: 44px;
+    padding: 0 22px;
+    border: none;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .fb-send:hover:not(:disabled) { background: var(--accent); }
+  .fb-send:disabled { opacity: 0.6; cursor: default; }
+  .fb-send:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; }
+  .fb-done {
+    display: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    margin-top: 14px;
+  }
+  .fb-done.show { display: block; }
+  .fallback { font-size: 12.5px !important; color: var(--ink-soft) !important; margin-top: 18px !important; }
+
+  a.link {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+  }
+
+  a.link:hover { color: var(--accent); }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+
+  footer .slogan {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--ink);
+  }
+
+  footer a { color: var(--ink-soft); text-decoration: none; border-bottom: 1px solid var(--hairline); }
+
+  a:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wrap { animation: none; }
+  }
+
+  .points { list-style: none; display: flex; flex-direction: column; gap: 0; margin-bottom: 40px; border-top: 1px solid var(--hairline); }
+  .points li { display: grid; grid-template-columns: 40px 1fr; gap: 0 12px; padding: 16px 0; border-bottom: 1px solid var(--hairline); }
+  .points .n { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); padding-top: 4px; }
+  .points h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 18px; margin-bottom: 4px; }
+  .points p { font-size: 14.5px; line-height: 1.55; color: var(--ink-soft); }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field label { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: var(--ink-soft); }
+  .field input, .field textarea {
+    width: 100%; border: none; border-bottom: 1.5px solid var(--ink); background: transparent;
+    font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.5; color: var(--ink); padding: 6px 0; outline: none; border-radius: 0;
+  }
+  .field textarea { min-height: 96px; resize: vertical; }
+  .field input::placeholder, .field textarea::placeholder { color: #A17C77; }
+  .field input:focus-visible, .field textarea:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 4px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+
+  .legal h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px; margin: 34px 0 8px; }
+  .legal p, .legal li { font-size: 15px; line-height: 1.65; color: var(--ink); }
+  .legal p + p { margin-top: 10px; }
+  .legal ul { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+  .legal ul li { padding-left: 16px; position: relative; }
+  .legal ul li::before { content: "–"; position: absolute; left: 0; color: var(--accent); }
+  .legal a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--accent); }
+  .legal .soft { color: var(--ink-soft); font-size: 13.5px; }
+  .address { font-style: normal; font-size: 16px; line-height: 1.6; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); padding: 16px 0; margin-bottom: 8px; }
+
+  .tool { display: grid; gap: 14px; margin: 8px 0 28px; }
+  .presets { display: flex; gap: 8px; flex-wrap: wrap; }
+  .presets button, .copy {
+    min-height: 44px; padding: 0 18px; border-radius: 999px; cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 14px;
+  }
+  .presets button { border: 1px solid #A07C77; background: var(--paper); color: var(--ink); }
+  .presets button:hover { border-color: var(--accent); }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field label { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: var(--ink-soft); }
+  .field input { border: none; border-bottom: 1.5px solid var(--ink); background: transparent; font: 15px/1.5 'Inter', sans-serif; color: var(--ink); padding: 6px 0; outline: none; border-radius: 0; }
+  .field input::placeholder { color: #7E5B55; }
+  .field input:focus-visible, .presets button:focus-visible, .copy:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+  .preview { background: #ffffff; border: 1px solid var(--hairline); border-radius: 4px; padding: 24px 20px; margin: 10px 0 14px; overflow-x: auto; }
+  .preview a { border-bottom: none !important; }
+  .copy { border: none; background: var(--ink); color: var(--paper); }
+  .copy:hover { background: var(--accent); }
+  .copied { font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: var(--accent); margin-left: 12px; }
+  .steps h2 { margin-top: 30px; }
+  .steps ol { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+  .steps li { font-size: 15px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+  <main class="wrap">
+    <div class="mark"><a href="/">SHOKULAB</a> · INTERN</div>
+
+    <h1>E-Mail-Signatur</h1>
+
+    <div class="legal">
+      <p>Felder ausfüllen, Signatur kopieren, in Mail einfügen. Die Vorschau zeigt genau, was Empfänger sehen.</p>
+
+      <div class="tool">
+        <div class="presets" role="group" aria-label="Vorlagen">
+          <button type="button" data-name="Quang Minh Huynh" data-mail="minh@shokulab.ch" data-role="Mitgründer">Minh</button>
+          <button type="button" data-name="Diego Vergara López" data-mail="diego@shokulab.ch" data-role="Mitgründer">Diego</button>
+          <button type="button" data-name="shokulab" data-mail="hello@shokulab.ch" data-role="">Allgemein (hello@)</button>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="f-name">Name</label><input id="f-name" value="Quang Minh Huynh"></div>
+          <div class="field"><label for="f-role">Funktion (optional)</label><input id="f-role" value="Mitgründer"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="f-mail">E-Mail</label><input id="f-mail" type="email" value="minh@shokulab.ch"></div>
+          <div class="field"><label for="f-tel">Telefon (optional)</label><input id="f-tel" type="tel" placeholder="+41 79 000 00 00"></div>
+        </div>
+      </div>
+
+      <div class="preview" id="preview" aria-label="Vorschau der Signatur"></div>
+      <button type="button" class="copy" id="copy">Signatur kopieren</button><span class="copied" id="copied" role="status" aria-live="polite"></span>
+
+      <div class="steps">
+        <h2>Apple Mail (Mac)</h2>
+        <ol>
+          <li>Oben auf <strong>Signatur kopieren</strong> klicken.</li>
+          <li>Mail → Einstellungen → <strong>Signaturen</strong> → links das Konto wählen → <strong>+</strong>.</li>
+          <li>Haken bei <strong>„Immer meine Standardschrift verwenden“</strong> entfernen.</li>
+          <li>Ins rechte Feld klicken, alles markieren (⌘A) und einfügen (⌘V).</li>
+        </ol>
+
+        <h2>iPhone / iPad</h2>
+        <ol>
+          <li>Diese Seite in Safari öffnen und <strong>Signatur kopieren</strong> tippen.</li>
+          <li>Einstellungen → Apps → Mail → <strong>Signatur</strong> → bestehenden Text löschen → einfügen.</li>
+          <li>iOS übernimmt Schrift und Farben; das Logo-Bild lässt es manchmal weg. Die Signatur sieht trotzdem sauber aus.</li>
+        </ol>
+
+        <h2>iCloud.com (Browser)</h2>
+        <ol>
+          <li>Mail → Einstellungen → <strong>Verfassen</strong> → Signatur. iCloud.com speichert nur Text — einfach Name, Funktion und Kontakt einfügen.</li>
+        </ol>
+
+        <p class="soft" style="margin-top:24px;">Diese Seite ist nicht verlinkt und wird nicht von Suchmaschinen erfasst.</p>
+      </div>
+    </div>
+
+    <footer style="margin-top:56px;">
+      <span class="slogan">Scientifically good.</span>
+      <a href="/">← shokulab.ch</a>
+    </footer>
+  </main>
+
+<script>
+  (function () {
+    var $ = function (id) { return document.getElementById(id); };
+    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+    function html() {
+      var name = esc($('f-name').value.trim()), role = esc($('f-role').value.trim()),
+          mail = esc($('f-mail').value.trim()), tel = $('f-tel').value.trim();
+      var telHref = tel.replace(/[^+\d]/g, '');
+      var a = 'color:#3D2F27;text-decoration:none;';
+      var lines = [];
+      lines.push('<a href="mailto:' + mail + '" style="' + a + '">' + mail + '</a>');
+      if (tel) lines.push('<a href="tel:' + telHref + '" style="' + a + '">' + esc(tel) + '</a>');
+      lines.push('<a href="https://shokulab.ch" style="' + a + '">shokulab.ch</a>');
+      return '<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:Helvetica,Arial,sans-serif;color:#3D2F27;">' +
+        '<tr>' +
+        '<td style="vertical-align:top;padding:2px 16px 0 0;border-right:2px solid #8B4A3C;">' +
+          '<a href="https://shokulab.ch" style="text-decoration:none;"><img src="https://shokulab.ch/email/wordmark.png" width="110" height="32" alt="shokulab" style="display:block;border:0;width:110px;height:32px;"></a>' +
+        '</td>' +
+        '<td style="vertical-align:top;padding:0 0 0 16px;font-size:13px;line-height:19px;">' +
+          '<div style="font-size:14px;font-weight:bold;color:#3D2F27;">' + name + '</div>' +
+          (role ? '<div style="color:#6E5747;">' + role + ' · shokulab</div>' : '') +
+          '<div style="margin-top:6px;color:#3D2F27;">' + lines.join(' &nbsp;·&nbsp; ') + '</div>' +
+          '<div style="margin-top:6px;font-size:11px;letter-spacing:1px;color:#8B4A3C;">SCIENTIFICALLY GOOD.</div>' +
+        '</td>' +
+        '</tr></table>';
+    }
+    function text() {
+      var t = [$('f-name').value.trim()];
+      if ($('f-role').value.trim()) t.push($('f-role').value.trim() + ' · shokulab');
+      t.push($('f-mail').value.trim() + ($('f-tel').value.trim() ? ' · ' + $('f-tel').value.trim() : '') + ' · shokulab.ch');
+      return t.join('\n');
+    }
+    function render() { $('preview').innerHTML = html(); $('copied').textContent = ''; }
+    ['f-name','f-role','f-mail','f-tel'].forEach(function (id) { $(id).addEventListener('input', render); });
+    document.querySelectorAll('.presets button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        $('f-name').value = b.dataset.name; $('f-mail').value = b.dataset.mail; $('f-role').value = b.dataset.role;
+        render();
+      });
+    });
+    $('copy').addEventListener('click', function () {
+      var h = html(), t = text();
+      function fallback() {
+        var r = document.createRange(); r.selectNode($('preview'));
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        var ok = document.execCommand('copy'); s.removeAllRanges(); return ok;
+      }
+      var done = function () { $('copied').textContent = 'Kopiert ✓'; };
+      var fail = function () { $('copied').textContent = 'Bitte die Vorschau markieren und manuell kopieren.'; };
+      if (navigator.clipboard && window.ClipboardItem) {
+        navigator.clipboard.write([new ClipboardItem({ 'text/html': new Blob([h], {type:'text/html'}), 'text/plain': new Blob([t], {type:'text/plain'}) })])
+          .then(done, function () { if (fallback()) done(); else fail(); });
+      } else if (fallback()) { done(); } else { fail(); }
+    });
+    render();
+  })();
+</script>
+
+</body>
+</html>
