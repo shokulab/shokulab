@@ -372,9 +372,9 @@
 
     <p class="sub">Sando aus japanischem Shokupan, frisch gebacken — dazu Kaffee. Unser erster Marktstand und gleichzeitig unser erster Testlauf.</p>
 
-    <div class="when">
-      <div class="when-date">Samstag, 10. Oktober</div>
-      <div class="when-where">09:00–13:00 · Sternenplatz, Wohlen</div>
+    <div class="when" id="when">
+      <div class="when-date" id="when-date">Samstag, 10. Oktober</div>
+      <div class="when-where" id="when-where">09:00–13:00 · Sternenplatz, Wohlen</div>
     </div>
 
     <section class="group" aria-labelledby="h-sando">
@@ -462,6 +462,23 @@
       <span><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="/">← shokulab.ch</a></span>
     </footer>
   </main>
+
+<script>
+  // Market date block: "Heute" on market day, thank-you after it closes.
+  (function () {
+    var now = new Date();
+    var start = new Date('2026-10-10T00:00:00+02:00');
+    var end = new Date('2026-10-10T13:00:00+02:00');
+    var d = document.getElementById('when-date');
+    var w = document.getElementById('when-where');
+    if (now >= end) {
+      d.textContent = 'Danke, Wohlen!';
+      w.innerHTML = 'Der nächste Markttermin folgt — auf <a class="link" href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">Instagram</a> und hier.';
+    } else if (now >= start) {
+      d.textContent = 'Heute · Samstag, 10. Oktober';
+    }
+  })();
+</script>
 
 <script>
   (function () {
