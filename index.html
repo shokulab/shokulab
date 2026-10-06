@@ -261,6 +261,23 @@
     .wrap { animation: none; }
   }
 
+
+  .after-market {
+    display: block;
+    margin-top: 22px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+  .after-market:hover { color: var(--accent); }
+  .after-market[hidden] { display: none; }
+
   /* market pop-up */
   .popup {
     position: fixed;
@@ -414,6 +431,7 @@
       <div class="cf-turnstile" data-sitekey="0x4AAAAAAE0MhNrj5Zp_jAq1" data-theme="light"></div>
     </form>
     <div class="note">Für Cafés, Märkte und alle, die es als Erste erfahren wollen.</div>
+    <a class="after-market" id="after-market" href="/menu#feedback-form" hidden>Warst du am Markt in Wohlen? Sag uns, wie's geschmeckt hat →</a>
     <div class="confirm" id="confirm" role="status" aria-live="polite">Danke — wir melden uns, sobald es losgeht.</div>
 
     <footer>
@@ -477,7 +495,11 @@
     var key = 'shokulab-popup-wohlen-2026-10-10';
     var dismissed = false;
     try { dismissed = localStorage.getItem(key) === '1'; } catch (e) {}
-    if (now >= marketEnd || dismissed) return;
+    if (now >= marketEnd) {
+      if (now < new Date('2026-10-25T00:00:00+02:00')) document.getElementById('after-market').hidden = false;
+      return;
+    }
+    if (dismissed) return;
     if (now >= marketDay) document.getElementById('popup-label').textContent = 'HEUTE · JETZT AM MARKT';
     popup.hidden = false;
     setTimeout(function () { popup.classList.add('show'); }, 900);
