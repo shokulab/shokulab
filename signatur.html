@@ -511,9 +511,15 @@
     $('copy').addEventListener('click', function () {
       var h = html(), t = text();
       function fallback() {
-        var r = document.createRange(); r.selectNode($('preview'));
+        // copy only the signature itself, never the preview frame around it
+        var tmp = document.createElement('div');
+        tmp.setAttribute('style', 'position:fixed;left:-10000px;top:0;background:transparent;padding:0;margin:0;border:0;');
+        tmp.innerHTML = h;
+        document.body.appendChild(tmp);
+        var r = document.createRange(); r.selectNodeContents(tmp);
         var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
-        var ok = document.execCommand('copy'); s.removeAllRanges(); return ok;
+        var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+        s.removeAllRanges(); document.body.removeChild(tmp); return ok;
       }
       var done = function () { $('copied').textContent = 'Kopiert ✓'; };
       var fail = function () { $('copied').textContent = 'Bitte die Vorschau markieren und manuell kopieren.'; };
