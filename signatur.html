@@ -354,6 +354,7 @@
   }
   .presets button { border: 1px solid #A07C77; background: var(--paper); color: var(--ink); }
   .presets button:hover { border-color: var(--accent); }
+  .presets button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
   .field { display: flex; flex-direction: column; gap: 4px; }
   .field label { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: var(--ink-soft); }
   .field input { border: none; border-bottom: 1.5px solid var(--ink); background: transparent; font: 15px/1.5 'Inter', sans-serif; color: var(--ink); padding: 6px 0; outline: none; border-radius: 0; }
@@ -386,6 +387,10 @@
           <button type="button" data-name="Quang Minh Huynh" data-mail="minh@shokulab.ch" data-role="Co-Founder">Minh</button>
           <button type="button" data-name="Diego Vergara López" data-mail="diego@shokulab.ch" data-role="Co-Founder">Diego</button>
           <button type="button" data-name="shokulab" data-mail="hello@shokulab.ch" data-role="">Allgemein (hello@)</button>
+        </div>
+        <div class="presets" role="group" aria-label="Stil">
+          <button type="button" class="style-btn" data-style="karte" aria-pressed="true">Stil: Karte</button>
+          <button type="button" class="style-btn" data-style="schlicht" aria-pressed="false">Stil: Schlicht</button>
         </div>
         <div class="row2">
           <div class="field"><label for="f-name">Name</label><input id="f-name" value="Quang Minh Huynh"></div>
@@ -448,6 +453,22 @@
       if (tel) l1.push(nw('<a href="tel:' + telHref + '" style="' + a + '">' + esc(tel) + '</a>'));
       var l2 = [nw('<a href="https://shokulab.ch" style="' + a + '">shokulab.ch</a>'),
                 nw('<a href="https://instagram.com/shokulab.ch" style="' + a + '">@shokulab.ch</a>')];
+      if (style === 'karte') {
+        var M = 'font-family:Menlo,Consolas,\'Courier New\',monospace;';
+        var c = '<div style="' + F + 'display:inline-block;background-color:#F2DDDB;color:#3D2F27;border-left:3px solid #8B4A3C;border-radius:4px;padding:14px 20px 14px 18px;margin:6px 0;font-size:13px;line-height:20px;">';
+        c += '<div style="' + M + 'font-size:10px;line-height:14px;letter-spacing:1px;color:#8B4A3C;">CHARGE #001 &middot; CH</div>';
+        c += '<div style="' + F + 'font-size:24px;line-height:30px;font-weight:bold;letter-spacing:-0.5px;color:#3D2F27;">shokulab</div>';
+        if (personal) {
+          c += '<div style="' + F + 'margin-top:8px;font-size:14px;line-height:19px;font-weight:bold;color:#3D2F27;">' + name + '</div>';
+          if (role) c += '<div style="' + F + 'font-size:13px;line-height:18px;color:#6E5747;">' + role + '</div>';
+        }
+        c += '<div style="border-top:1px solid #DDC3C0;margin:10px 0 8px;font-size:0;line-height:0;">&nbsp;</div>';
+        c += '<div style="' + F + '">' + l1.join(sep) + '</div>';
+        c += '<div style="' + F + '">' + l2.join(sep) + '</div>';
+        c += '<div style="' + M + 'margin-top:8px;font-size:10px;line-height:14px;letter-spacing:1px;color:#8B4A3C;">SCIENTIFICALLY GOOD.</div>';
+        c += '</div>';
+        return c;
+      }
       var out = '<div style="' + F + 'color:#3D2F27;border-left:2px solid #8B4A3C;padding:2px 0 2px 14px;margin:4px 0;font-size:13px;line-height:20px;">';
       out += '<div style="' + F + 'font-size:20px;line-height:24px;font-weight:bold;letter-spacing:-0.3px;color:#3D2F27;">shokulab</div>';
       if (personal) {
@@ -468,9 +489,17 @@
       lines.push('shokulab.ch · @shokulab.ch');
       return lines.join('\n');
     }
+    var style = 'karte';
+    document.querySelectorAll('.style-btn').forEach(function (b) {
+      b.addEventListener('click', function () {
+        style = b.dataset.style;
+        document.querySelectorAll('.style-btn').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        render();
+      });
+    });
     function render() { $('preview').innerHTML = html(); $('copied').textContent = ''; }
     ['f-name','f-role','f-mail','f-tel'].forEach(function (id) { $(id).addEventListener('input', render); });
-    document.querySelectorAll('.presets button').forEach(function (b) {
+    document.querySelectorAll('.presets button:not(.style-btn)').forEach(function (b) {
       b.addEventListener('click', function () {
         $('f-name').value = b.dataset.name; $('f-mail').value = b.dataset.mail; $('f-role').value = b.dataset.role;
         render();
