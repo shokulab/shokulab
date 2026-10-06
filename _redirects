@@ -1,0 +1,34 @@
+# Common typos / capitalisation → real pages (301)
+/Menu          /menu   301
+/MENU          /menu   301
+/Menü          /menu   301
+/menü          /menu   301
+/MENÜ          /menu   301
+/menue         /menu   301
+/Menue         /menu   301
+/speisekarte   /menu   301
+/Speisekarte   /menu   301
+/karte         /menu   301
+/feedback      /menu#feedback-form   301
+/Feedback      /menu#feedback-form   301
+/cafe          /cafes  301
+/Cafe          /cafes  301
+/Cafes         /cafes  301
+/café          /cafes  301
+/Café          /cafes  301
+/cafés         /cafes  301
+/Cafés         /cafes  301
+/kontakt       /cafes  301
+/Kontakt       /cafes  301
+/Impressum     /impressum   301
+/Datenschutz   /datenschutz 301
+/privacy       /datenschutz 301
+
+# URL-encoded variants of the umlaut/accent paths
+/Men%C3%BC          /menu   301
+/men%C3%BC          /menu   301
+/MEN%C3%9C          /menu   301
+/caf%C3%A9          /cafes  301
+/Caf%C3%A9          /cafes  301
+/caf%C3%A9s         /cafes  301
+/Caf%C3%A9s         /cafes  301
