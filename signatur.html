@@ -455,19 +455,22 @@
                 nw('<a href="https://instagram.com/shokulab.ch" style="' + a + '">@shokulab.ch</a>')];
       if (style === 'karte') {
         var M = 'font-family:Menlo,Consolas,\'Courier New\',monospace;';
-        var c = '<div style="' + F + 'display:inline-block;background-color:#F2DDDB;color:#3D2F27;border-left:3px solid #8B4A3C;border-radius:4px;padding:14px 20px 14px 18px;margin:6px 0;font-size:13px;line-height:20px;">';
-        c += '<div style="' + M + 'font-size:10px;line-height:14px;letter-spacing:1px;color:#8B4A3C;">CHARGE #001 &middot; CH</div>';
-        c += '<div style="' + F + 'font-size:24px;line-height:30px;font-weight:bold;letter-spacing:-0.5px;color:#3D2F27;">shokulab</div>';
+        var P = '#F2DDDB';
+        var left = '<td valign="middle" bgcolor="' + P + '" style="' + F + 'background-color:' + P + ';padding:14px 16px 14px 14px;border-left:3px solid #8B4A3C;vertical-align:middle;white-space:nowrap;">' +
+          '<div style="' + M + 'font-size:10px;line-height:14px;letter-spacing:1px;color:#8B4A3C;">CHARGE #001 &middot; CH</div>' +
+          '<div style="' + F + 'font-size:22px;line-height:28px;font-weight:bold;letter-spacing:-0.5px;color:#3D2F27;">shokulab</div>' +
+          '<div style="' + M + 'margin-top:8px;font-size:9px;line-height:13px;letter-spacing:1px;color:#8B4A3C;">SCIENTIFICALLY<br>GOOD.</div>' +
+        '</td>';
+        var right = '<td valign="middle" bgcolor="' + P + '" style="' + F + 'background-color:' + P + ';padding:14px 16px 14px 16px;border-left:1px solid #DDC3C0;vertical-align:middle;font-size:13px;line-height:20px;color:#3D2F27;">';
         if (personal) {
-          c += '<div style="' + F + 'margin-top:8px;font-size:14px;line-height:19px;font-weight:bold;color:#3D2F27;">' + name + '</div>';
-          if (role) c += '<div style="' + F + 'font-size:13px;line-height:18px;color:#6E5747;">' + role + '</div>';
+          right += '<div style="' + F + 'font-size:14px;line-height:19px;font-weight:bold;color:#3D2F27;">' + name + '</div>';
+          if (role) right += '<div style="' + F + 'font-size:13px;line-height:18px;color:#6E5747;">' + role + '</div>';
+          right += '<div style="height:8px;line-height:8px;font-size:0;">&nbsp;</div>';
         }
-        c += '<div style="border-top:1px solid #DDC3C0;margin:10px 0 8px;font-size:0;line-height:0;">&nbsp;</div>';
-        c += '<div style="' + F + '">' + l1.join(sep) + '</div>';
-        c += '<div style="' + F + '">' + l2.join(sep) + '</div>';
-        c += '<div style="' + M + 'margin-top:8px;font-size:10px;line-height:14px;letter-spacing:1px;color:#8B4A3C;">SCIENTIFICALLY GOOD.</div>';
-        c += '</div>';
-        return c;
+        l1.forEach(function (x) { right += '<div style="' + F + '">' + x + '</div>'; });
+        right += '<div style="' + F + '">' + l2.join(sep) + '</div>';
+        right += '</td>';
+        return '<table cellpadding="0" cellspacing="0" border="0" bgcolor="' + P + '" style="border-collapse:separate;background-color:' + P + ';border-radius:4px;margin:6px 0;"><tr>' + left + right + '</tr></table>';
       }
       var out = '<div style="' + F + 'color:#3D2F27;border-left:2px solid #8B4A3C;padding:2px 0 2px 14px;margin:4px 0;font-size:13px;line-height:20px;">';
       out += '<div style="' + F + 'font-size:20px;line-height:24px;font-weight:bold;letter-spacing:-0.3px;color:#3D2F27;">shokulab</div>';
