@@ -218,7 +218,7 @@
       <div class="spec">
         <span>Yudane <b>15%</b></span>
         <span>Hydration <b>83%</b></span>
-        <span>Status <b>in Entwicklung</b></span>
+        <span>Status <b>im Testlauf</b></span>
       </div>
       <div class="ctas">
         <a class="btn" href="#maerkte">Nächster Markt</a>
@@ -409,13 +409,15 @@
         (up.length > 1 ? '<div class="more">Danach: ' + up.slice(1, 4).map(function (x) {
           return esc(E.shortDate(x.start)) + ' · ' + esc(x.town);
         }).join(' &nbsp;/&nbsp; ') + '</div>' : '');
-      document.getElementById('hero-mark').textContent = 'CHARGE ' + e.charge + ' · AARAU, CH';
     } else {
       card.innerHTML = '<div class="when">Nächster Termin folgt</div>' +
         '<div class="where">Wir geben ihn hier, auf Instagram und per Mail bekannt.</div>' +
         '<div><a class="textlink" href="#newsletter">Per Mail erfahren →</a></div>' +
         '<div class="more">Oder folg uns auf ' + ig + '.</div>';
     }
+
+    var charge = up.length ? up[0].charge : '#' + ('00' + (past.length + 1)).slice(-3);
+    document.getElementById('hero-mark').textContent = 'CHARGE ' + charge + ' · AARAU, CH';
 
     if (past.length) {
       document.getElementById('log-empty').hidden = true;
