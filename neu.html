@@ -93,7 +93,7 @@
   .spec b { color: var(--accent); font-weight: 500; }
   .ctas { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
   .btn {
-    display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 999px;
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 0;
     font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; text-decoration: none;
     background: var(--ink); color: var(--paper); transition: background .2s ease;
   }
@@ -109,7 +109,7 @@
 
   /* next market */
   .next {
-    background: var(--card); border: 1px solid var(--hairline); border-radius: 4px;
+    background: var(--card); border: 1px solid var(--hairline); border-radius: 0;
     padding: 24px 24px 22px; display: grid; gap: 4px; max-width: 560px;
   }
   .next .when { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 24px; line-height: 1.2; }
@@ -118,7 +118,7 @@
     display: inline-flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace;
     font-size: 11.5px; letter-spacing: .08em; color: var(--accent); margin-bottom: 6px;
   }
-  .next .live i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 1.6s ease-in-out infinite; }
+  .next .live i { width: 8px; height: 8px; background: var(--accent); animation: pulse 1.6s ease-in-out infinite; }
   @keyframes pulse { 50% { opacity: .3; } }
   @media (prefers-reduced-motion: reduce) { .next .live i { animation: none; } }
   .next .more { font-size: 14px; color: var(--ink-soft); margin-top: 14px; }
@@ -132,11 +132,13 @@
   /* sorts */
   .sorts { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 26px; }
   @media (max-width: 640px) { .sorts { grid-template-columns: 1fr; } }
-  .sort { background: var(--card); border: 1px solid var(--hairline); border-radius: 4px; padding: 18px 18px 20px; }
+  .sort { background: var(--card); border: 1px solid var(--hairline); border-radius: 0; padding: 18px 18px 20px; }
   .sort .no { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--accent); letter-spacing: .06em; margin-bottom: 26px; }
   .sort h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 22px; line-height: 1.1; }
   .sort .jp { font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: var(--ink-soft); margin-bottom: 10px; }
   .sort p { font-size: 14px; color: var(--ink-soft); }
+  .allergens { margin-top: 18px; font-size: 13.5px; color: var(--ink-soft); max-width: 60ch; }
+  .allergens .mono { font-size: 11.5px; letter-spacing: .08em; color: var(--accent); margin-right: 6px; }
   .after-sorts { margin-top: 18px; font-size: 14px; color: var(--ink-soft); }
 
   /* method */
@@ -160,7 +162,7 @@
   .log-empty { margin-top: 20px; font-size: 14px; color: var(--ink-soft); }
 
   /* cafes band */
-  .band { background: var(--ink); color: var(--paper); border-radius: 4px; padding: 30px 26px; margin: 0; }
+  .band { background: var(--ink); color: var(--paper); border-radius: 0; padding: 30px 26px; margin: 0; }
   .band .label { color: #E3B8AE; }
   .band h2 { color: var(--paper); }
   .band p { color: #E9D3CF; max-width: 46ch; margin-bottom: 20px; }
@@ -216,7 +218,7 @@
       <h1>shokulab</h1>
       <p class="sub">Japanisches Shokupan, Schweizer Präzision. Weich, randlos, mit frischer Frucht und Mascarpone-Creme — für Cafés und Wochenmärkte.</p>
       <div class="spec">
-        <span>Yudane <b>15%</b></span>
+        <span>Tangzhong <b>1:5</b></span>
         <span>Hydration <b>83%</b></span>
         <span>Status <b>im Testlauf</b></span>
       </div>
@@ -274,13 +276,13 @@
         <div class="no">NO. 01</div>
         <h3>Ichigo</h3>
         <div class="jp">いちご · Erdbeere</div>
-        <p>Frische Erdbeeren, Mascarpone-Creme.</p>
+        <p>Frische Erdbeeren, Mascarpone-Rahm mit Vanille.</p>
       </li>
       <li class="sort">
         <div class="no">NO. 02</div>
         <h3>Kiwi</h3>
         <div class="jp">キウイ · Kiwi</div>
-        <p>Frische Kiwi, Mascarpone-Creme.</p>
+        <p>Frische Kiwi, Mascarpone-Rahm mit Vanille.</p>
       </li>
       <li class="sort">
         <div class="no">NO. 03</div>
@@ -289,6 +291,7 @@
         <p>Der Klassiker mit Ei.</p>
       </li>
     </ul>
+    <p class="allergens"><span class="mono">ALLERGENE</span> Shokupan: Weizen (Gluten), Milch, Ei. Ichigo und Kiwi zusätzlich Milch (Mascarpone, Rahm). Tamago: frag uns am Stand.</p>
     <p class="after-sorts"><a class="textlink" href="/menu">Ganzes Menü mit Kaffee →</a></p>
   </section>
 
@@ -298,12 +301,16 @@
     <p class="lead">Wir backen wie im Labor: messen, notieren, anpassen. Jede Charge wird besser als die letzte.</p>
     <ol class="steps">
       <li>
-        <div class="k">15%</div>
-        <div><h3>Yudane</h3><p>Ein Teil des Mehls wird mit heissem Wasser verkleistert. So bindet der Teig mehr Feuchtigkeit und das Brot bleibt länger weich.</p></div>
+        <div class="k">1:5</div>
+        <div><h3>Tangzhong</h3><p>Mehl und Milch im Verhältnis 1:5 zu einer Paste gekocht. Die gebundene Stärke hält mehr Feuchtigkeit — das Brot bleibt länger weich.</p></div>
       </li>
       <li>
         <div class="k">83%</div>
-        <div><h3>Hydration</h3><p>Viel Wasser im Teig ergibt eine feine, fluffige Krume statt eines trockenen Toasts.</p></div>
+        <div><h3>Hydration</h3><p>Milch und Ei, gerechnet auf das Mehl. Ergibt eine feine, fluffige Krume statt eines trockenen Toasts.</p></div>
+      </li>
+      <li>
+        <div class="k">1,3 cm</div>
+        <div><h3>Schnitt</h3><p>Jede Scheibe gleich dick. Gemessen, nicht geschätzt.</p></div>
       </li>
       <li>
         <div class="k">0 mm</div>
