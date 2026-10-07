@@ -166,6 +166,9 @@
     white-space: nowrap;
   }
 
+  /* after the market: prices hidden while we analyse them */
+  .no-prices .price, .no-prices .dots { display: none; }
+
   .desc {
     font-size: 13.5px;
     color: var(--ink-soft);
@@ -473,6 +476,7 @@
     var d = document.getElementById('when-date');
     var w = document.getElementById('when-where');
     if (now >= end) {
+      document.documentElement.classList.add('no-prices');
       d.textContent = 'Danke, Wohlen!';
       w.innerHTML = 'Der nächste Markttermin folgt — auf <a class="link" href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">Instagram</a> und hier.';
     } else if (now >= start) {
