@@ -9,13 +9,13 @@
  */
 window.SHOKULAB_EVENTS = [
   {
-    charge: '#001',
+    charge: '#002',
     title: 'Wochenmarkt Wohlen',
     place: 'Sternenplatz',
     town: 'Wohlen AG',
     start: '2026-10-10T09:00:00+02:00',
     end:   '2026-10-10T13:00:00+02:00',
-    note:  'Erster Marktstand und erster Testlauf.'
+    note:  'Erster Marktstand.'
   }
 ];
 

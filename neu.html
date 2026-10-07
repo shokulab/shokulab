@@ -214,7 +214,7 @@
 
   <header class="hero reveal">
     <div>
-      <div class="mark" id="hero-mark">CHARGE #001 · AARAU, CH</div>
+      <div class="mark" id="hero-mark">CHARGE #002 · AARAU, CH</div>
       <h1>shokulab</h1>
       <p class="sub">Japanisches Shokupan, Schweizer Präzision. Weich, randlos, mit frischer Frucht und Mascarpone-Creme — für Cafés und Wochenmärkte.</p>
       <div class="spec">
@@ -431,7 +431,8 @@
         '<div class="more">Oder folg uns auf ' + ig + '.</div>';
     }
 
-    var charge = up.length ? up[0].charge : '#' + ('00' + (past.length + 1)).slice(-3);
+    var last = past.reduce(function (m, x) { return Math.max(m, parseInt(String(x.charge).replace(/\D/g, ''), 10) || 0); }, 0);
+    var charge = up.length ? up[0].charge : '#' + ('00' + (last + 1)).slice(-3);
     document.getElementById('hero-mark').textContent = 'CHARGE ' + charge + ' · AARAU, CH';
 
     if (past.length) {
