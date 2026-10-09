@@ -53,9 +53,6 @@
     </div>
     <div class="filters" role="group" aria-label="Filter">
       <button type="button" data-f="alle" aria-pressed="true">Alle</button>
-      <button type="button" data-f="Café" aria-pressed="false">Cafés</button>
-      <button type="button" data-f="Laden" aria-pressed="false">Läden</button>
-      <button type="button" data-f="markt" aria-pressed="false">Markt</button>
     </div>
     <p class="nearest" id="nearest" role="status" aria-live="polite"></p>
     <div class="map" id="map" role="region" aria-label="Karte mit Markt und Partnern"></div>
@@ -231,6 +228,19 @@
         if (on && !map.hasLayer(m)) m.addTo(map); else if (!on && map.hasLayer(m)) m.remove();
       });
     }
+    // one filter per partner type that actually exists (Café, Bar, Laden …), plus the market
+    (function () {
+      var PLURAL = { 'Café': 'Cafés', 'Bar': 'Bars', 'Laden': 'Läden', 'Bäckerei': 'Bäckereien', 'Hotel': 'Hotels', 'Restaurant': 'Restaurants' };
+      var box = document.querySelector('.filters'), seen = {};
+      P.forEach(function (p) { seen[p.type || 'Café'] = true; });
+      Object.keys(seen).sort(function (a, b) { return a.localeCompare(b, 'de'); }).concat(market ? ['markt'] : []).forEach(function (t) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.dataset.f = t; b.setAttribute('aria-pressed', 'false');
+        b.textContent = t === 'markt' ? 'Markt' : (PLURAL[t] || t);
+        box.appendChild(b);
+      });
+      if (box.children.length < 3) box.hidden = true; // nothing to filter yet
+    })();
     document.querySelectorAll('.filters button').forEach(function (b) {
       b.addEventListener('click', function () {
         filter = b.dataset.f;

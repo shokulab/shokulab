@@ -3,7 +3,7 @@
  *
  * Neuer Partner: einen Eintrag ergänzen. Die Seite /partner sortiert nach Ort.
  *   name     Name des Cafés / Ladens
- *   type     'Café' oder 'Laden'
+ *   type     'Café', 'Bar', 'Laden', 'Bäckerei' … (Filter entstehen automatisch)
  *   street   Strasse und Nummer
  *   town     PLZ und Ort, z. B. '5000 Aarau'
  *   days     wann es Sando gibt, z. B. 'Mo–Mi, solange Vorrat'
