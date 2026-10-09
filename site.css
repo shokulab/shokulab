@@ -148,6 +148,14 @@
   .band p { color: #E9D3CF; max-width: 46ch; margin-bottom: 20px; }
   .band .btn { background: var(--paper); color: var(--ink); }
   .band .btn:hover { background: #fff; }
+  /* partner register line: numbers only, a rule above, no badge */
+  .band-reg { margin: 26px 0 0; padding-top: 12px; border-top: 1px solid rgba(242,221,219,.28); max-width: none;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: #E9D3CF; }
+  .band p.band-reg { margin-bottom: 0; max-width: none; color: #E9D3CF; }
+  .band-reg a, .band-reg span { white-space: nowrap; }
+  .band-reg a { color: var(--paper); text-decoration: none; border-bottom: 1px solid rgba(242,221,219,.5); }
+  .band-reg a:hover { border-bottom-color: var(--paper); }
+  .band-reg a:focus-visible { outline-color: var(--paper); }
 
   /* newsletter */
   form { display: flex; flex-direction: column; gap: 14px; max-width: 420px; margin-top: 20px; }

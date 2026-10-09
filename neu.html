@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="/fonts/fonts.css">
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script src="/events.js"></script>
+<script src="/partners.js"></script>
 <link rel="stylesheet" href="/site.css">
 </head>
 <body>
@@ -166,6 +167,7 @@
       <h2 id="h-cafes">Shokupan für eure Theke.</h2>
       <p>Am Wochenende gebacken, am Montag geliefert — in der Region Aarau und Solothurn. Erst probieren, dann entscheiden.</p>
       <a class="btn" href="/cafes">Muster anfragen →</a>
+      <p class="band-reg" id="band-reg" hidden></p>
     </div>
   </section>
 
@@ -268,6 +270,17 @@
           '<span class="t"><b>' + esc(x.title) + '</b><span>' + esc(x.note || 'Notizen folgen.') + '</span></span></div>';
       }).join('');
     }
+  })();
+
+  // Partner register line in the cafés band, from /partners.js
+  (function () {
+    var P = window.SHOKULAB_PARTNERS, el = document.getElementById('band-reg');
+    if (!P || !el) return;
+    P = P.filter(function (p) { return p && p.name; });
+    function pad(n) { return ('00' + n).slice(-3); }
+    var next = P.reduce(function (m, p) { return Math.max(m, +p.no || 0); }, 0) + 1;
+    el.innerHTML = '<a href="/partner#register">Partner-Register</a>&nbsp;· <span>' + pad(P.length) + ' vergeben&nbsp;·</span> <span>nächste Nummer No.&nbsp;' + pad(next) + '</span>';
+    el.hidden = false;
   })();
 
   // Newsletter form
