@@ -174,7 +174,7 @@
         '<div class="meta">' + esc(meta) + '</div>' +
         (where ? '<div class="addr">' + esc(where) + '</div>' : '') +
         (p.days ? '<div class="days">' + esc(p.days) + '</div>' : '') +
-        (p.sorts && p.sorts.length ? '<div class="tags">' + p.sorts.map(function (s) { return '<span>' + esc(s) + '</span>'; }).join('') + '</div>' : '') +
+        (p.sorts && p.sorts.length ? '<div class="sorts-line"><span class="k">Sorten</span>' + p.sorts.map(esc).join(' · ') + '</div>' : '') +
         '<div class="links"><a class="textlink" href="' + routeUrl(p.name + ', ' + where) + '" target="_blank" rel="noopener">Route →</a>' +
         (url ? '<a class="textlink" href="' + esc(url) + '" target="_blank" rel="noopener">Website →</a>' : '') + '</div></div></li>';
     }
