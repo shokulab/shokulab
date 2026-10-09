@@ -212,11 +212,6 @@
   .pin.partner span { background: var(--ink); }
   .pin.markt span { background: var(--accent); }
   .pin.me span { background: #fff; border-color: var(--ink); border-radius: 0; transform: rotate(45deg) scale(.8); }
-  .leaflet-container { font-family: 'Inter', system-ui, sans-serif; }
-  .leaflet-popup-content-wrapper, .leaflet-popup-tip { border-radius: 0; box-shadow: none; border: 1px solid var(--hairline); }
-  .leaflet-popup-content { font-size: 13.5px; line-height: 1.5; color: var(--ink); }
-  .leaflet-popup-content a { color: var(--ink); font-weight: 600; }
-  .leaflet-bar, .leaflet-bar a { border-radius: 0 !important; }
 
   /* filters, partner numbers, seal */
   .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
@@ -238,3 +233,16 @@
   .nearest a, .links a { white-space: nowrap; }
   .partner .pno { flex-wrap: wrap; }
   .partner .feat { margin-left: auto; }
+
+  /* MapLibre */
+  .pin { display: block; width: 18px; height: 18px; padding: 0; border: 0; background: none; cursor: pointer; }
+  .pin:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 4px; }
+  .maplibregl-map { font-family: 'Inter', system-ui, sans-serif; }
+  .maplibregl-popup-content { border-radius: 0; box-shadow: none; border: 1px solid var(--hairline); background: var(--card); padding: 12px 30px 12px 14px; font-size: 13.5px; line-height: 1.5; color: var(--ink); }
+  .maplibregl-popup-content a { color: var(--ink); font-weight: 600; }
+  .maplibregl-popup-tip { border-top-color: var(--hairline) !important; border-bottom-color: var(--hairline) !important; }
+  .maplibregl-popup-close-button { font-size: 18px; width: 28px; height: 28px; color: var(--ink-soft); }
+  .maplibregl-ctrl-group { border-radius: 0 !important; box-shadow: none !important; border: 1px solid var(--hairline); background: var(--card); }
+  .maplibregl-ctrl-group button { border-radius: 0 !important; }
+  .maplibregl-cooperative-gesture-screen { font-family: 'IBM Plex Mono', monospace; font-size: 13px; background: rgba(61,47,39,.72); }
+  .map-off { padding: 24px; font-size: 14px; color: var(--ink-soft); }

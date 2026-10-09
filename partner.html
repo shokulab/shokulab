@@ -19,9 +19,9 @@
 <link rel="stylesheet" href="/fonts/fonts.css">
 <script src="/events.js"></script>
 <script src="/partners.js"></script>
-<link rel="stylesheet" href="/vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="/vendor/maplibre/maplibre-gl.css">
 <link rel="stylesheet" href="/site.css">
-<script src="/vendor/leaflet/leaflet.js" defer></script>
+<script src="/vendor/maplibre/maplibre-gl-csp.js" defer></script>
 </head>
 <body>
 
@@ -195,29 +195,87 @@
     }
     renderList();
 
-    // map (Leaflet, swisstopo tiles)
+    // map (MapLibre GL, swisstopo light base map, restyled in shokulab colours)
     var map = null, meMarker = null, markers = [];
-    function icon(cls) { return L.divIcon({ className: 'pin ' + cls, html: '<span></span>', iconSize: [18, 18], iconAnchor: [9, 9] }); }
+    var C = { paper: '#F2DDDB', ink: '#3D2F27', soft: '#6E5747', hair: '#DDC3C0', card: '#F8E9E7',
+              land: '#EDD5D2', water: '#E2C6C3', waterLine: '#D7B7B3', building: '#E8CCC8', road: '#FAEEEC', rail: '#C9A8A3' };
+    function restyle() {
+      map.getStyle().layers.forEach(function (l) {
+        var id = l.id, t = l.type;
+        function set(p, v) { try { map.setPaintProperty(id, p, v); } catch (e) {} }
+        function hide() { map.setLayoutProperty(id, 'visibility', 'none'); }
+        if (t === 'background') return set('background-color', C.paper);
+        if (/hillshade|scree|contour|hachure|pattern|spot_elevation|road_number|poi|aeroway|via_ferrata|parking|construct|glacier|relief/.test(id)) return hide();
+        if (t === 'fill') {
+          if (/water/.test(id)) { set('fill-color', C.water); return set('fill-opacity', 1); }
+          if (/building/.test(id)) { set('fill-color', C.building); return set('fill-opacity', 1); }
+          if (/landcover|landuse|park/.test(id)) { set('fill-color', C.land); return set('fill-opacity', .55); }
+          return set('fill-color', C.land);
+        }
+        if (t === 'line') {
+          if (/water/.test(id)) return set('line-color', C.waterLine);
+          if (/casing|outline|building_ln/.test(id)) return /road/.test(id) ? set('line-color', C.hair) : hide();
+          if (/public_transport|aerialway|rail/.test(id)) { set('line-color', C.rail); return set('line-opacity', .6); }
+          if (/boundary/.test(id)) { set('line-color', C.rail); return set('line-opacity', .5); }
+          if (/road|l1|l2|pedestrian|path|footway|tunnel/.test(id)) return set('line-color', C.road);
+          return set('line-color', C.hair);
+        }
+        if (t === 'symbol') {
+          set('text-color', /water|lake|river/.test(id) ? '#8E6F6A' : C.soft);
+          set('text-halo-color', C.paper); set('text-halo-width', 1.4);
+          set('icon-opacity', 0);
+        }
+      });
+    }
+    function pin(cls, title) {
+      var el = document.createElement('button');
+      el.type = 'button'; el.className = 'pin ' + cls; el.setAttribute('aria-label', title);
+      el.innerHTML = '<span></span>';
+      return el;
+    }
+    function popupHtml(x) {
+      return '<strong>' + esc(x.name) + '</strong><br>' +
+        (x.kind === 'markt' ? esc(x.sub) : esc([x.p.street, x.p.town].filter(Boolean).join(', '))) +
+        '<br><a href="' + routeUrl(x.q) + '" target="_blank" rel="noopener">Route →</a>';
+    }
+    function webgl() {
+      try { var c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; }
+    }
     function initMap() {
-      if (!window.L) return;
-      map = L.map('map', { scrollWheelZoom: false, attributionControl: false }).setView([47.37, 7.95], 9);
-      L.tileLayer('https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-grau/default/current/3857/{z}/{x}/{y}.jpeg',
-        { maxZoom: 18, minZoom: 7 }).addTo(map);
+      if (!window.maplibregl || !webgl()) {
+        document.getElementById('map').innerHTML = '<p class="map-off">Die Karte braucht WebGL. Die Liste unten funktioniert trotzdem.</p>';
+        return;
+      }
+      maplibregl.setWorkerUrl('/vendor/maplibre/maplibre-gl-csp-worker.js');
+      map = new maplibregl.Map({
+        container: 'map',
+        style: 'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.lightbasemap.vt/style.json',
+        center: [7.95, 47.37], zoom: 8.6, minZoom: 7, maxZoom: 17,
+        attributionControl: false, cooperativeGestures: true,
+        preserveDrawingBuffer: /debugmap/.test(location.search), dragRotate: false, pitchWithRotate: false
+      });
+      map.touchZoomRotate.disableRotation();
+      map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-left');
+      map.on('style.load', restyle);
+      if (/debugmap/.test(location.search)) window._map = map;
       places.filter(hasPos).forEach(function (x) {
-        var m = L.marker([x.lat, x.lng], { icon: icon(x.kind + (x.p && x.p.featured ? ' featured' : '')), title: x.name, keyboard: true }).addTo(map);
-        m._place = x;
-        m.bindPopup('<strong>' + esc(x.name) + '</strong><br>' +
-          (x.kind === 'markt' ? esc(x.sub) : esc([x.p.street, x.p.town].filter(Boolean).join(', '))) +
-          '<br><a href="' + routeUrl(x.q) + '" target="_blank" rel="noopener">Route →</a>');
+        var el = pin(x.kind + (x.p && x.p.featured ? ' featured' : ''), x.name);
+        var pop = new maplibregl.Popup({ offset: 14, closeButton: true, maxWidth: '260px' }).setHTML(popupHtml(x));
+        var m = new maplibregl.Marker({ element: el }).setLngLat([x.lng, x.lat]).setPopup(pop).addTo(map);
+        m._place = x; m._on = true;
         markers.push(m);
       });
       fit();
     }
     function fit() {
-      var pts = places.filter(hasPos).map(function (x) { return [x.lat, x.lng]; });
-      if (me) pts.push([me.lat, me.lng]);
-      if (pts.length === 1) map.setView(pts[0], 13);
-      else if (pts.length) map.fitBounds(pts, { padding: [36, 36], maxZoom: 14 });
+      if (!map) return;
+      var pts = places.filter(function (x) { return hasPos(x) && shown(x.kind, x.p && x.p.type); }).map(function (x) { return [x.lng, x.lat]; });
+      if (me) pts.push([me.lng, me.lat]);
+      if (pts.length === 1) return map.jumpTo({ center: pts[0], zoom: 13 });
+      if (!pts.length) return;
+      var b = new maplibregl.LngLatBounds(pts[0], pts[0]);
+      pts.forEach(function (p) { b.extend(p); });
+      map.fitBounds(b, { padding: 48, maxZoom: 14, duration: 0 });
     }
     window.addEventListener('load', initMap);
 
@@ -225,8 +283,9 @@
       if (!map) return;
       markers.forEach(function (m) {
         var x = m._place, on = shown(x.kind, x.p && x.p.type);
-        if (on && !map.hasLayer(m)) m.addTo(map); else if (!on && map.hasLayer(m)) m.remove();
+        if (on && !m._on) { m.addTo(map); m._on = true; } else if (!on && m._on) { m.remove(); m._on = false; }
       });
+      fit();
     }
     // one filter per partner type that actually exists (Café, Bar, Laden …), plus the market
     (function () {
@@ -268,10 +327,10 @@
         }
         if (map) {
           if (meMarker) meMarker.remove();
-          meMarker = L.marker([me.lat, me.lng], { icon: icon('me'), title: 'Du' }).addTo(map).bindPopup('Du bist hier');
+          meMarker = new maplibregl.Marker({ element: pin('me', 'Dein Standort') }).setLngLat([me.lng, me.lat]).addTo(map);
           fit();
           if (ranked.length) markers.forEach(function (m) {
-            var ll = m.getLatLng(); if (ll.lat === ranked[0].x.lat && ll.lng === ranked[0].x.lng) m.openPopup();
+            if (m._place === ranked[0].x && m._on && !m.getPopup().isOpen()) m.togglePopup();
           });
         }
         renderList();
