@@ -164,8 +164,8 @@
       var url = safeUrl(p.url);
       var no = p.no ? 'PARTNER NO. ' + pad(p.no) : 'PARTNER';
       var since = p.since ? ' · SEIT ' + String(p.since).slice(0, 4) : '';
-      return '<li class="partner' + (p.featured ? ' featured' : '') + '">' +
-        '<div class="pno">' + esc(no + since) + (p.featured ? '<span class="feat">Ausgewählt</span>' : '') + '</div>' +
+      return '<li class="partner">' +
+        '<div class="pno">' + esc(no + since) + '</div>' +
         '<h3>' + esc(p.name) + '</h3><span class="type">' + (d != null ? esc(fmtKm(d)) + ' · ' : '') + esc(p.type || 'Café') + '</span>' +
         (p.street || p.town ? '<div class="addr">' + esc([p.street, p.town].filter(Boolean).join(', ')) + '</div>' : '') +
         (p.days ? '<div class="days">' + esc(p.days) + '</div>' : '') +
@@ -262,7 +262,7 @@
       if (/debugmap/.test(location.search)) window._map = map;
       places.filter(hasPos).forEach(function (x) {
         var no = x.p && x.p.no;
-        var el = pin(x.kind + (x.p && x.p.featured ? ' featured' : ''), (no ? 'Partner No. ' + pad(no) + ', ' : '') + x.name, no);
+        var el = pin(x.kind, (no ? 'Partner No. ' + pad(no) + ', ' : '') + x.name, no);
         var pop = new maplibregl.Popup({ offset: 14, closeButton: true, maxWidth: '260px' }).setHTML(popupHtml(x));
         el.style.zIndex = no ? 1000 - no : 1000; // overlapping pins: lower number on top
         var m = new maplibregl.Marker({ element: el }).setLngLat([x.lng, x.lat]).setPopup(pop).addTo(map);
