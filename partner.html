@@ -41,7 +41,7 @@
   <header class="page-head reveal">
     <div class="mark">SHOKULAB · VERKAUFSSTELLEN</div>
     <h1>Wo es uns gibt.</h1>
-    <p class="sub">Am Wochenmarkt und bei Cafés, die unser Shokupan auf der Theke haben — in der Region Aarau und Solothurn.</p>
+    <p class="sub" id="head-sub">Zurzeit am Wochenmarkt, in der Region Aarau und Solothurn. Partner-Cafés tragen eine Nummer. Die erste ist noch frei.</p>
   </header>
 
   <section id="karte" aria-labelledby="h-karte">
@@ -74,7 +74,7 @@
   <section id="register" aria-labelledby="h-partner">
     <div class="label">Partner</div>
     <h2 id="h-partner">Cafés und Läden</h2>
-    <p class="lead">Hier gibt es shokulab-Sando ausserhalb des Markts. Frisch, solange Vorrat.</p>
+    <p class="lead" id="reg-lead">Hier stehen die Cafés und Läden, die shokulab-Sando führen. Jedes mit seiner Nummer.</p>
     <div id="partner-list"></div>
     <div class="register" id="partner-empty">
       <div class="reg-head"><span>Register</span><span>000 Partner</span></div>
@@ -181,6 +181,12 @@
     // ledger head, same as the empty register: what is listed and how many
     function regHead(left, n) {
       return '<div class="reg-head"><span>' + esc(left) + '</span><span>' + pad(n) + ' Partner</span></div>';
+    }
+
+    // head and register copy follow the register: no claim of cafés before the first number is given
+    if (P.length) {
+      document.getElementById('head-sub').textContent = 'Am Wochenmarkt und bei ' + (P.length === 1 ? 'einem Partner' : P.length + ' Partnern') + ' in der Region Aarau und Solothurn. Jeder mit seiner Nummer.';
+      document.getElementById('reg-lead').textContent = 'Hier gibt es shokulab-Sando ausserhalb des Markts. Frisch, solange Vorrat.';
     }
 
     function renderList() {
