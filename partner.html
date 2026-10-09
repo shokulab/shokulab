@@ -151,7 +151,7 @@
       document.getElementById('next-card').innerHTML =
         (live ? '<div class="live"><i></i>JETZT AM MARKT</div>' : today ? '<div class="live"><i></i>HEUTE</div>' : '') +
         '<div class="when">' + esc(E.longDate(market.start)) + '</div>' +
-        '<div class="when" style="font-weight:500;font-size:19px;">' + esc(market.title) + '</div>' +
+        '<div class="when title">' + esc(market.title) + '</div>' +
         '<div class="where">' + esc(E.time(market.start)) + '–' + esc(E.time(market.end)) + ' · ' + esc(market.place) + ', ' + esc(market.town) + '</div>' +
         '<div><a class="textlink" href="/menu">Menü ansehen →</a></div>';
     }
