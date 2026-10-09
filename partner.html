@@ -51,6 +51,12 @@
       <button type="button" class="btn" id="locate">Meinen Standort verwenden</button>
       <span class="locate-note">Dein Standort bleibt in deinem Browser. Wir speichern nichts.</span>
     </div>
+    <div class="filters" role="group" aria-label="Filter">
+      <button type="button" data-f="alle" aria-pressed="true">Alle</button>
+      <button type="button" data-f="Café" aria-pressed="false">Cafés</button>
+      <button type="button" data-f="Laden" aria-pressed="false">Läden</button>
+      <button type="button" data-f="markt" aria-pressed="false">Markt</button>
+    </div>
     <p class="nearest" id="nearest" role="status" aria-live="polite"></p>
     <div class="map" id="map" role="region" aria-label="Karte mit Markt und Partnern"></div>
     <p class="map-credit">Karte © <a href="https://www.swisstopo.admin.ch" target="_blank" rel="noopener">swisstopo</a></p>
@@ -73,6 +79,24 @@
     <div class="empty" id="partner-empty">
       <p><strong>Bald hier:</strong> die ersten Cafés mit shokulab auf der Theke.</p>
       <p>Bis dahin findest du uns am Markt — oder du holst uns in dein Lieblingscafé.</p>
+    </div>
+  </section>
+
+  <section id="siegel" aria-labelledby="h-siegel">
+    <div class="seal-row">
+      <svg class="seal" viewBox="0 0 120 120" role="img" aria-label="Partner-Siegel von shokulab">
+        <rect x="1.5" y="1.5" width="117" height="117" fill="none" stroke="#3D2F27" stroke-width="3"/>
+        <rect x="8" y="8" width="104" height="104" fill="none" stroke="#3D2F27" stroke-width="1"/>
+        <text x="60" y="34" text-anchor="middle" class="s-mono">SHOKULAB</text>
+        <line x1="22" y1="44" x2="98" y2="44" stroke="#DDC3C0" stroke-width="1"/>
+        <text x="60" y="72" text-anchor="middle" class="s-big">No.</text>
+        <text x="60" y="94" text-anchor="middle" class="s-mono s-acc">PARTNER</text>
+      </svg>
+      <div>
+        <div class="label">Das Siegel</div>
+        <h2 id="h-siegel">Nummeriert, nicht verteilt.</h2>
+        <p class="lead">Jedes Partner-Café bekommt eine Nummer — in der Reihenfolge, in der es dazukommt. Wo dieses Siegel an der Theke steht, gibt es shokulab.</p>
+      </div>
     </div>
   </section>
 
@@ -115,7 +139,8 @@
     var E = window.shokulabEvents, now = new Date();
     var market = E ? E.upcoming(now)[0] : null;
     var P = (window.SHOKULAB_PARTNERS || []).filter(function (p) { return p && p.name; });
-    var me = null;
+    var me = null, filter = 'alle';
+    function shown(kind, type) { return filter === 'alle' || (filter === 'markt' ? kind === 'markt' : kind === 'partner' && (type || 'Café') === filter); }
 
     // next market card
     if (market) {
@@ -138,7 +163,10 @@
 
     function partnerHtml(p, d) {
       var url = safeUrl(p.url);
-      return '<li class="partner">' +
+      var no = p.no ? 'PARTNER NO. ' + ('00' + p.no).slice(-3) : 'PARTNER';
+      var since = p.since ? ' · SEIT ' + String(p.since).slice(0, 4) : '';
+      return '<li class="partner' + (p.featured ? ' featured' : '') + '">' +
+        '<div class="pno">' + esc(no + since) + (p.featured ? '<span class="feat">Ausgewählt</span>' : '') + '</div>' +
         '<h3>' + esc(p.name) + '</h3><span class="type">' + (d != null ? esc(fmtKm(d)) + ' · ' : '') + esc(p.type || 'Café') + '</span>' +
         (p.street || p.town ? '<div class="addr">' + esc([p.street, p.town].filter(Boolean).join(', ')) + '</div>' : '') +
         (p.days ? '<div class="days">' + esc(p.days) + '</div>' : '') +
@@ -149,17 +177,20 @@
 
     function renderList() {
       var box = document.getElementById('partner-list');
+      var PP = P.filter(function (p) { return shown('partner', p.type); });
+      box.innerHTML = '';
       if (!P.length) return;
       document.getElementById('partner-empty').hidden = true;
+      if (!PP.length) { box.innerHTML = '<p class="log-empty">' + (filter === 'markt' ? 'Den Markt findest du oben auf der Karte.' : 'In dieser Kategorie gibt es noch keine Partner.') + '</p>'; return; }
       if (me) { // flat, nearest first
-        var sorted = P.map(function (p) { return { p: p, d: hasPos(p) ? km(me, p) : Infinity }; })
+        var sorted = PP.map(function (p) { return { p: p, d: hasPos(p) ? km(me, p) : Infinity }; })
           .sort(function (a, b) { return a.d - b.d; });
         box.innerHTML = '<div class="town">Nach Entfernung</div><ul class="partners">' +
           sorted.map(function (x) { return partnerHtml(x.p, isFinite(x.d) ? x.d : null); }).join('') + '</ul>';
         return;
       }
       var byTown = {};
-      P.forEach(function (p) { var t = String(p.town || '').replace(/^\d{4}\s*/, '') || 'Weitere'; (byTown[t] = byTown[t] || []).push(p); });
+      PP.forEach(function (p) { var t = String(p.town || '').replace(/^\d{4}\s*/, '') || 'Weitere'; (byTown[t] = byTown[t] || []).push(p); });
       box.innerHTML = Object.keys(byTown).sort(function (a, b) { return a.localeCompare(b, 'de'); }).map(function (t) {
         return '<div class="town">' + esc(t) + '</div><ul class="partners">' +
           byTown[t].sort(function (a, b) { return a.name.localeCompare(b.name, 'de'); }).map(function (p) { return partnerHtml(p, null); }).join('') + '</ul>';
@@ -176,7 +207,8 @@
       L.tileLayer('https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-grau/default/current/3857/{z}/{x}/{y}.jpeg',
         { maxZoom: 18, minZoom: 7 }).addTo(map);
       places.filter(hasPos).forEach(function (x) {
-        var m = L.marker([x.lat, x.lng], { icon: icon(x.kind), title: x.name, keyboard: true }).addTo(map);
+        var m = L.marker([x.lat, x.lng], { icon: icon(x.kind + (x.p && x.p.featured ? ' featured' : '')), title: x.name, keyboard: true }).addTo(map);
+        m._place = x;
         m.bindPopup('<strong>' + esc(x.name) + '</strong><br>' +
           (x.kind === 'markt' ? esc(x.sub) : esc([x.p.street, x.p.town].filter(Boolean).join(', '))) +
           '<br><a href="' + routeUrl(x.q) + '" target="_blank" rel="noopener">Route →</a>');
@@ -192,6 +224,21 @@
     }
     window.addEventListener('load', initMap);
 
+    function applyMapFilter() {
+      if (!map) return;
+      markers.forEach(function (m) {
+        var x = m._place, on = shown(x.kind, x.p && x.p.type);
+        if (on && !map.hasLayer(m)) m.addTo(map); else if (!on && map.hasLayer(m)) m.remove();
+      });
+    }
+    document.querySelectorAll('.filters button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        filter = b.dataset.f;
+        document.querySelectorAll('.filters button').forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+        applyMapFilter(); renderList();
+      });
+    });
+
     // locate
     var btn = document.getElementById('locate'), out = document.getElementById('nearest');
     if (!('geolocation' in navigator)) { btn.hidden = true; }
@@ -200,7 +247,7 @@
       navigator.geolocation.getCurrentPosition(function (pos) {
         me = { lat: pos.coords.latitude, lng: pos.coords.longitude };
         btn.disabled = false; btn.textContent = 'Standort aktualisieren';
-        var ranked = places.filter(hasPos).map(function (x) { return { x: x, d: km(me, x) }; })
+        var ranked = places.filter(function (x) { return hasPos(x) && shown(x.kind, x.p && x.p.type); }).map(function (x) { return { x: x, d: km(me, x) }; })
           .sort(function (a, b) { return a.d - b.d; });
         if (ranked.length) {
           var n = ranked[0];
