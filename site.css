@@ -246,3 +246,11 @@
   .maplibregl-ctrl-group button { border-radius: 0 !important; }
   .maplibregl-cooperative-gesture-screen { font-family: 'IBM Plex Mono', monospace; font-size: 13px; background: rgba(61,47,39,.72); }
   .map-off { padding: 24px; font-size: 14px; color: var(--ink-soft); }
+
+  /* numbered pins: the partner number is the marker */
+  .pin.num { width: auto; height: auto; }
+  .pin.num span {
+    width: auto; height: auto; padding: 3px 5px 2px; color: var(--paper);
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; line-height: 1; letter-spacing: .04em;
+  }
+  .maplibregl-popup-content .pop-no { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .08em; color: var(--ink-soft); margin-bottom: 2px; }

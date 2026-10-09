@@ -1,7 +1,8 @@
 /*
  * shokulab — Partner (Cafés und Läden, die unsere Sando verkaufen)
  *
- * Neuer Partner: einen Eintrag ergänzen. Die Seite /partner sortiert nach Ort.
+ * Neuer Partner: einen Eintrag ergänzen. Die Seite /partner sortiert nach Ort, innerhalb des Orts nach Nummer.
+ *   Die Nummer steht auch auf der Karte als Markierung.
  *   name     Name des Cafés / Ladens
  *   type     'Café', 'Bar', 'Laden', 'Bäckerei' … (Filter entstehen automatisch)
  *   street   Strasse und Nummer

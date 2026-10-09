@@ -119,6 +119,7 @@
   (function () {
     function esc(s) { return String(s || '').replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
     function safeUrl(u) { return /^https:\/\//.test(u || '') ? u : ''; }
+    function pad(n) { return ('00' + n).slice(-3); }
     function hasPos(x) { return x && isFinite(x.lat) && isFinite(x.lng); }
     function km(a, b) { // haversine
       var R = 6371, r = Math.PI / 180, dLat = (b.lat - a.lat) * r, dLng = (b.lng - a.lng) * r;
@@ -160,7 +161,7 @@
 
     function partnerHtml(p, d) {
       var url = safeUrl(p.url);
-      var no = p.no ? 'PARTNER NO. ' + ('00' + p.no).slice(-3) : 'PARTNER';
+      var no = p.no ? 'PARTNER NO. ' + pad(p.no) : 'PARTNER';
       var since = p.since ? ' · SEIT ' + String(p.since).slice(0, 4) : '';
       return '<li class="partner' + (p.featured ? ' featured' : '') + '">' +
         '<div class="pno">' + esc(no + since) + (p.featured ? '<span class="feat">Ausgewählt</span>' : '') + '</div>' +
@@ -190,7 +191,7 @@
       PP.forEach(function (p) { var t = String(p.town || '').replace(/^\d{4}\s*/, '') || 'Weitere'; (byTown[t] = byTown[t] || []).push(p); });
       box.innerHTML = Object.keys(byTown).sort(function (a, b) { return a.localeCompare(b, 'de'); }).map(function (t) {
         return '<div class="town">' + esc(t) + '</div><ul class="partners">' +
-          byTown[t].sort(function (a, b) { return a.name.localeCompare(b.name, 'de'); }).map(function (p) { return partnerHtml(p, null); }).join('') + '</ul>';
+          byTown[t].sort(function (a, b) { return (a.no || 1e9) - (b.no || 1e9) || a.name.localeCompare(b.name, 'de'); }).map(function (p) { return partnerHtml(p, null); }).join('') + '</ul>';
       }).join('');
     }
     renderList();
@@ -227,14 +228,14 @@
         }
       });
     }
-    function pin(cls, title) {
+    function pin(cls, title, no) {
       var el = document.createElement('button');
-      el.type = 'button'; el.className = 'pin ' + cls; el.setAttribute('aria-label', title);
-      el.innerHTML = '<span></span>';
+      el.type = 'button'; el.className = 'pin ' + cls + (no ? ' num' : ''); el.setAttribute('aria-label', title);
+      el.innerHTML = '<span>' + (no ? esc(pad(no)) : '') + '</span>';
       return el;
     }
     function popupHtml(x) {
-      return '<strong>' + esc(x.name) + '</strong><br>' +
+      return (x.p && x.p.no ? '<span class="pop-no">NO. ' + esc(pad(x.p.no)) + '</span>' : '') + '<strong>' + esc(x.name) + '</strong><br>' +
         (x.kind === 'markt' ? esc(x.sub) : esc([x.p.street, x.p.town].filter(Boolean).join(', '))) +
         '<br><a href="' + routeUrl(x.q) + '" target="_blank" rel="noopener">Route →</a>';
     }
@@ -259,8 +260,10 @@
       map.on('style.load', restyle);
       if (/debugmap/.test(location.search)) window._map = map;
       places.filter(hasPos).forEach(function (x) {
-        var el = pin(x.kind + (x.p && x.p.featured ? ' featured' : ''), x.name);
+        var no = x.p && x.p.no;
+        var el = pin(x.kind + (x.p && x.p.featured ? ' featured' : ''), (no ? 'Partner No. ' + pad(no) + ', ' : '') + x.name, no);
         var pop = new maplibregl.Popup({ offset: 14, closeButton: true, maxWidth: '260px' }).setHTML(popupHtml(x));
+        el.style.zIndex = no ? 1000 - no : 1000; // overlapping pins: lower number on top
         var m = new maplibregl.Marker({ element: el }).setLngLat([x.lng, x.lat]).setPopup(pop).addTo(map);
         m._place = x; m._on = true;
         markers.push(m);
