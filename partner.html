@@ -161,17 +161,22 @@
       q: market.place + ', ' + market.town, sub: E.longDate(market.start) + ', ' + E.time(market.start) + '–' + E.time(market.end) });
 
     function partnerHtml(p, d) {
-      var url = safeUrl(p.url);
-      var no = p.no ? 'PARTNER NO. ' + pad(p.no) : 'PARTNER';
-      var since = p.since ? ' · SEIT ' + String(p.since).slice(0, 4) : '';
+      var url = safeUrl(p.url), where = [p.street, p.town].filter(Boolean).join(', ');
+      var meta = [d != null ? fmtKm(d) : '', p.type || 'Café', p.since ? 'seit ' + String(p.since).slice(0, 4) : ''].filter(Boolean).join(' · ');
       return '<li class="partner">' +
-        '<div class="pno">' + esc(no + since) + '</div>' +
-        '<h3>' + esc(p.name) + '</h3><span class="type">' + (d != null ? esc(fmtKm(d)) + ' · ' : '') + esc(p.type || 'Café') + '</span>' +
-        (p.street || p.town ? '<div class="addr">' + esc([p.street, p.town].filter(Boolean).join(', ')) + '</div>' : '') +
+        '<span class="n">' + (p.no ? 'No. ' + esc(pad(p.no)) : '—') + '</span>' +
+        '<div class="body">' +
+        '<h3>' + esc(p.name) + '</h3>' +
+        '<div class="meta">' + esc(meta) + '</div>' +
+        (where ? '<div class="addr">' + esc(where) + '</div>' : '') +
         (p.days ? '<div class="days">' + esc(p.days) + '</div>' : '') +
         (p.sorts && p.sorts.length ? '<div class="tags">' + p.sorts.map(function (s) { return '<span>' + esc(s) + '</span>'; }).join('') + '</div>' : '') +
-        '<div class="links"><a class="textlink" href="' + routeUrl(p.name + ', ' + [p.street, p.town].filter(Boolean).join(', ')) + '" target="_blank" rel="noopener">Route →</a>' +
-        (url ? '<a class="textlink" href="' + esc(url) + '" target="_blank" rel="noopener">Website →</a>' : '') + '</div></li>';
+        '<div class="links"><a class="textlink" href="' + routeUrl(p.name + ', ' + where) + '" target="_blank" rel="noopener">Route →</a>' +
+        (url ? '<a class="textlink" href="' + esc(url) + '" target="_blank" rel="noopener">Website →</a>' : '') + '</div></div></li>';
+    }
+    // ledger head, same as the empty register: what is listed and how many
+    function regHead(left, n) {
+      return '<div class="reg-head"><span>' + esc(left) + '</span><span>' + pad(n) + ' Partner</span></div>';
     }
 
     function renderList() {
@@ -184,13 +189,13 @@
       if (me) { // flat, nearest first
         var sorted = PP.map(function (p) { return { p: p, d: hasPos(p) ? km(me, p) : Infinity }; })
           .sort(function (a, b) { return a.d - b.d; });
-        box.innerHTML = '<div class="town">Nach Entfernung</div><ul class="partners">' +
+        box.innerHTML = regHead('Nach Entfernung', PP.length) + '<ul class="partners">' +
           sorted.map(function (x) { return partnerHtml(x.p, isFinite(x.d) ? x.d : null); }).join('') + '</ul>';
         return;
       }
       var byTown = {};
       PP.forEach(function (p) { var t = String(p.town || '').replace(/^\d{4}\s*/, '') || 'Weitere'; (byTown[t] = byTown[t] || []).push(p); });
-      box.innerHTML = Object.keys(byTown).sort(function (a, b) { return a.localeCompare(b, 'de'); }).map(function (t) {
+      box.innerHTML = regHead('Register', PP.length) + Object.keys(byTown).sort(function (a, b) { return a.localeCompare(b, 'de'); }).map(function (t) {
         return '<div class="town">' + esc(t) + '</div><ul class="partners">' +
           byTown[t].sort(function (a, b) { return (a.no || 1e9) - (b.no || 1e9) || a.name.localeCompare(b.name, 'de'); }).map(function (p) { return partnerHtml(p, null); }).join('') + '</ul>';
       }).join('');
