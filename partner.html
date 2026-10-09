@@ -131,7 +131,7 @@
       var h = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(a.lat * r) * Math.cos(b.lat * r) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
       return 2 * R * Math.asin(Math.sqrt(h));
     }
-    function fmtKm(d) { return d < 1 ? Math.round(d * 1000 / 50) * 50 + ' m' : d.toFixed(d < 10 ? 1 : 0).replace('.', ',') + ' km'; }
+    function fmtKm(d) { return d < 1 ? Math.round(d * 1000 / 50) * 50 + '\u00a0m' : d.toFixed(d < 10 ? 1 : 0).replace('.', ',') + '\u00a0km'; } // number and unit never split
     // Apple devices open Apple Maps, everyone else Google Maps
     var apple = /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent);
     function routeUrl(q) {
@@ -166,12 +166,13 @@
 
     function partnerHtml(p, d) {
       var url = safeUrl(p.url), where = [p.street, p.town].filter(Boolean).join(', ');
-      var meta = [d != null ? fmtKm(d) : '', p.type || 'Café', p.since ? 'seit ' + String(p.since).slice(0, 4) : ''].filter(Boolean).join(' · ');
+      // the distance keeps its lower-case unit (m, km) inside the upper-case meta line
+      var meta = [d != null ? '<span class="u">' + esc(fmtKm(d)) + '</span>' : '', esc(p.type || 'Café'), p.since ? 'seit ' + esc(String(p.since).slice(0, 4)) : ''].filter(Boolean).join(' · ');
       return '<li class="partner">' +
         '<span class="n">' + (p.no ? 'No. ' + esc(pad(p.no)) : '—') + '</span>' +
         '<div class="body">' +
         '<h3>' + esc(p.name) + '</h3>' +
-        '<div class="meta">' + esc(meta) + '</div>' +
+        '<div class="meta">' + meta + '</div>' +
         (where ? '<div class="addr">' + esc(where) + '</div>' : '') +
         (p.days ? '<div class="days">' + esc(p.days) + '</div>' : '') +
         (p.sorts && p.sorts.length ? '<div class="sorts-line"><span class="k">Sorten</span>' + p.sorts.map(esc).join(' · ') + '</div>' : '') +
@@ -351,11 +352,13 @@
         if (ranked.length) {
           var n = ranked[0];
           var tag = n.x.p && n.x.p.no ? 'No. ' + pad(n.x.p.no) : n.x.kind === 'markt' ? 'Markt' : '';
-          out.innerHTML = '<span class="mono">AM NÄCHSTEN</span> ' + (tag ? '<span class="mono n">' + esc(tag) + '</span> ' : '') +
-            '<strong>' + esc(n.x.name) + '</strong> · ' + esc(fmtKm(n.d)) +
-            ' · <a class="textlink" href="' + routeUrl(n.x.q) + '" target="_blank" rel="noopener">Route →</a>';
+          // one ledger row, same grid as the register: number, name with distance, route
+          out.className = 'nearest on';
+          out.innerHTML = '<span class="n">' + esc(tag || '—') + '</span>' +
+            '<span class="t"><strong>' + esc(n.x.name) + '</strong><span class="d">Am nächsten · <span class="u">' + esc(fmtKm(n.d)) + '</span></span></span>' +
+            '<a class="textlink" href="' + routeUrl(n.x.q) + '" target="_blank" rel="noopener">Route →</a>';
         } else {
-          out.textContent = 'Noch keine Verkaufsstelle auf der Karte.';
+          out.className = 'nearest'; out.textContent = 'Noch keine Verkaufsstelle auf der Karte.';
         }
         if (map) {
           if (meMarker) meMarker.remove();
@@ -368,7 +371,7 @@
         renderList();
       }, function (err) {
         btn.disabled = false; btn.textContent = 'Meinen Standort verwenden';
-        out.textContent = err.code === 1 ? 'Standort nicht freigegeben. Du kannst die Karte trotzdem verschieben.' : 'Standort konnte nicht ermittelt werden.';
+        out.className = 'nearest'; out.textContent = err.code === 1 ? 'Standort nicht freigegeben. Du kannst die Karte trotzdem verschieben.' : 'Standort konnte nicht ermittelt werden.';
       }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
     });
   })();
