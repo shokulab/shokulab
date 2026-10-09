@@ -105,7 +105,12 @@
       return 2 * R * Math.asin(Math.sqrt(h));
     }
     function fmtKm(d) { return d < 1 ? Math.round(d * 1000 / 50) * 50 + ' m' : d.toFixed(d < 10 ? 1 : 0).replace('.', ',') + ' km'; }
-    function routeUrl(q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q); }
+    // Apple devices open Apple Maps, everyone else Google Maps
+    var apple = /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent);
+    function routeUrl(q) {
+      return apple ? 'https://maps.apple.com/?q=' + encodeURIComponent(q)
+                   : 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
+    }
 
     var E = window.shokulabEvents, now = new Date();
     var market = E ? E.upcoming(now)[0] : null;
