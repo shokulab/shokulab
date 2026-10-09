@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Wo es uns gibt — shokulab</title>
+<!-- VORSCHAU: noch nicht öffentlich. Vor dem Livegang noindex entfernen. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Wo es shokulab-Sando gibt: Partner-Cafés und Läden in der Region Aarau und Solothurn, dazu unser nächster Wochenmarkt.">
+<meta name="theme-color" content="#F2DDDB">
+<meta name="color-scheme" content="light">
+
+<link rel="icon" href="/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=2">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="preload" href="/fonts/space-grotesk-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<script src="/events.js"></script>
+<script src="/partners.js"></script>
+<link rel="stylesheet" href="/site.css">
+</head>
+<body>
+
+<div class="wrap">
+
+  <nav class="nav" aria-label="Hauptnavigation">
+    <a class="brand" href="/neu">shokulab</a>
+    <ul>
+      <li><a href="/menu">Menü</a></li>
+      <li class="hide-s"><a href="/neu#maerkte">Märkte</a></li>
+      <li class="hide-s"><a href="/neu#methode">Methode</a></li>
+      <li><a href="/partner" aria-current="page">Wo kaufen</a></li>
+      <li><a href="/cafes">Für Cafés</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-head reveal">
+    <div class="mark">SHOKULAB · VERKAUFSSTELLEN</div>
+    <h1>Wo es uns gibt.</h1>
+    <p class="sub">Am Wochenmarkt und bei Cafés, die unser Shokupan auf der Theke haben — in der Region Aarau und Solothurn.</p>
+  </header>
+
+  <section aria-labelledby="h-markt">
+    <div class="label">Markt</div>
+    <h2 id="h-markt">Nächster Markt</h2>
+    <div class="next" id="next-card">
+      <div class="when">Nächster Termin folgt</div>
+      <div class="where">Wir geben ihn hier und auf Instagram bekannt.</div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-partner">
+    <div class="label">Partner</div>
+    <h2 id="h-partner">Cafés und Läden</h2>
+    <p class="lead">Hier gibt es shokulab-Sando ausserhalb des Markts. Frisch, solange Vorrat.</p>
+    <div id="partner-list"></div>
+    <div class="empty" id="partner-empty">
+      <p><strong>Bald hier:</strong> die ersten Cafés mit shokulab auf der Theke.</p>
+      <p>Bis dahin findest du uns am Markt — oder du holst uns in dein Lieblingscafé.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-cafes" style="border-top:0;padding-top:0;">
+    <div class="band">
+      <div class="label">Für Cafés</div>
+      <h2 id="h-cafes">Euer Café auf dieser Liste?</h2>
+      <p>Am Wochenende gebacken, am Montag geliefert. Erst probieren, dann entscheiden.</p>
+      <a class="btn" href="/cafes">Muster anfragen →</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="slogan">Scientifically good.</div>
+    <div><a href="mailto:hello@shokulab.ch">hello@shokulab.ch</a> · <a href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">@shokulab.ch</a></div>
+    <div><a href="/menu">Menü</a> · <a href="/cafes">Für Cafés</a></div>
+    <div class="small"><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a></div>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    function esc(s) { return String(s || '').replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+    function safeUrl(u) { return /^https:\/\//.test(u || '') ? u : ''; }
+
+    // next market (from /events.js)
+    var E = window.shokulabEvents, now = new Date();
+    if (E) {
+      var up = E.upcoming(now);
+      if (up.length) {
+        var e = up[0], live = E.isLive(e, now), today = E.isToday(e, now);
+        document.getElementById('next-card').innerHTML =
+          (live ? '<div class="live"><i></i>JETZT AM MARKT</div>' : today ? '<div class="live"><i></i>HEUTE</div>' : '') +
+          '<div class="when">' + esc(E.longDate(e.start)) + '</div>' +
+          '<div class="when" style="font-weight:500;font-size:19px;">' + esc(e.title) + '</div>' +
+          '<div class="where">' + esc(E.time(e.start)) + '–' + esc(E.time(e.end)) + ' · ' + esc(e.place) + ', ' + esc(e.town) + '</div>' +
+          '<div><a class="textlink" href="/menu">Menü ansehen →</a></div>';
+      }
+    }
+
+    // partners (from /partners.js), grouped by town
+    var P = (window.SHOKULAB_PARTNERS || []).filter(function (p) { return p && p.name; });
+    if (!P.length) return;
+    document.getElementById('partner-empty').hidden = true;
+    var byTown = {};
+    P.forEach(function (p) { var t = String(p.town || '').replace(/^\d{4}\s*/, '') || 'Weitere'; (byTown[t] = byTown[t] || []).push(p); });
+    var html = Object.keys(byTown).sort(function (a, b) { return a.localeCompare(b, 'de'); }).map(function (t) {
+      return '<div class="town">' + esc(t) + '</div><ul class="partners">' +
+        byTown[t].sort(function (a, b) { return a.name.localeCompare(b.name, 'de'); }).map(function (p) {
+          var q = encodeURIComponent(p.name + ', ' + (p.street || '') + ', ' + (p.town || ''));
+          var url = safeUrl(p.url);
+          return '<li class="partner">' +
+            '<h3>' + esc(p.name) + '</h3><span class="type">' + esc(p.type || 'Café') + '</span>' +
+            (p.street || p.town ? '<div class="addr">' + esc([p.street, p.town].filter(Boolean).join(', ')) + '</div>' : '') +
+            (p.days ? '<div class="days">' + esc(p.days) + '</div>' : '') +
+            (p.sorts && p.sorts.length ? '<div class="tags">' + p.sorts.map(function (s) { return '<span>' + esc(s) + '</span>'; }).join('') + '</div>' : '') +
+            '<div class="links"><a class="textlink" href="https://www.google.com/maps/search/?api=1&query=' + q + '" target="_blank" rel="noopener">Route →</a>' +
+            (url ? '<a class="textlink" href="' + esc(url) + '" target="_blank" rel="noopener">Website →</a>' : '') + '</div>' +
+            '</li>';
+        }).join('') + '</ul>';
+    }).join('');
+    document.getElementById('partner-list').innerHTML = html;
+  })();
+</script>
+
+</body>
+</html>
