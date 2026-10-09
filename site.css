@@ -226,6 +226,15 @@
   .map { height: 380px; border: 1px solid var(--hairline); background: #EDE6E2; z-index: 0; }
   @media (max-width: 640px) { .map { height: 300px; } }
   .map-credit { font-size: 11.5px; color: var(--ink-soft); margin-top: 6px; }
+  /* map key: one quiet line, the same marks as on the map */
+  .map-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 24px; }
+  .map-foot .map-credit { margin-left: auto; }
+  .map-key { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; margin-top: 8px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+  .map-key span { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+  .map-key i { font-style: normal; margin-left: 2px; }
+  .map-key .k-no { background: var(--ink); color: var(--paper); font-size: 10px; letter-spacing: .04em; line-height: 1; padding: 3px 5px 2px; box-shadow: 0 0 0 1px var(--paper), 0 0 0 2px var(--ink); }
+  .map-key .k-markt { width: 12px; height: 12px; background: var(--accent); box-shadow: 0 0 0 1px var(--paper), 0 0 0 2px var(--ink); }
   .map-credit a { color: var(--ink-soft); }
   .pin span { display: block; width: 18px; height: 18px; border: 2px solid var(--paper); box-shadow: 0 0 0 1px var(--ink); }
   .pin.partner span { background: var(--ink); }

@@ -56,7 +56,10 @@
     </div>
     <p class="nearest" id="nearest" role="status" aria-live="polite"></p>
     <div class="map" id="map" role="region" aria-label="Karte mit Markt und Partnern"></div>
-    <p class="map-credit">Karte © <a href="https://www.swisstopo.admin.ch" target="_blank" rel="noopener">swisstopo</a></p>
+    <div class="map-foot">
+      <p class="map-key" id="map-key" hidden></p>
+      <p class="map-credit">Karte © <a href="https://www.swisstopo.admin.ch" target="_blank" rel="noopener">swisstopo</a></p>
+    </div>
   </section>
 
   <section aria-labelledby="h-markt">
@@ -274,7 +277,18 @@
         m._place = x; m._on = true;
         markers.push(m);
       });
+      mapKey();
       fit();
+    }
+    // map key: only the marks that are actually on the map
+    function mapKey() {
+      var box = document.getElementById('map-key'), first = null, k = [];
+      P.forEach(function (p) { if (p.no && hasPos(p) && (!first || p.no < first)) first = p.no; });
+      if (first) k.push('<span><i class="k-no" aria-hidden="true">' + pad(first) + '</i>Partner-Nummer</span>');
+      if (market && hasPos(market)) k.push('<span><i class="k-markt" aria-hidden="true"></i>Nächster Markt</span>');
+      if (!k.length) return;
+      box.innerHTML = k.join('');
+      box.hidden = false;
     }
     function fit() {
       if (!map) return;
