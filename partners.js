@@ -10,13 +10,15 @@
  *   sorts    welche Sorten, z. B. ['Ichigo', 'Tamago']
  *   url      Website oder Instagram (optional)
  *   since    seit wann Partner, z. B. '2026-11-02' (optional)
+ *   lat/lng  Koordinaten für die Karte (Claude ergänzt sie aus der Adresse)
  *
  * Beispiel (auskommentiert):
  * {
  *   name: 'Café Beispiel', type: 'Café',
  *   street: 'Bahnhofstrasse 1', town: '5000 Aarau',
  *   days: 'Mo–Mi, solange Vorrat', sorts: ['Ichigo', 'Kiwi', 'Tamago'],
- *   url: 'https://instagram.com/cafebeispiel', since: '2026-11-02'
+ *   url: 'https://instagram.com/cafebeispiel', since: '2026-11-02',
+ *   lat: 47.3925, lng: 8.0442
  * },
  */
 window.SHOKULAB_PARTNERS = [

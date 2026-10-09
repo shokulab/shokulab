@@ -6,6 +6,7 @@
  * Zeiten immer mit +02:00 (Sommerzeit) oder +01:00 (Winterzeit) angeben.
  *
  * note: kurze Notiz fürs Laborbuch (erscheint, sobald der Markt vorbei ist)
+ * lat/lng: Koordinaten für die Karte auf /partner (z. B. aus map.geo.admin.ch)
  */
 window.SHOKULAB_EVENTS = [
   {
@@ -15,7 +16,8 @@ window.SHOKULAB_EVENTS = [
     town: 'Wohlen AG',
     start: '2026-10-10T09:00:00+02:00',
     end:   '2026-10-10T13:00:00+02:00',
-    note:  'Erster Marktstand.'
+    note:  'Erster Marktstand.',
+    lat: 47.3541, lng: 8.2830   // Ortsmitte Wohlen (ungefähr)
   }
 ];
 

@@ -19,7 +19,9 @@
 <link rel="stylesheet" href="/fonts/fonts.css">
 <script src="/events.js"></script>
 <script src="/partners.js"></script>
+<link rel="stylesheet" href="/vendor/leaflet/leaflet.css">
 <link rel="stylesheet" href="/site.css">
+<script src="/vendor/leaflet/leaflet.js" defer></script>
 </head>
 <body>
 
@@ -41,6 +43,18 @@
     <h1>Wo es uns gibt.</h1>
     <p class="sub">Am Wochenmarkt und bei Cafés, die unser Shokupan auf der Theke haben — in der Region Aarau und Solothurn.</p>
   </header>
+
+  <section id="karte" aria-labelledby="h-karte">
+    <div class="label">Karte</div>
+    <h2 id="h-karte">In deiner Nähe</h2>
+    <div class="locate-row">
+      <button type="button" class="btn" id="locate">Meinen Standort verwenden</button>
+      <span class="locate-note">Dein Standort bleibt in deinem Browser. Wir speichern nichts.</span>
+    </div>
+    <p class="nearest" id="nearest" role="status" aria-live="polite"></p>
+    <div class="map" id="map" role="region" aria-label="Karte mit Markt und Partnern"></div>
+    <p class="map-credit">Karte © <a href="https://www.swisstopo.admin.ch" target="_blank" rel="noopener">swisstopo</a></p>
+  </section>
 
   <section aria-labelledby="h-markt">
     <div class="label">Markt</div>
@@ -84,44 +98,126 @@
   (function () {
     function esc(s) { return String(s || '').replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
     function safeUrl(u) { return /^https:\/\//.test(u || '') ? u : ''; }
+    function hasPos(x) { return x && isFinite(x.lat) && isFinite(x.lng); }
+    function km(a, b) { // haversine
+      var R = 6371, r = Math.PI / 180, dLat = (b.lat - a.lat) * r, dLng = (b.lng - a.lng) * r;
+      var h = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(a.lat * r) * Math.cos(b.lat * r) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+      return 2 * R * Math.asin(Math.sqrt(h));
+    }
+    function fmtKm(d) { return d < 1 ? Math.round(d * 1000 / 50) * 50 + ' m' : d.toFixed(d < 10 ? 1 : 0).replace('.', ',') + ' km'; }
+    function routeUrl(q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q); }
 
-    // next market (from /events.js)
     var E = window.shokulabEvents, now = new Date();
-    if (E) {
-      var up = E.upcoming(now);
-      if (up.length) {
-        var e = up[0], live = E.isLive(e, now), today = E.isToday(e, now);
-        document.getElementById('next-card').innerHTML =
-          (live ? '<div class="live"><i></i>JETZT AM MARKT</div>' : today ? '<div class="live"><i></i>HEUTE</div>' : '') +
-          '<div class="when">' + esc(E.longDate(e.start)) + '</div>' +
-          '<div class="when" style="font-weight:500;font-size:19px;">' + esc(e.title) + '</div>' +
-          '<div class="where">' + esc(E.time(e.start)) + '–' + esc(E.time(e.end)) + ' · ' + esc(e.place) + ', ' + esc(e.town) + '</div>' +
-          '<div><a class="textlink" href="/menu">Menü ansehen →</a></div>';
-      }
+    var market = E ? E.upcoming(now)[0] : null;
+    var P = (window.SHOKULAB_PARTNERS || []).filter(function (p) { return p && p.name; });
+    var me = null;
+
+    // next market card
+    if (market) {
+      var live = E.isLive(market, now), today = E.isToday(market, now);
+      document.getElementById('next-card').innerHTML =
+        (live ? '<div class="live"><i></i>JETZT AM MARKT</div>' : today ? '<div class="live"><i></i>HEUTE</div>' : '') +
+        '<div class="when">' + esc(E.longDate(market.start)) + '</div>' +
+        '<div class="when" style="font-weight:500;font-size:19px;">' + esc(market.title) + '</div>' +
+        '<div class="where">' + esc(E.time(market.start)) + '–' + esc(E.time(market.end)) + ' · ' + esc(market.place) + ', ' + esc(market.town) + '</div>' +
+        '<div><a class="textlink" href="/menu">Menü ansehen →</a></div>';
     }
 
-    // partners (from /partners.js), grouped by town
-    var P = (window.SHOKULAB_PARTNERS || []).filter(function (p) { return p && p.name; });
-    if (!P.length) return;
-    document.getElementById('partner-empty').hidden = true;
-    var byTown = {};
-    P.forEach(function (p) { var t = String(p.town || '').replace(/^\d{4}\s*/, '') || 'Weitere'; (byTown[t] = byTown[t] || []).push(p); });
-    var html = Object.keys(byTown).sort(function (a, b) { return a.localeCompare(b, 'de'); }).map(function (t) {
-      return '<div class="town">' + esc(t) + '</div><ul class="partners">' +
-        byTown[t].sort(function (a, b) { return a.name.localeCompare(b.name, 'de'); }).map(function (p) {
-          var q = encodeURIComponent(p.name + ', ' + (p.street || '') + ', ' + (p.town || ''));
-          var url = safeUrl(p.url);
-          return '<li class="partner">' +
-            '<h3>' + esc(p.name) + '</h3><span class="type">' + esc(p.type || 'Café') + '</span>' +
-            (p.street || p.town ? '<div class="addr">' + esc([p.street, p.town].filter(Boolean).join(', ')) + '</div>' : '') +
-            (p.days ? '<div class="days">' + esc(p.days) + '</div>' : '') +
-            (p.sorts && p.sorts.length ? '<div class="tags">' + p.sorts.map(function (s) { return '<span>' + esc(s) + '</span>'; }).join('') + '</div>' : '') +
-            '<div class="links"><a class="textlink" href="https://www.google.com/maps/search/?api=1&query=' + q + '" target="_blank" rel="noopener">Route →</a>' +
-            (url ? '<a class="textlink" href="' + esc(url) + '" target="_blank" rel="noopener">Website →</a>' : '') + '</div>' +
-            '</li>';
-        }).join('') + '</ul>';
-    }).join('');
-    document.getElementById('partner-list').innerHTML = html;
+    // all places for map and distance: partners + next market
+    var places = P.map(function (p) {
+      return { kind: 'partner', name: p.name, lat: +p.lat, lng: +p.lng, p: p,
+               q: p.name + ', ' + [p.street, p.town].filter(Boolean).join(', ') };
+    });
+    if (market) places.push({ kind: 'markt', name: market.title, lat: +market.lat, lng: +market.lng,
+      q: market.place + ', ' + market.town, sub: E.longDate(market.start) + ', ' + E.time(market.start) + '–' + E.time(market.end) });
+
+    function partnerHtml(p, d) {
+      var url = safeUrl(p.url);
+      return '<li class="partner">' +
+        '<h3>' + esc(p.name) + '</h3><span class="type">' + (d != null ? esc(fmtKm(d)) + ' · ' : '') + esc(p.type || 'Café') + '</span>' +
+        (p.street || p.town ? '<div class="addr">' + esc([p.street, p.town].filter(Boolean).join(', ')) + '</div>' : '') +
+        (p.days ? '<div class="days">' + esc(p.days) + '</div>' : '') +
+        (p.sorts && p.sorts.length ? '<div class="tags">' + p.sorts.map(function (s) { return '<span>' + esc(s) + '</span>'; }).join('') + '</div>' : '') +
+        '<div class="links"><a class="textlink" href="' + routeUrl(p.name + ', ' + [p.street, p.town].filter(Boolean).join(', ')) + '" target="_blank" rel="noopener">Route →</a>' +
+        (url ? '<a class="textlink" href="' + esc(url) + '" target="_blank" rel="noopener">Website →</a>' : '') + '</div></li>';
+    }
+
+    function renderList() {
+      var box = document.getElementById('partner-list');
+      if (!P.length) return;
+      document.getElementById('partner-empty').hidden = true;
+      if (me) { // flat, nearest first
+        var sorted = P.map(function (p) { return { p: p, d: hasPos(p) ? km(me, p) : Infinity }; })
+          .sort(function (a, b) { return a.d - b.d; });
+        box.innerHTML = '<div class="town">Nach Entfernung</div><ul class="partners">' +
+          sorted.map(function (x) { return partnerHtml(x.p, isFinite(x.d) ? x.d : null); }).join('') + '</ul>';
+        return;
+      }
+      var byTown = {};
+      P.forEach(function (p) { var t = String(p.town || '').replace(/^\d{4}\s*/, '') || 'Weitere'; (byTown[t] = byTown[t] || []).push(p); });
+      box.innerHTML = Object.keys(byTown).sort(function (a, b) { return a.localeCompare(b, 'de'); }).map(function (t) {
+        return '<div class="town">' + esc(t) + '</div><ul class="partners">' +
+          byTown[t].sort(function (a, b) { return a.name.localeCompare(b.name, 'de'); }).map(function (p) { return partnerHtml(p, null); }).join('') + '</ul>';
+      }).join('');
+    }
+    renderList();
+
+    // map (Leaflet, swisstopo tiles)
+    var map = null, meMarker = null, markers = [];
+    function icon(cls) { return L.divIcon({ className: 'pin ' + cls, html: '<span></span>', iconSize: [18, 18], iconAnchor: [9, 9] }); }
+    function initMap() {
+      if (!window.L) return;
+      map = L.map('map', { scrollWheelZoom: false, attributionControl: false }).setView([47.37, 7.95], 9);
+      L.tileLayer('https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-grau/default/current/3857/{z}/{x}/{y}.jpeg',
+        { maxZoom: 18, minZoom: 7 }).addTo(map);
+      places.filter(hasPos).forEach(function (x) {
+        var m = L.marker([x.lat, x.lng], { icon: icon(x.kind), title: x.name, keyboard: true }).addTo(map);
+        m.bindPopup('<strong>' + esc(x.name) + '</strong><br>' +
+          (x.kind === 'markt' ? esc(x.sub) : esc([x.p.street, x.p.town].filter(Boolean).join(', '))) +
+          '<br><a href="' + routeUrl(x.q) + '" target="_blank" rel="noopener">Route →</a>');
+        markers.push(m);
+      });
+      fit();
+    }
+    function fit() {
+      var pts = places.filter(hasPos).map(function (x) { return [x.lat, x.lng]; });
+      if (me) pts.push([me.lat, me.lng]);
+      if (pts.length === 1) map.setView(pts[0], 13);
+      else if (pts.length) map.fitBounds(pts, { padding: [36, 36], maxZoom: 14 });
+    }
+    window.addEventListener('load', initMap);
+
+    // locate
+    var btn = document.getElementById('locate'), out = document.getElementById('nearest');
+    if (!('geolocation' in navigator)) { btn.hidden = true; }
+    btn.addEventListener('click', function () {
+      btn.disabled = true; btn.textContent = 'Suche …';
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        me = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        btn.disabled = false; btn.textContent = 'Standort aktualisieren';
+        var ranked = places.filter(hasPos).map(function (x) { return { x: x, d: km(me, x) }; })
+          .sort(function (a, b) { return a.d - b.d; });
+        if (ranked.length) {
+          var n = ranked[0];
+          out.innerHTML = '<span class="mono">AM NÄCHSTEN</span> <strong>' + esc(n.x.name) + '</strong> · ' + esc(fmtKm(n.d)) +
+            ' · <a class="textlink" href="' + routeUrl(n.x.q) + '" target="_blank" rel="noopener">Route →</a>';
+        } else {
+          out.textContent = 'Noch keine Verkaufsstelle auf der Karte.';
+        }
+        if (map) {
+          if (meMarker) meMarker.remove();
+          meMarker = L.marker([me.lat, me.lng], { icon: icon('me'), title: 'Du' }).addTo(map).bindPopup('Du bist hier');
+          fit();
+          if (ranked.length) markers.forEach(function (m) {
+            var ll = m.getLatLng(); if (ll.lat === ranked[0].x.lat && ll.lng === ranked[0].x.lng) m.openPopup();
+          });
+        }
+        renderList();
+      }, function (err) {
+        btn.disabled = false; btn.textContent = 'Meinen Standort verwenden';
+        out.textContent = err.code === 1 ? 'Standort nicht freigegeben. Du kannst die Karte trotzdem verschieben.' : 'Standort konnte nicht ermittelt werden.';
+      }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
+    });
   })();
 </script>
 
