@@ -214,6 +214,7 @@
   button.btn:disabled { opacity: .6; cursor: default; }
   .nearest { min-height: 24px; margin: 12px 0 14px; font-size: 15px; }
   .nearest .mono { font-size: 11.5px; letter-spacing: .08em; color: var(--accent); margin-right: 6px; }
+  .nearest .mono.n { color: var(--ink-soft); }
   .map { height: 380px; border: 1px solid var(--hairline); background: #EDE6E2; z-index: 0; }
   @media (max-width: 640px) { .map { height: 300px; } }
   .map-credit { font-size: 11.5px; color: var(--ink-soft); margin-top: 6px; }
@@ -242,6 +243,7 @@
   /* MapLibre */
   .pin { display: block; width: 18px; height: 18px; padding: 0; border: 0; background: none; cursor: pointer; }
   .pin:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 4px; }
+  .maplibregl-popup { z-index: 2000; } /* above numbered pins (z-index up to 1000) */
   .maplibregl-map { font-family: 'Inter', system-ui, sans-serif; }
   .maplibregl-popup-content { border-radius: 0; box-shadow: none; border: 1px solid var(--hairline); background: var(--card); padding: 12px 30px 12px 14px; font-size: 13.5px; line-height: 1.5; color: var(--ink); }
   .maplibregl-popup-content a { color: var(--ink); font-weight: 600; }

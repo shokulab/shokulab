@@ -329,7 +329,9 @@
           .sort(function (a, b) { return a.d - b.d; });
         if (ranked.length) {
           var n = ranked[0];
-          out.innerHTML = '<span class="mono">AM NÄCHSTEN</span> <strong>' + esc(n.x.name) + '</strong> · ' + esc(fmtKm(n.d)) +
+          var tag = n.x.p && n.x.p.no ? 'No. ' + pad(n.x.p.no) : n.x.kind === 'markt' ? 'Markt' : '';
+          out.innerHTML = '<span class="mono">AM NÄCHSTEN</span> ' + (tag ? '<span class="mono n">' + esc(tag) + '</span> ' : '') +
+            '<strong>' + esc(n.x.name) + '</strong> · ' + esc(fmtKm(n.d)) +
             ' · <a class="textlink" href="' + routeUrl(n.x.q) + '" target="_blank" rel="noopener">Route →</a>';
         } else {
           out.textContent = 'Noch keine Verkaufsstelle auf der Karte.';
