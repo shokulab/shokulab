@@ -22,7 +22,11 @@ window.SHOKULAB_EVENTS = [
     note:  'Erster Marktstand. Kurz vor 13:00 ausverkauft. Am meisten gefragt: Tamago.',
     counts: [['Sando', 80], ['Ichigo', 36], ['Tamago', 28], ['Kiwi', 16]],
     thanks: { name: 'SATÕ Coffee', url: 'https://satocoffee.com', for: 'Kaffee und Maschine' },
-    photos: [],   // z. B. { src: '/fotos/wohlen-1.jpg', alt: 'Ichigo-Sando im Anschnitt' }
+    photos: [
+      { src: '/fotos/2026-10-10-wohlen-1.jpg', alt: 'Ichigo-Sando im Anschnitt, drei Erdbeeren in Mascarpone-Rahm' },
+      { src: '/fotos/2026-10-10-wohlen-2.jpg', alt: 'Das Team hinter dem Stand in Wohlen' },
+      { src: '/fotos/2026-10-10-wohlen-3.jpg', alt: 'Hinter der Kaffeemaschine am Stand' }
+    ],
     lat: 47.3541, lng: 8.2830   // Ortsmitte Wohlen (ungefähr)
   }
 ];

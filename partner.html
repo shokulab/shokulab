@@ -41,7 +41,7 @@
   <header class="page-head reveal">
     <div class="mark">SHOKULAB · VERKAUFSSTELLEN</div>
     <h1>Wo es uns gibt.</h1>
-    <p class="sub" id="head-sub">Zurzeit am Wochenmarkt, in der Region Aarau und Solothurn. Partner-Cafés tragen eine Nummer. Die erste ist noch frei.</p>
+    <p class="sub" id="head-sub">Zurzeit am Wochenmarkt. Bald auch in Cafés in der Region Aarau und Solothurn.</p>
   </header>
 
   <section id="karte" aria-labelledby="h-karte">
@@ -74,31 +74,10 @@
   <section id="register" aria-labelledby="h-partner">
     <div class="label">Partner</div>
     <h2 id="h-partner">Cafés und Läden</h2>
-    <p class="lead" id="reg-lead">Hier stehen die Cafés und Läden, die shokulab-Sando führen. Jedes mit seiner Nummer.</p>
+    <p class="lead" id="reg-lead">Hier stehen die Cafés und Läden, die shokulab-Sando führen.</p>
     <div id="partner-list"></div>
     <div class="register" id="partner-empty">
-      <div class="reg-head"><span>Register</span><span>000 Partner</span></div>
-      <div class="reg-row"><span class="n">No. 001</span><span class="t">Noch frei.</span></div>
-      <p>Die erste Nummer ist noch nicht vergeben. Bis dahin gibt es uns am Markt.</p>
-    </div>
-  </section>
-
-  <section id="siegel" aria-labelledby="h-siegel">
-    <div class="seal-row">
-      <svg class="seal" viewBox="0 0 120 120" role="img" aria-label="Partner-Siegel von shokulab, mit Feld für die Partner-Nummer">
-        <rect x="1.5" y="1.5" width="117" height="117" fill="none" stroke="#3D2F27" stroke-width="3"/>
-        <rect x="8" y="8" width="104" height="104" fill="none" stroke="#3D2F27" stroke-width="1"/>
-        <text x="60" y="34" text-anchor="middle" class="s-mono">SHOKULAB</text>
-        <line x1="22" y1="44" x2="98" y2="44" stroke="#DDC3C0" stroke-width="1"/>
-        <text x="25" y="72" class="s-big">No.</text>
-        <line x1="73" y1="72" x2="95" y2="72" stroke="#3D2F27" stroke-width="1"/>
-        <text x="60" y="94" text-anchor="middle" class="s-mono s-acc">PARTNER</text>
-      </svg>
-      <div>
-        <div class="label">Das Siegel</div>
-        <h2 id="h-siegel">Nummeriert, nicht verteilt.</h2>
-        <p class="lead">Jedes Partner-Café bekommt eine Nummer — in der Reihenfolge, in der es dazukommt. Wo dieses Siegel an der Theke steht, gibt es shokulab.</p>
-      </div>
+      <p>Noch keine Partner-Cafés. Bis dahin gibt es uns am Markt.</p>
     </div>
   </section>
 
@@ -186,7 +165,7 @@
 
     // head and register copy follow the register: no claim of cafés before the first number is given
     if (P.length) {
-      document.getElementById('head-sub').textContent = 'Am Wochenmarkt und bei ' + (P.length === 1 ? 'einem Partner' : P.length + ' Partnern') + ' in der Region Aarau und Solothurn. Jeder mit seiner Nummer.';
+      document.getElementById('head-sub').textContent = 'Am Wochenmarkt und bei ' + (P.length === 1 ? 'einem Partner' : P.length + ' Partnern') + ' in der Region Aarau und Solothurn.';
       document.getElementById('reg-lead').textContent = 'Hier gibt es shokulab-Sando ausserhalb des Markts. Frisch, solange Vorrat.';
     }
 
