@@ -6,6 +6,9 @@
  * Zeiten immer mit +02:00 (Sommerzeit) oder +01:00 (Winterzeit) angeben.
  *
  * note: kurze Notiz fürs Laborbuch (erscheint, sobald der Markt vorbei ist)
+ * counts: [['Sando', 80], ['Ichigo', 36] …] — Zahlen fürs Laborbuch (optional)
+ * thanks: { name, url, for } — Dank an Partner des Tages (optional)
+ * photos: bis zu 3 Bilder { src, alt } — quadratisch, liegen in /fotos (optional)
  * lat/lng: Koordinaten für die Karte auf /partner (z. B. aus map.geo.admin.ch)
  */
 window.SHOKULAB_EVENTS = [
@@ -16,7 +19,10 @@ window.SHOKULAB_EVENTS = [
     town: 'Wohlen AG',
     start: '2026-10-10T09:00:00+02:00',
     end:   '2026-10-10T13:00:00+02:00',
-    note:  'Erster Marktstand.',
+    note:  'Erster Marktstand. Kurz vor 13:00 ausverkauft. Am meisten gefragt: Tamago.',
+    counts: [['Sando', 80], ['Ichigo', 36], ['Tamago', 28], ['Kiwi', 16]],
+    thanks: { name: 'SATÕ Coffee', url: 'https://satocoffee.com', for: 'Kaffee und Maschine' },
+    photos: [],   // z. B. { src: '/fotos/wohlen-1.jpg', alt: 'Ichigo-Sando im Anschnitt' }
     lat: 47.3541, lng: 8.2830   // Ortsmitte Wohlen (ungefähr)
   }
 ];

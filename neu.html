@@ -267,7 +267,17 @@
       document.getElementById('log').innerHTML = past.map(function (x) {
         return '<div class="log-row"><span class="c">' + esc(x.charge) + '</span>' +
           '<span class="d">' + esc(E.shortDate(x.start)) + '</span>' +
-          '<span class="t"><b>' + esc(x.title) + '</b><span>' + esc(x.note || 'Notizen folgen.') + '</span></span></div>';
+          '<span class="t"><b>' + esc(x.title) + '</b><span>' + esc(x.note || 'Notizen folgen.') + '</span>' +
+          (x.counts && x.counts.length ? '<span class="counts">' + x.counts.map(function (c, i) {
+            return '<span class="nw">' + (i === 0 ? '<strong>' + esc(c[1]) + '</strong> ' + esc(c[0]) : esc(c[0]) + ' <strong>' + esc(c[1]) + '</strong>') + '</span>';
+          }).join(' · ') + '</span>' : '') +
+          (x.thanks && x.thanks.name ? '<span class="thanks">Danke an ' +
+            (/^https:\/\//.test(x.thanks.url || '') ? '<a href="' + esc(x.thanks.url) + '" target="_blank" rel="noopener">' + esc(x.thanks.name) + '</a>' : esc(x.thanks.name)) +
+            (x.thanks.for ? ' für ' + esc(x.thanks.for) : '') + '.</span>' : '') +
+          (x.photos && x.photos.length ? '<span class="shots">' + x.photos.slice(0, 3).map(function (p) {
+            return '<a href="' + esc(p.src) + '" target="_blank" rel="noopener"><img src="' + esc(p.src) + '" alt="' + esc(p.alt || x.title) + '" loading="lazy" width="400" height="400"></a>';
+          }).join('') + '</span>' : '') +
+          '</span></div>';
       }).join('');
     }
   })();
