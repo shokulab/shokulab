@@ -21,6 +21,7 @@ window.SHOKULAB_EVENTS = [
     end:   '2026-10-10T13:00:00+02:00',
     note:  'Erster Marktstand. Kurz vor 13:00 ausverkauft. Am meisten gefragt: Tamago.',
     counts: [['Sando', 80], ['Ichigo', 36], ['Tamago', 28], ['Kiwi', 16]],
+    feedback: '/menu#feedback-form',   // Link «Wie hat's geschmeckt?» erscheint 14 Tage nach dem Markt
     thanks: { name: 'SATÕ Coffee', url: 'https://satocoffee.com', for: 'Kaffee und Maschine' },
     photos: [
       { src: '/fotos/2026-10-10-wohlen-1.jpg', alt: 'Ichigo-Sando im Anschnitt, drei Erdbeeren in Mascarpone-Rahm' },
