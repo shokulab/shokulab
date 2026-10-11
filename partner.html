@@ -59,40 +59,52 @@
     <p class="sub" id="head-sub">Zurzeit am Wochenmarkt. Bald auch in Cafés in der Region Aarau und Solothurn.</p>
   </header>
 
-  <section id="karte" aria-labelledby="h-karte">
-    <div class="label">Karte</div>
-    <h2 id="h-karte">In deiner Nähe</h2>
-    <div class="locate-row">
-      <button type="button" class="btn" id="locate">Meinen Standort verwenden</button>
-      <span class="locate-note">Dein Standort bleibt in deinem Browser. Wir speichern nichts.</span>
+  <section id="karte" class="wide" aria-labelledby="h-karte">
+    <div class="sec-head">
+      <div class="label">Karte</div>
+      <h2 id="h-karte">In deiner Nähe</h2>
     </div>
-    <div class="filters" role="group" aria-label="Filter">
-      <button type="button" data-f="alle" aria-pressed="true">Alle</button>
-    </div>
-    <p class="nearest" id="nearest" role="status" aria-live="polite"></p>
-    <div class="map" id="map" role="region" aria-label="Karte mit Markt und Partnern"></div>
-    <div class="map-foot">
-      <p class="map-key" id="map-key" hidden></p>
-      <p class="map-credit">Karte © <a href="https://www.swisstopo.admin.ch" target="_blank" rel="noopener">swisstopo</a></p>
+    <div class="sec-body">
+      <div class="locate-row">
+        <button type="button" class="btn" id="locate">Meinen Standort verwenden</button>
+        <span class="locate-note">Dein Standort bleibt in deinem Browser. Wir speichern nichts.</span>
+      </div>
+      <div class="filters" role="group" aria-label="Filter">
+        <button type="button" data-f="alle" aria-pressed="true">Alle</button>
+      </div>
+      <p class="nearest" id="nearest" role="status" aria-live="polite"></p>
+      <div class="map" id="map" role="region" aria-label="Karte mit Markt und Partnern"></div>
+      <div class="map-foot">
+        <p class="map-key" id="map-key" hidden></p>
+        <p class="map-credit">Karte © <a href="https://www.swisstopo.admin.ch" target="_blank" rel="noopener">swisstopo</a></p>
+      </div>
     </div>
   </section>
 
   <section aria-labelledby="h-markt">
-    <div class="label">Markt</div>
-    <h2 id="h-markt">Nächster Markt</h2>
-    <div class="next" id="next-card">
-      <div class="when">Nächster Termin folgt</div>
-      <div class="where">Wir geben ihn hier und auf Instagram bekannt.</div>
+    <div class="sec-head">
+      <div class="label">Markt</div>
+      <h2 id="h-markt">Nächster Markt</h2>
+    </div>
+    <div class="sec-body">
+      <div class="next" id="next-card">
+        <div class="when">Nächster Termin folgt</div>
+        <div class="where">Wir geben ihn hier und auf Instagram bekannt.</div>
+      </div>
     </div>
   </section>
 
   <section id="register" aria-labelledby="h-partner">
-    <div class="label">Partner</div>
-    <h2 id="h-partner">Cafés und Läden</h2>
-    <p class="lead" id="reg-lead">Hier stehen die Cafés und Läden, die shokulab-Sando führen.</p>
-    <div id="partner-list"></div>
-    <div class="register" id="partner-empty">
-      <p>Noch keine Partner-Cafés. Bis dahin gibt es uns am Markt.</p>
+    <div class="sec-head">
+      <div class="label">Partner</div>
+      <h2 id="h-partner">Cafés und Läden</h2>
+      <p class="lead" id="reg-lead">Hier stehen die Cafés und Läden, die shokulab-Sando führen.</p>
+    </div>
+    <div class="sec-body">
+      <div id="partner-list"></div>
+      <div class="register" id="partner-empty">
+        <p>Noch keine Partner-Cafés. Bis dahin gibt es uns am Markt.</p>
+      </div>
     </div>
   </section>
 
