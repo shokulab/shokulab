@@ -370,3 +370,21 @@
     footer { grid-template-columns: 1fr auto auto auto; align-items: end; column-gap: 40px; }
   }
   .thanks .nw, .nw { white-space: nowrap; }
+
+  /* forms (cafés inquiry) */
+  .form { display: flex; flex-direction: column; gap: 18px; max-width: 620px; margin-top: 0; }
+  .form .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 520px) { .form .row2 { grid-template-columns: 1fr; } }
+  .form .field { display: flex; flex-direction: column; gap: 6px; }
+  .form label { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: .06em; color: var(--ink-soft); text-transform: uppercase; }
+  .form input[type="text"], .form input[type="email"], .form textarea {
+    border: 0; border-bottom: 1.5px solid var(--ink); border-radius: 0; background: transparent;
+    font: 16px/1.5 'Inter', sans-serif; color: var(--ink); padding: 6px 0; outline: none; width: 100%;
+  }
+  .form textarea { resize: vertical; min-height: 96px; border: 1px solid var(--hairline); border-bottom: 1.5px solid var(--ink); padding: 8px 10px; }
+  .form input::placeholder, .form textarea::placeholder { color: #7E5B55; }
+  .form input:focus-visible, .form textarea:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 4px; }
+  .form .btn { border: 0; cursor: pointer; }
+  .form .btn:disabled { opacity: .6; cursor: default; }
+  .fallback { margin-top: 22px; font-size: 14px; color: var(--ink-soft); }
+  .sec-head { margin-bottom: 22px; } @media (min-width: 1000px) { .sec-head { margin-bottom: 0; } }

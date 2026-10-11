@@ -30,351 +30,59 @@
 <link rel="preload" href="/fonts/space-grotesk-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts/fonts.css">
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-<style>
-  :root {
-    --paper: #F2DDDB;
-    --ink: #3D2F27;
-    --ink-soft: #6E5747;
-    --accent: #8B4A3C;
-    --hairline: #DDC3C0;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'Inter', system-ui, sans-serif;
-    min-height: 100vh;
-    padding: 72px 32px 56px;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 64px;
-    width: 1px;
-    background: var(--hairline);
-  }
-
-  .wrap {
-    max-width: 520px;
-    width: 100%;
-    padding-left: 48px;
-    animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  @media (max-width: 640px) {
-    body { padding: 48px 20px 40px; }
-    body::before { left: 28px; }
-    .wrap { padding-left: 24px; }
-  }
-
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .mark, .label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    color: var(--accent);
-  }
-
-  .mark { margin-bottom: 26px; }
-  .mark a { color: inherit; text-decoration: none; }
-  .mark a:hover { text-decoration: underline; }
-
-  h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: clamp(2.8rem, 9vw, 4rem);
-    line-height: 1;
-    letter-spacing: -0.015em;
-    margin-bottom: 18px;
-  }
-
-  .sub {
-    font-size: 17px;
-    line-height: 1.55;
-    color: var(--ink-soft);
-    max-width: 40ch;
-    margin-bottom: 30px;
-  }
-
-  .when {
-    border-top: 1px solid var(--hairline);
-    border-bottom: 1px solid var(--hairline);
-    padding: 16px 0;
-    margin-bottom: 40px;
-  }
-
-  .when-date {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: 22px;
-  }
-
-  .when-where {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--ink-soft);
-    margin-top: 4px;
-  }
-
-  section.group { margin-bottom: 36px; }
-  section.group .label { margin-bottom: 14px; font-weight: 400; }
-
-  ul { list-style: none; display: flex; flex-direction: column; gap: 16px; }
-
-  .row {
-    display: flex;
-    align-items: baseline;
-  }
-
-  .name {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: 20px;
-  }
-
-  .jp {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    color: var(--ink-soft);
-    margin-left: 8px;
-  }
-
-  .dots {
-    flex: 1;
-    min-width: 16px;
-    border-bottom: 1px dotted var(--hairline);
-    margin: 0 10px;
-    transform: translateY(-5px);
-  }
-
-  .price {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 15px;
-    white-space: nowrap;
-  }
-
-  .desc {
-    font-size: 13.5px;
-    color: var(--ink-soft);
-    margin-top: 3px;
-  }
-
-  .spec {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12.5px;
-    color: var(--ink-soft);
-    border-top: 1px solid var(--hairline);
-    padding-top: 14px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 18px;
-    margin-bottom: 10px;
-  }
-
-  .spec b { color: var(--accent); font-weight: 500; }
-
-  .allergen {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11.5px;
-    color: var(--ink-soft);
-    margin-bottom: 44px;
-  }
-
-  .test {
-    background: #F8E9E7;
-    border: 1px solid var(--hairline);
-    border-radius: 4px;
-    padding: 20px 22px;
-    margin-bottom: 48px;
-  }
-
-  .test p {
-    font-size: 15px;
-    line-height: 1.55;
-    color: var(--ink);
-    margin-top: 8px;
-  }
-
-
-  .fb { margin-top: 16px; display: flex; flex-direction: column; gap: 20px; }
-  .fb fieldset { border: none; padding: 0; margin: 0; min-width: 0; }
-  .fb legend {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11.5px;
-    letter-spacing: 0.06em;
-    color: var(--ink-soft);
-    margin-bottom: 10px;
-    padding: 0;
-  }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chips label { position: relative; }
-  .chips input {
-    position: absolute;
-    opacity: 0;
-    width: 1px;
-    height: 1px;
-  }
-  .chips span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    min-width: 44px;
-    padding: 0 16px;
-    border: 1px solid var(--hairline);
-    border-radius: 999px;
-    background: var(--paper);
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 500;
-    font-size: 15px;
-    color: var(--ink);
-    cursor: pointer;
-    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-  }
-  .chips span:hover { border-color: var(--accent); }
-  .chips input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--paper); }
-  .chips input:focus-visible + span { outline: 1.5px solid var(--accent); outline-offset: 3px; }
-  .chips.rating span { padding: 0; width: 44px; font-family: 'IBM Plex Mono', monospace; }
-  .scale-hint {
-    display: flex;
-    justify-content: space-between;
-    max-width: 252px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--ink-soft);
-    margin-top: 6px;
-  }
-  .fb textarea {
-    width: 100%;
-    min-height: 88px;
-    resize: vertical;
-    border: none;
-    border-bottom: 1.5px solid var(--ink);
-    background: transparent;
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    line-height: 1.5;
-    color: var(--ink);
-    padding: 6px 0;
-    outline: none;
-  }
-  .fb textarea::placeholder { color: #7E5B55; }
-  .fb textarea:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 4px; }
-  .fb-send {
-    align-self: flex-start;
-    min-height: 44px;
-    padding: 0 22px;
-    border: none;
-    border-radius: 999px;
-    background: var(--ink);
-    color: var(--paper);
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: 15px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-  }
-  .fb-send:hover:not(:disabled) { background: var(--accent); }
-  .fb-send:disabled { opacity: 0.6; cursor: default; }
-  .fb-send:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; }
-  .fb-done {
-    display: none;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--accent);
-    margin-top: 14px;
-  }
-  .fb-done.show { display: block; }
-  .fallback { font-size: 12.5px !important; color: var(--ink-soft) !important; margin-top: 18px !important; }
-
-  a.link {
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--accent);
-  }
-
-  a.link:hover { color: var(--accent); }
-
-  footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 8px 16px;
-    font-size: 12.5px;
-    color: var(--ink-soft);
-  }
-
-  footer .slogan {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 500;
-    font-size: 15px;
-    color: var(--ink);
-  }
-
-  footer a { color: var(--ink-soft); text-decoration: none; border-bottom: 1px solid var(--hairline); }
-
-  a:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .wrap { animation: none; }
-  }
-
-  .points { list-style: none; display: flex; flex-direction: column; gap: 0; margin-bottom: 40px; border-top: 1px solid var(--hairline); }
-  .points li { display: grid; grid-template-columns: 40px 1fr; gap: 0 12px; padding: 16px 0; border-bottom: 1px solid var(--hairline); }
-  .points .n { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); padding-top: 4px; }
-  .points h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 18px; margin-bottom: 4px; }
-  .points p { font-size: 14.5px; line-height: 1.55; color: var(--ink-soft); }
-  .field { display: flex; flex-direction: column; gap: 4px; }
-  .field label { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: var(--ink-soft); }
-  .field input, .field textarea {
-    width: 100%; border: none; border-bottom: 1.5px solid var(--ink); background: transparent;
-    font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.5; color: var(--ink); padding: 6px 0; outline: none; border-radius: 0;
-  }
-  .field textarea { min-height: 96px; resize: vertical; }
-  .field input::placeholder, .field textarea::placeholder { color: #7E5B55; }
-  .field input:focus-visible, .field textarea:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 4px; }
-  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
-</style>
+<link rel="stylesheet" href="/site.css">
 </head>
 <body>
 
-  <main class="wrap">
-    <div class="mark"><a href="/">SHOKULAB</a> · FÜR CAFÉS · AARAU / SOLOTHURN</div>
+<div class="wrap">
 
-    <h1>Für Cafés</h1>
+  <nav class="nav" aria-label="Hauptnavigation">
+    <a class="brand" href="/">shokulab</a>
+    <ul>
+      <li><a href="/menu">Menü</a></li>
+      <li class="hide-s"><a href="/#maerkte">Märkte</a></li>
+      <li class="hide-s"><a href="/#methode">Methode</a></li>
+      <li><a href="/partner">Wo kaufen</a></li>
+      <li><a href="/cafes" aria-current="page">Für Cafés</a></li>
+    </ul>
+  </nav>
 
-    <p class="sub">Sando aus japanischem Shokupan für eure Theke — fluffig, randlos, sauber geschnitten. Wir starten gerade und suchen die ersten Cafés in der Region, die mit uns loslegen wollen.</p>
+  <header class="page-head reveal">
+    <div class="mark">SHOKULAB · FÜR CAFÉS · AARAU / SOLOTHURN</div>
+    <h1>Shokupan für eure Theke.</h1>
+    <p class="sub">Sando aus japanischem Shokupan — fluffig, randlos, sauber geschnitten. Wir starten gerade und suchen die ersten Cafés in der Region, die mit uns loslegen.</p>
+    <div class="ctas" style="margin-top:26px;">
+      <a class="btn" href="#anfrage">Muster anfragen</a>
+      <a class="btn ghost" href="/#sorten">Sorten ansehen</a>
+    </div>
+  </header>
 
-    <ol class="points">
-      <li><span class="n">01</span><div><h3>Shokupan, selbst gebacken</h3><p>Japanisches Milchbrot im Pullman-Deckel gebacken, randlos geschnitten. Gefüllt als Sando — süss mit Frucht und Mascarpone-Creme oder herzhaft.</p></div></li>
-      <li><span class="n">02</span><div><h3>Wochenende backen, Montag liefern</h3><p>Wir produzieren am Wochenende und liefern am Montag direkt zu euch.</p></div></li>
-      <li><span class="n">03</span><div><h3>Region Aarau und Solothurn</h3><p>Wir sind zwischen Aarau und Solothurn zuhause und liefern vorerst in dieser Region.</p></div></li>
-      <li><span class="n">04</span><div><h3>Erst probieren</h3><p>Schreibt uns — wir kommen gern mit Mustern vorbei und besprechen Sorten, Mengen und Konditionen direkt mit euch.</p></div></li>
-    </ol>
+  <section id="angebot" aria-labelledby="h-angebot">
+    <div class="sec-head">
+      <div class="label">Angebot</div>
+      <h2 id="h-angebot">Was ihr bekommt.</h2>
+      <p class="lead">Vier Dinge, auf die ihr euch verlassen könnt.</p>
+    </div>
+    <div class="sec-body">
+      <ol class="steps">
+        <li><div class="k">01</div><div><h3>Shokupan, selbst gebacken</h3><p>Japanisches Milchbrot, im Pullman-Deckel gebacken und randlos geschnitten. Gefüllt als Sando — süss mit Frucht und Mascarpone-Rahm oder herzhaft mit Ei.</p></div></li>
+        <li><div class="k">02</div><div><h3>Wochenende backen, Montag liefern</h3><p>Wir produzieren am Wochenende und liefern am Montag direkt zu euch.</p></div></li>
+        <li><div class="k">03</div><div><h3>Region Aarau und Solothurn</h3><p>Wir sind zwischen Aarau und Solothurn zuhause und liefern vorerst in dieser Region.</p></div></li>
+        <li><div class="k">04</div><div><h3>Erst probieren</h3><p>Wir kommen gern mit Mustern vorbei und besprechen Sorten, Mengen und Konditionen direkt mit euch.</p></div></li>
+      </ol>
+    </div>
+  </section>
 
-    <section class="test" aria-labelledby="cafe-title">
-      <div class="label" id="cafe-title">ANFRAGE</div>
-      <p>Erzählt uns kurz von eurem Café. Wir melden uns innert weniger Tage.</p>
-
-      <form class="fb" id="cafe-form" action="https://formspree.io/f/mdeoqwnq" method="POST">
+  <section id="anfrage" aria-labelledby="h-anfrage">
+    <div class="sec-head">
+      <div class="label">Anfrage</div>
+      <h2 id="h-anfrage">Erzählt uns von eurem Café.</h2>
+      <p class="lead">Wir melden uns innert weniger Tage.</p>
+    </div>
+    <div class="sec-body">
+      <form class="form" id="cafe-form" action="https://formspree.io/f/mdeoqwnq" method="POST">
         <input type="hidden" name="form" value="cafe-anfrage">
         <input type="hidden" name="_subject" value="Café-Anfrage über shokulab.ch">
-
         <div class="row2">
           <div class="field">
             <label for="c-name">Café</label>
@@ -391,23 +99,24 @@
         </div>
         <div class="field">
           <label for="c-msg">Nachricht (optional)</label>
-          <textarea id="c-msg" name="nachricht" placeholder="Was sucht ihr? Wie viele Gäste, welche Tage, Fragen …"></textarea>
+          <textarea id="c-msg" name="nachricht" rows="4" placeholder="Was sucht ihr? Wie viele Gäste, welche Tage, Fragen …"></textarea>
         </div>
-
         <div class="cf-turnstile" data-sitekey="0x4AAAAAAE0MhNrj5Zp_jAq1" data-theme="light"></div>
-
-        <button type="submit" class="fb-send">Anfrage senden</button>
+        <div><button type="submit" class="btn fb-send">Anfrage senden</button></div>
       </form>
-      <div class="fb-done" id="cafe-done" role="status" aria-live="polite">Danke! Wir melden uns bald bei euch.</div>
+      <div class="confirm" id="cafe-done" role="status" aria-live="polite">Danke. Wir melden uns bald bei euch.</div>
+      <p class="fallback">Lieber direkt? <a class="textlink" href="mailto:hello@shokulab.ch?subject=Caf%C3%A9-Anfrage">hello@shokulab.ch</a> · <a class="textlink" href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">@shokulab.ch</a></p>
+    </div>
+  </section>
 
-      <p class="fallback">Lieber direkt? <a class="link" href="mailto:hello@shokulab.ch?subject=Caf%C3%A9-Anfrage">hello@shokulab.ch</a> · <a class="link" href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">@shokulab.ch</a></p>
-    </section>
+  <footer>
+    <div class="slogan">Scientifically good.</div>
+    <div><a href="mailto:hello@shokulab.ch">hello@shokulab.ch</a> · <a href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">@shokulab.ch</a></div>
+    <div><a href="/menu">Menü</a> · <a href="/partner">Wo kaufen</a> · <a href="/cafes">Für Cafés</a></div>
+    <div class="small"><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a></div>
+  </footer>
 
-    <footer>
-      <span class="slogan">Scientifically good.</span>
-      <span><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="/">← shokulab.ch</a></span>
-    </footer>
-  </main>
+</div>
 
 <script>
   (function () {
