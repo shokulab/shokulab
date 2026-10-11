@@ -36,3 +36,8 @@
 # Former preview of the open homepage
 /neu        /   301
 /neu.html   /   301
+/ueber        /ueber-uns   301
+/about        /ueber-uns   301
+/team         /ueber-uns   301
+/Über-uns     /ueber-uns   301
+/über-uns     /ueber-uns   301
