@@ -308,7 +308,7 @@
             (/^https:\/\//.test(x.thanks.url || '') ? '<a href="' + esc(x.thanks.url) + '" target="_blank" rel="noopener">' + esc(x.thanks.name) + '</a>' : esc(x.thanks.name)) +
             (x.thanks.for ? ' für ' + esc(x.thanks.for) : '') + '.</span>' : '') +
           (x.photos && x.photos.length ? '<span class="shots">' + x.photos.slice(0, 3).map(function (p) {
-            return '<a href="' + esc(p.src) + '" target="_blank" rel="noopener"><img src="' + esc(p.src) + '" alt="' + esc(p.alt || x.title) + '" loading="lazy" width="400" height="400"></a>';
+            return '<a href="' + esc(p.src) + '" aria-label="Foto gross ansehen: ' + esc(p.alt || x.title) + '"><img src="' + esc(p.src) + '" alt="' + esc(p.alt || x.title) + '" loading="lazy" width="400" height="400"></a>';
           }).join('') + '</span>' : '') +
           '</span></div>';
       }).join('');
@@ -335,6 +335,58 @@
           confirmEl.classList.add('show'); btn.disabled = false; btn.textContent = 'Anmelden';
         });
     });
+  })();
+</script>
+
+<dialog class="lightbox" id="lightbox" aria-label="Foto">
+  <figure>
+    <img id="lb-img" alt="">
+    <figcaption><span id="lb-cap"></span><span class="lb-count" id="lb-count"></span></figcaption>
+  </figure>
+  <button type="button" class="lb-btn lb-close" id="lb-close" aria-label="Schliessen">×</button>
+  <button type="button" class="lb-btn lb-prev" id="lb-prev" aria-label="Vorheriges Foto">←</button>
+  <button type="button" class="lb-btn lb-next" id="lb-next" aria-label="Nächstes Foto">→</button>
+</dialog>
+
+<script>
+  // Lightbox: photos open on the page instead of a new tab
+  (function () {
+    var dlg = document.getElementById('lightbox');
+    if (!dlg || typeof dlg.showModal !== 'function') return; // old browsers keep the plain link
+    var img = document.getElementById('lb-img'), cap = document.getElementById('lb-cap'), cnt = document.getElementById('lb-count');
+    var set = [], i = 0;
+    function show(n) {
+      i = (n + set.length) % set.length;
+      var a = set[i], t = a.querySelector('img');
+      img.src = a.getAttribute('href'); img.alt = t ? t.alt : '';
+      cap.textContent = t ? t.alt : '';
+      cnt.textContent = set.length > 1 ? (i + 1) + ' / ' + set.length : '';
+      dlg.querySelector('.lb-prev').hidden = dlg.querySelector('.lb-next').hidden = set.length < 2;
+    }
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('.shots a');
+      if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      set = [].slice.call(a.parentNode.querySelectorAll('a'));
+      show(set.indexOf(a));
+      dlg.showModal();
+    });
+    document.getElementById('lb-close').addEventListener('click', function () { dlg.close(); });
+    document.getElementById('lb-prev').addEventListener('click', function () { show(i - 1); });
+    document.getElementById('lb-next').addEventListener('click', function () { show(i + 1); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); }); // click on the backdrop
+    dlg.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') show(i - 1);
+      if (e.key === 'ArrowRight') show(i + 1);
+    });
+    var x0 = null; // swipe on phones
+    dlg.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    dlg.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40 && set.length > 1) show(dx < 0 ? i + 1 : i - 1);
+    });
+    dlg.addEventListener('close', function () { img.removeAttribute('src'); });
   })();
 </script>
 
