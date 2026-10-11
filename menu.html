@@ -152,22 +152,8 @@
     margin-left: 8px;
   }
 
-  .dots {
-    flex: 1;
-    min-width: 16px;
-    border-bottom: 1px dotted var(--hairline);
-    margin: 0 10px;
-    transform: translateY(-5px);
-  }
 
-  .price {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 15px;
-    white-space: nowrap;
-  }
 
-  /* after the market: prices hidden while we analyse them */
-  .no-prices .price, .no-prices .dots { display: none; }
 
   .desc {
     font-size: 13.5px;
@@ -385,15 +371,15 @@
       <h2 class="label" id="h-sando">SANDO</h2>
       <ul>
         <li>
-          <div class="row"><span class="name">Ichigo</span><span class="jp">Erdbeere</span><span class="dots"></span><span class="price">CHF 6.–</span></div>
+          <div class="row"><span class="name">Ichigo</span><span class="jp">Erdbeere</span></div>
           <div class="desc">Frische Erdbeeren, Mascarpone-Creme</div>
         </li>
         <li>
-          <div class="row"><span class="name">Kiwi</span><span class="jp">Kiwi</span><span class="dots"></span><span class="price">CHF 6.–</span></div>
+          <div class="row"><span class="name">Kiwi</span><span class="jp">Kiwi</span></div>
           <div class="desc">Frische Kiwi, Mascarpone-Creme</div>
         </li>
         <li>
-          <div class="row"><span class="name">Tamago</span><span class="jp">Ei</span><span class="dots"></span><span class="price">CHF 6.–</span></div>
+          <div class="row"><span class="name">Tamago</span><span class="jp">Ei</span></div>
         </li>
       </ul>
     </section>
@@ -401,11 +387,11 @@
     <section class="group" aria-labelledby="h-kaffee">
       <h2 class="label" id="h-kaffee">KAFFEE</h2>
       <ul>
-        <li><div class="row"><span class="name">Latte / Cappuccino</span><span class="dots"></span><span class="price">CHF 5.–</span></div></li>
-        <li><div class="row"><span class="name">Espresso</span><span class="dots"></span><span class="price">CHF 4.–</span></div></li>
-        <li><div class="row"><span class="name">Iced Latte</span><span class="dots"></span><span class="price">CHF 5.50</span></div></li>
+        <li><div class="row"><span class="name">Latte / Cappuccino</span></div></li>
+        <li><div class="row"><span class="name">Espresso</span></div></li>
+        <li><div class="row"><span class="name">Iced Latte</span></div></li>
         <li>
-          <div class="row"><span class="name">Mont Blanc</span><span class="dots"></span><span class="price">CHF 7.–</span></div>
+          <div class="row"><span class="name">Mont Blanc</span></div>
           <div class="desc">Espresso, Orangen-Sahne</div>
         </li>
       </ul>
@@ -476,7 +462,6 @@
     var d = document.getElementById('when-date');
     var w = document.getElementById('when-where');
     if (now >= end) {
-      document.documentElement.classList.add('no-prices');
       d.textContent = 'Danke, Wohlen!';
       w.innerHTML = 'Der nächste Markttermin folgt — auf <a class="link" href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">Instagram</a> und hier.';
     } else if (now >= start) {

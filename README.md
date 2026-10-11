@@ -31,14 +31,14 @@ Wir ändern pro Backtag eine Variable und schreiben alles auf. Erst wenn die Kru
 
 **Samstag, 10. Oktober · 09:00–13:00 · Sternenplatz, Wohlen**
 
-| Sando              |          | Kaffee                                   |          |
-| :----------------- | -------: | :--------------------------------------- | -------: |
-| Tamago <sub>Ei</sub>      | CHF 6.–  | Latte / Cappuccino                       | CHF 5.–  |
-| Kiwi <sub>Kiwi</sub>      | CHF 6.–  | Espresso                                 | CHF 4.–  |
-| Ichigo <sub>Erdbeere</sub> | CHF 6.– | Iced Latte                               | CHF 5.50 |
-|                    |          | Mont Blanc <sub>Espresso, Orangen-Sahne</sub> | CHF 7.–  |
+| Sando | Kaffee |
+| :--- | :--- |
+| Tamago <sub>Ei</sub> | Latte / Cappuccino |
+| Kiwi <sub>Kiwi</sub> | Espresso |
+| Ichigo <sub>Erdbeere</sub> | Iced Latte |
+| | Mont Blanc <sub>Espresso, Orangen-Sahne</sub> |
 
-<sub>Allergene auf Anfrage. Ganzes Menü: <a href="https://shokulab.ch/menu">shokulab.ch/menu</a></sub>
+<sub>Preise werden nach dem ersten Markt neu kalkuliert. Ganzes Menü: <a href="https://shokulab.ch/menu">shokulab.ch/menu</a></sub>
 
 <br>
 
