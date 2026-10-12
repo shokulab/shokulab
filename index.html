@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>shokulab — Japanisches Shokupan aus der Schweiz</title>
-<meta name="description" content="shokulab: japanisches Shokupan und Sando mit Schweizer Präzision. Für Cafés und Wochenmärkte in der Region Aarau und Solothurn.">
+<title>shokulab — Japanisches Shokupan &amp; Sando aus der Schweiz</title>
+<meta name="description" content="shokulab backt japanisches Shokupan und Sando in der Schweiz: Ichigo, Kiwi, Tamago. Am Wochenmarkt und bald in Cafés in der Region Aarau und Solothurn.">
 <link rel="canonical" href="https://shokulab.ch/">
 
 <!-- Open Graph / social preview -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="shokulab">
-<meta property="og:title" content="shokulab — Japanisches Shokupan aus der Schweiz">
-<meta property="og:description" content="Shokupan und Sando, gebacken wie im Labor. Am Wochenmarkt und bald in Cafés in der Region Aarau und Solothurn.">
+<meta property="og:title" content="shokulab — Japanisches Shokupan &amp; Sando aus der Schweiz">
+<meta property="og:description" content="shokulab backt japanisches Shokupan und Sando in der Schweiz: Ichigo, Kiwi, Tamago. Am Wochenmarkt und bald in Cafés in der Region Aarau und Solothurn.">
 <meta property="og:url" content="https://shokulab.ch/">
 <meta property="og:locale" content="de_CH">
 <meta property="og:image" content="https://shokulab.ch/og-image.png">
@@ -20,8 +20,8 @@
 <meta property="og:image:alt" content="shokulab — Japanisches Shokupan, Schweizer Präzision. Scientifically good.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://shokulab.ch/og-image.png">
-<meta name="twitter:title" content="shokulab — Japanisches Shokupan aus der Schweiz">
-<meta name="twitter:description" content="Shokupan und Sando, gebacken wie im Labor. Am Wochenmarkt und bald in Cafés in der Region Aarau und Solothurn.">
+<meta name="twitter:title" content="shokulab — Japanisches Shokupan &amp; Sando aus der Schweiz">
+<meta name="twitter:description" content="shokulab backt japanisches Shokupan und Sando in der Schweiz: Ichigo, Kiwi, Tamago. Am Wochenmarkt und bald in Cafés in der Region Aarau und Solothurn.">
 <meta name="theme-color" content="#F2DDDB">
 <meta name="color-scheme" content="light">
 
@@ -36,23 +36,102 @@
 <script src="/events.js"></script>
 <script src="/partners.js"></script>
 <link rel="stylesheet" href="/site.css">
+
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
- "@type": "Bakery",
- "name": "shokulab",
- "url": "https://shokulab.ch/",
- "logo": "https://shokulab.ch/icon-512.png",
- "image": "https://shokulab.ch/og-image.png",
- "description": "Japanisches Shokupan und Sando, in der Schweiz gebacken. Für Cafés und Wochenmärkte in der Region Aarau und Solothurn.",
- "email": "hello@shokulab.ch",
- "address": { "@type": "PostalAddress", "streetAddress": "Bahnhofstrasse 46b", "postalCode": "5012", "addressLocality": "Schönenwerd", "addressCountry": "CH" },
- "areaServed": ["Aarau", "Solothurn"],
- "servesCuisine": "Japanisch",
- "sameAs": ["https://instagram.com/shokulab.ch"]
+ "@graph": [
+  {
+   "@type": [
+    "Bakery",
+    "Organization"
+   ],
+   "@id": "https://shokulab.ch/#org",
+   "name": "shokulab",
+   "alternateName": [
+    "Shokulab",
+    "shoku lab",
+    "Shoku Lab",
+    "shokulab.ch"
+   ],
+   "url": "https://shokulab.ch/",
+   "logo": "https://shokulab.ch/icon-512.png",
+   "image": [
+    "https://shokulab.ch/og-image.png",
+    "https://shokulab.ch/fotos/2026-10-10-wohlen-1.jpg"
+   ],
+   "description": "shokulab backt japanisches Shokupan und Sando in der Schweiz — gemessen, notiert, verbessert wie im Labor. Am Wochenmarkt und für Cafés in der Region Aarau und Solothurn.",
+   "slogan": "Scientifically good.",
+   "email": "hello@shokulab.ch",
+   "foundingDate": "2026-09",
+   "founder": [
+    {
+     "@type": "Person",
+     "name": "Quang Minh Huynh",
+     "jobTitle": "Co-Founder, Küche"
+    },
+    {
+     "@type": "Person",
+     "name": "Diego Vergara López",
+     "jobTitle": "Co-Founder, Business"
+    }
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Bahnhofstrasse 46b",
+    "postalCode": "5012",
+    "addressLocality": "Schönenwerd",
+    "addressRegion": "SO",
+    "addressCountry": "CH"
+   },
+   "areaServed": [
+    {
+     "@type": "City",
+     "name": "Aarau"
+    },
+    {
+     "@type": "City",
+     "name": "Solothurn"
+    }
+   ],
+   "servesCuisine": [
+    "Japanisch",
+    "Sando",
+    "Shokupan"
+   ],
+   "hasMenu": "https://shokulab.ch/menu",
+   "knowsAbout": [
+    "Shokupan",
+    "Sando",
+    "Fruit Sando",
+    "Tamago Sando",
+    "Yudane",
+    "Japanisches Milchbrot"
+   ],
+   "sameAs": [
+    "https://instagram.com/shokulab.ch",
+    "https://github.com/shokulab"
+   ]
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://shokulab.ch/#website",
+   "name": "shokulab",
+   "alternateName": [
+    "Shokulab",
+    "shoku lab",
+    "Shoku Lab",
+    "shokulab.ch"
+   ],
+   "url": "https://shokulab.ch/",
+   "inLanguage": "de-CH",
+   "publisher": {
+    "@id": "https://shokulab.ch/#org"
+   }
+  }
+ ]
 }
 </script>
-
 </head>
 <body>
 
