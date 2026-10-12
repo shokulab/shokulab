@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Menü: Sando &amp; Kaffee — shokulab</title>
 <meta name="description" content="Das Menü von shokulab: Sando aus japanischem Shokupan — Ichigo (Erdbeere), Kiwi, Tamago (Ei) — und Kaffee. Mit Allergenen. Am Wochenmarkt in der Region Aarau.">
+<meta name="application-name" content="shokulab">
+<meta name="apple-mobile-web-app-title" content="shokulab">
 <meta name="theme-color" content="#F2DDDB">
 <meta name="color-scheme" content="light">
 <link rel="canonical" href="https://shokulab.ch/menu">
@@ -32,298 +34,8 @@
 <link rel="preload" href="/fonts/space-grotesk-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts/fonts.css">
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-<style>
-  :root {
-    --paper: #F2DDDB;
-    --ink: #3D2F27;
-    --ink-soft: #6E5747;
-    --accent: #8B4A3C;
-    --hairline: #DDC3C0;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'Inter', system-ui, sans-serif;
-    min-height: 100vh;
-    padding: 72px 32px 56px;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 64px;
-    width: 1px;
-    background: var(--hairline);
-  }
-
-  .wrap {
-    max-width: 520px;
-    width: 100%;
-    padding-left: 48px;
-    animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  @media (max-width: 640px) {
-    body { padding: 48px 20px 40px; }
-    body::before { left: 28px; }
-    .wrap { padding-left: 24px; }
-  }
-
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .mark, .label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    color: var(--accent);
-  }
-
-  .mark { margin-bottom: 26px; }
-  .mark a { color: inherit; text-decoration: none; }
-  .mark a:hover { text-decoration: underline; }
-
-  h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: clamp(2.8rem, 9vw, 4rem);
-    line-height: 1;
-    letter-spacing: -0.015em;
-    margin-bottom: 18px;
-  }
-
-  .sub {
-    font-size: 17px;
-    line-height: 1.55;
-    color: var(--ink-soft);
-    max-width: 40ch;
-    margin-bottom: 30px;
-  }
-
-  .when {
-    border-top: 1px solid var(--hairline);
-    border-bottom: 1px solid var(--hairline);
-    padding: 16px 0;
-    margin-bottom: 40px;
-  }
-
-  .when-date {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: 22px;
-  }
-
-  .when-where {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--ink-soft);
-    margin-top: 4px;
-  }
-
-  section.group { margin-bottom: 36px; }
-  section.group .label { margin-bottom: 14px; font-weight: 400; }
-
-  ul { list-style: none; display: flex; flex-direction: column; gap: 16px; }
-
-  .row {
-    display: flex;
-    align-items: baseline;
-  }
-
-  .name {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: 20px;
-  }
-
-  .jp {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    color: var(--ink-soft);
-    margin-left: 8px;
-  }
-
-
-
-
-  .desc {
-    font-size: 13.5px;
-    color: var(--ink-soft);
-    margin-top: 3px;
-  }
-
-  .spec {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12.5px;
-    color: var(--ink-soft);
-    border-top: 1px solid var(--hairline);
-    padding-top: 14px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 18px;
-    margin-bottom: 10px;
-  }
-
-  .spec b { color: var(--accent); font-weight: 500; }
-
-  .allergen {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11.5px;
-    color: var(--ink-soft);
-    margin-bottom: 44px;
-  }
-
-  .test {
-    background: #F8E9E7;
-    border: 1px solid var(--hairline);
-    border-radius: 4px;
-    padding: 20px 22px;
-    margin-bottom: 48px;
-  }
-
-  .test p {
-    font-size: 15px;
-    line-height: 1.55;
-    color: var(--ink);
-    margin-top: 8px;
-  }
-
-
-  .fb { margin-top: 16px; display: flex; flex-direction: column; gap: 20px; }
-  .fb fieldset { border: none; padding: 0; margin: 0; min-width: 0; }
-  .fb legend {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11.5px;
-    letter-spacing: 0.06em;
-    color: var(--ink-soft);
-    margin-bottom: 10px;
-    padding: 0;
-  }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chips label { position: relative; }
-  .chips input {
-    position: absolute;
-    opacity: 0;
-    width: 1px;
-    height: 1px;
-  }
-  .chips span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    min-width: 44px;
-    padding: 0 16px;
-    border: 1px solid #A07C77;
-    border-radius: 999px;
-    background: var(--paper);
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 500;
-    font-size: 15px;
-    color: var(--ink);
-    cursor: pointer;
-    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-  }
-  .chips span:hover { border-color: var(--accent); }
-  .chips input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--paper); }
-  .chips input:focus-visible + span { outline: 1.5px solid var(--accent); outline-offset: 3px; }
-  .chips.rating span { padding: 0; width: 44px; font-family: 'IBM Plex Mono', monospace; }
-  .scale-hint {
-    display: flex;
-    justify-content: space-between;
-    max-width: 252px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--ink-soft);
-    margin-top: 6px;
-  }
-  .fb textarea {
-    width: 100%;
-    min-height: 88px;
-    resize: vertical;
-    border: none;
-    border-bottom: 1.5px solid var(--ink);
-    background: transparent;
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    line-height: 1.5;
-    color: var(--ink);
-    padding: 6px 0;
-    outline: none;
-  }
-  .fb textarea::placeholder { color: #7E5B55; }
-  .fb textarea:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 4px; }
-  .fb-send {
-    align-self: flex-start;
-    min-height: 44px;
-    padding: 0 22px;
-    border: none;
-    border-radius: 999px;
-    background: var(--ink);
-    color: var(--paper);
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: 15px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-  }
-  .fb-send:hover:not(:disabled) { background: var(--accent); }
-  .fb-send:disabled { opacity: 0.6; cursor: default; }
-  .fb-send:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; }
-  .fb-done {
-    display: none;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--accent);
-    margin-top: 14px;
-  }
-  .fb-done.show { display: block; }
-  .fallback { font-size: 12.5px !important; color: var(--ink-soft) !important; margin-top: 18px !important; }
-
-  a.link {
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--accent);
-  }
-
-  a.link:hover { color: var(--accent); }
-
-  footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 8px 16px;
-    font-size: 12.5px;
-    color: var(--ink-soft);
-  }
-
-  footer .slogan {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 500;
-    font-size: 15px;
-    color: var(--ink);
-  }
-
-  footer a { color: var(--ink-soft); text-decoration: none; border-bottom: 1px solid var(--hairline); }
-
-  a:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .wrap { animation: none; }
-  }
-</style>
+<script src="/events.js"></script>
+<link rel="stylesheet" href="/site.css">
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -407,63 +119,73 @@
 </head>
 <body>
 
-  <main class="wrap">
-    <div class="mark"><a href="/">SHOKULAB</a> · MARKTSTAND · WOHLEN, CH</div>
+<div class="wrap">
 
-    <h1>Menü</h1>
+  <nav class="nav" aria-label="Hauptnavigation">
+    <a class="brand" href="/">shokulab</a>
+    <ul>
+      <li><a href="/menu" aria-current="page">Menü</a></li>
+      <li class="hide-s"><a href="#maerkte">Märkte</a></li>
+      <li class="hide-s"><a href="#methode">Methode</a></li>
+      <li class="hide-s"><a href="/ueber-uns">Über uns</a></li>
+      <li><a href="/partner">Wo kaufen</a></li>
+      <li><a href="/cafes">Für Cafés</a></li>
+    </ul>
+  </nav>
 
-    <p class="sub">Sando aus japanischem Shokupan, frisch gebacken — dazu Kaffee. Unser erster Marktstand und gleichzeitig unser erster Testlauf.</p>
-
-    <div class="when" id="when">
-      <div class="when-date" id="when-date">Samstag, 10. Oktober</div>
-      <div class="when-where" id="when-where">09:00–13:00 · Sternenplatz, Wohlen</div>
+  <header class="page-head reveal">
+    <div class="mark">SHOKULAB · MENÜ</div>
+    <h1>Menü.</h1>
+    <p class="sub">Sando aus japanischem Shokupan, frisch gebacken — dazu Kaffee.</p>
+    <div class="next" id="next-card" style="margin-top:28px;">
+      <div class="when">Nächster Markt folgt</div>
+      <div class="where">Wir geben ihn hier und auf <a class="textlink" href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">Instagram</a> bekannt.</div>
     </div>
+  </header>
 
-    <section class="group" aria-labelledby="h-sando">
-      <h2 class="label" id="h-sando">SANDO</h2>
-      <ul>
-        <li>
-          <div class="row"><span class="name">Ichigo</span><span class="jp">Erdbeere</span></div>
-          <div class="desc">Frische Erdbeeren, Mascarpone-Creme</div>
-        </li>
-        <li>
-          <div class="row"><span class="name">Kiwi</span><span class="jp">Kiwi</span></div>
-          <div class="desc">Frische Kiwi, Mascarpone-Creme</div>
-        </li>
-        <li>
-          <div class="row"><span class="name">Tamago</span><span class="jp">Ei</span></div>
-        </li>
-      </ul>
-    </section>
-
-    <section class="group" aria-labelledby="h-kaffee">
-      <h2 class="label" id="h-kaffee">KAFFEE</h2>
-      <ul>
-        <li><div class="row"><span class="name">Latte / Cappuccino</span></div></li>
-        <li><div class="row"><span class="name">Espresso</span></div></li>
-        <li><div class="row"><span class="name">Iced Latte</span></div></li>
-        <li>
-          <div class="row"><span class="name">Mont Blanc</span></div>
-          <div class="desc">Espresso, Orangen-Sahne</div>
-        </li>
-      </ul>
-    </section>
-
-    <div class="spec">
-      <span>Yudane <b>15%</b></span>
-      <span>Hydration <b>83%</b></span>
-      <span>Pullman <b>randlos</b></span>
+  <section aria-labelledby="h-sando">
+    <div class="sec-head">
+      <div class="label">Sando</div>
+      <h2 id="h-sando">Drei Sorten.</h2>
+      <p class="lead">Alle auf demselben Shokupan: randlos, 1,3 cm dick geschnitten.</p>
     </div>
-    <div class="allergen">Allergene: alle Sando mit Weizen (Gluten), Milch und Ei. Tamago kann Senf enthalten. Weitere Allergene auf Anfrage — frag uns am Stand.</div>
+    <div class="sec-body">
+      <ul class="menu-list">
+        <li><div class="mi-name">Ichigo <span class="jp">いちご · Erdbeere</span></div><div class="mi-desc">Frische Erdbeeren, Mascarpone-Rahm.</div></li>
+        <li><div class="mi-name">Kiwi <span class="jp">キウイ · Kiwi</span></div><div class="mi-desc">Frische Kiwi, Mascarpone-Rahm.</div></li>
+        <li><div class="mi-name">Tamago <span class="jp">たまご · Ei</span></div><div class="mi-desc">Eiersalat mit Kewpie-Mayonnaise.</div></li>
+      </ul>
+      <p class="allergens"><span class="mono">ALLERGENE</span> Alle Sando: Weizen (Gluten), Milch, Ei. Tamago kann Senf enthalten. Weitere Allergene auf Anfrage — frag uns am Stand.</p>
+    </div>
+  </section>
 
-    <section class="test" aria-labelledby="fb-title">
-      <div class="label" id="fb-title">TESTLAUF · DEIN FEEDBACK</div>
-      <p>Wir tüfteln noch an der Rezeptur. Sag uns in 20 Sekunden, was dir geschmeckt hat.</p>
+  <section aria-labelledby="h-kaffee">
+    <div class="sec-head">
+      <div class="label">Kaffee</div>
+      <h2 id="h-kaffee">Dazu.</h2>
+    </div>
+    <div class="sec-body">
+      <ul class="menu-list">
+        <li><div class="mi-name">Latte / Cappuccino</div></li>
+        <li><div class="mi-name">Espresso</div></li>
+        <li><div class="mi-name">Iced Latte</div></li>
+        <li><div class="mi-name">Mont Blanc</div><div class="mi-desc">Espresso, Orangen-Sahne.</div></li>
+      </ul>
+      <div class="spec" style="margin-top:22px;"><span>Yudane <b>15%</b></span><span>Hydration <b>83%</b></span><span>Pullman <b>randlos</b></span></div>
+      <p class="after-sorts"><a class="textlink" href="/#methode">So backen wir →</a></p>
+    </div>
+  </section>
 
-      <form class="fb" id="feedback-form" action="https://formspree.io/f/mdeoqwnq" method="POST">
+  <section id="feedback" aria-labelledby="fb-title">
+    <div class="sec-head">
+      <div class="label">Testlauf</div>
+      <h2 id="fb-title">Dein Feedback.</h2>
+      <p class="lead">Wir tüfteln noch an der Rezeptur. Sag uns in 20 Sekunden, was dir geschmeckt hat.</p>
+    </div>
+    <div class="sec-body">
+      <form class="form fb" id="feedback-form" action="https://formspree.io/f/mdeoqwnq" method="POST">
         <input type="hidden" name="form" value="feedback-wohlen">
         <input type="hidden" name="_subject" value="Feedback Marktstand Wohlen">
-
         <fieldset>
           <legend>Lieblingssorte</legend>
           <div class="chips">
@@ -472,7 +194,6 @@
             <label><input type="radio" name="lieblingssorte" value="Tamago"><span>Tamago</span></label>
           </div>
         </fieldset>
-
         <fieldset>
           <legend>Wie gut war's?</legend>
           <div class="chips rating">
@@ -484,41 +205,39 @@
           </div>
           <div class="scale-hint" aria-hidden="true"><span>naja</span><span>sehr gut</span></div>
         </fieldset>
-
-        <div>
-          <label for="fb-comment" class="label" style="display:block;color:var(--ink-soft);font-size:11.5px;margin-bottom:4px;">Was fehlt? (optional)</label>
-          <textarea id="fb-comment" name="kommentar" placeholder="z. B. süsser, mehr Frucht, andere Sorte …"></textarea>
+        <div class="field">
+          <label for="fb-comment">Was fehlt? (optional)</label>
+          <textarea id="fb-comment" name="kommentar" rows="3" placeholder="z. B. süsser, mehr Frucht, andere Sorte …"></textarea>
         </div>
-
         <div class="cf-turnstile" data-sitekey="0x4AAAAAAE0MhNrj5Zp_jAq1" data-theme="light"></div>
-
-        <button type="submit" class="fb-send">Feedback senden</button>
+        <div><button type="submit" class="btn fb-send">Feedback senden</button></div>
       </form>
-      <div class="fb-done" id="fb-done" role="status" aria-live="polite">Danke! Genau das hilft uns beim Tüfteln.</div>
+      <div class="confirm" id="fb-done" role="status" aria-live="polite">Danke. Genau das hilft uns beim Tüfteln.</div>
+      <p class="fallback">Lieber direkt? <a class="textlink" href="mailto:hello@shokulab.ch?subject=Feedback">hello@shokulab.ch</a> · <a class="textlink" href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">@shokulab.ch</a></p>
+    </div>
+  </section>
 
-      <p class="fallback">Lieber direkt? <a class="link" href="mailto:hello@shokulab.ch?subject=Feedback%20Wohlen">hello@shokulab.ch</a> · <a class="link" href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">@shokulab.ch</a></p>
-    </section>
+  <footer>
+    <div class="slogan">Scientifically good.</div>
+    <div><a href="mailto:hello@shokulab.ch">hello@shokulab.ch</a> · <a href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">@shokulab.ch</a></div>
+    <div><a href="/menu">Menü</a> · <a href="/partner">Wo kaufen</a> · <a href="/cafes">Für Cafés</a> · <a href="/ueber-uns">Über uns</a></div>
+    <div class="small"><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a></div>
+  </footer>
 
-    <footer>
-      <span class="slogan">Scientifically good.</span>
-      <span><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="/">← shokulab.ch</a></span>
-    </footer>
-  </main>
+</div>
 
 <script>
-  // Market date block: "Heute" on market day, thank-you after it closes.
+  // Next market from /events.js
   (function () {
-    var now = new Date();
-    var start = new Date('2026-10-10T00:00:00+02:00');
-    var end = new Date('2026-10-10T13:00:00+02:00');
-    var d = document.getElementById('when-date');
-    var w = document.getElementById('when-where');
-    if (now >= end) {
-      d.textContent = 'Danke, Wohlen!';
-      w.innerHTML = 'Der nächste Markttermin folgt — auf <a class="link" href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">Instagram</a> und hier.';
-    } else if (now >= start) {
-      d.textContent = 'Heute · Samstag, 10. Oktober';
-    }
+    var E = window.shokulabEvents; if (!E) return;
+    var now = new Date(), up = E.upcoming(now);
+    if (!up.length) return;
+    var e = up[0], live = E.isLive(e, now), today = E.isToday(e, now);
+    function esc(s) { return String(s || '').replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+    document.getElementById('next-card').innerHTML =
+      (live ? '<div class="live"><i></i>JETZT AM MARKT</div>' : today ? '<div class="live"><i></i>HEUTE</div>' : '') +
+      '<div class="when">' + esc(E.longDate(e.start)) + ' · ' + esc(e.title) + '</div>' +
+      '<div class="where">' + esc(E.time(e.start)) + '–' + esc(E.time(e.end)) + ' · ' + esc(e.place) + ', ' + esc(e.town) + '</div>';
   })();
 </script>
 

@@ -407,3 +407,23 @@
   .person .facts span { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); padding-top: 1px; }
   .person .facts a { color: var(--ink); text-decoration: none; }
   .person .facts a:hover { color: var(--accent); }
+
+  /* menu page */
+  .menu-list { list-style: none; border-top: 1px solid var(--ink); }
+  .menu-list li { padding: 16px 0 18px; border-bottom: 1px solid var(--hairline); }
+  .mi-name { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 22px; line-height: 1.2; }
+  .mi-name .jp { font-family: 'IBM Plex Mono', monospace; font-weight: 400; font-size: 12.5px; color: var(--ink-soft); margin-left: 8px; white-space: nowrap; }
+  .mi-desc { font-size: 15px; color: var(--ink-soft); margin-top: 4px; }
+
+  /* feedback chips */
+  .fb fieldset { border: 0; padding: 0; margin: 0; }
+  .fb legend { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: .06em; color: var(--ink-soft); text-transform: uppercase; margin-bottom: 8px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips label { position: relative; cursor: pointer; }
+  .chips input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .chips span { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 16px; border: 1px solid #A07C77; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; color: var(--ink); background: transparent; }
+  .chips input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .chips input:focus-visible + span { outline: 1.5px solid var(--accent); outline-offset: 3px; }
+  .chips label:hover span { border-color: var(--accent); }
+  .rating span { padding: 0; }
+  .scale-hint { display: flex; justify-content: space-between; max-width: 268px; margin-top: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-soft); }

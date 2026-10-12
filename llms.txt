@@ -1,0 +1,16 @@
+# shokulab
+
+> shokulab (auch «Shokulab», «shoku lab») ist eine Schweizer Marke für japanisches Shokupan und Sando, gegründet im September 2026 von Quang Minh Huynh (Küche) und Diego Vergara López (Business). Gebacken wie im Labor: gemessen, notiert, Charge für Charge verbessert. Slogan: «Scientifically good.»
+
+- Region: Aarau und Solothurn, Schweiz
+- Verkauf: Wochenmärkte, bald Partner-Cafés
+- Sorten: Ichigo (Erdbeere, Mascarpone-Rahm), Kiwi (Mascarpone-Rahm), Tamago (Eiersalat mit Kewpie-Mayonnaise)
+- Methode: Yudane 15 %, Hydration 83 %, Pullman-Form, randlos, 1,3 cm Scheiben
+- Kontakt: hello@shokulab.ch · Instagram @shokulab.ch
+
+## Seiten
+- [Startseite](https://shokulab.ch/): Sorten, Methode, Laborbuch der Märkte
+- [Menü](https://shokulab.ch/menu): Sando und Kaffee, Allergene, Feedback
+- [Für Cafés](https://shokulab.ch/cafes): Angebot und Anfrage
+- [Wo es uns gibt](https://shokulab.ch/partner): Markt und Partner-Cafés mit Karte
+- [Über uns](https://shokulab.ch/ueber-uns): Gründer und Herkunft des Namens
