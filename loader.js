@@ -27,10 +27,14 @@
     '.ld .pulse{fill:#8B4A3C;opacity:0;animation:ld-in .2s ease 2s forwards,ld-glow 1.2s ease-in-out 2.1s infinite}' +
     '.ld .word{font:600 clamp(34px,7vw,52px)/1 "Space Grotesk",system-ui,sans-serif;letter-spacing:-.02em;color:#3D2F27;opacity:0;transform:translateY(8px);animation:ld-up .6s cubic-bezier(.16,1,.3,1) 1.75s forwards}' +
     '.ld .tag{font:400 12px/1 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#8B4A3C;opacity:0;animation:ld-in .5s ease 2.05s forwards}' +
-    '.ld-q{position:fixed;left:0;right:0;top:0;height:26px;z-index:9999;pointer-events:none;transition:opacity .25s ease}' +
-    '.ld-q.out{opacity:0}' +
-    '.ld-q svg{display:block;width:100%;height:26px}' +
-    '.ld-q path{fill:none;stroke:#8B4A3C;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:ld-draw .55s cubic-bezier(.45,.05,.35,1) forwards}' +
+    'html.ld-quick{overflow:hidden}' +
+    'html.ld-quick::before{content:"";position:fixed;inset:0;background:#F2DDDB;z-index:9998}' +
+    '.ld-q{position:fixed;inset:0;z-index:9999;background:#F2DDDB;display:flex;align-items:center;justify-content:center;transition:opacity .3s ease,visibility 0s .3s}' +
+    '.ld-q.out{opacity:0;visibility:hidden}' +
+    '.ld-q svg{width:min(56vw,300px);height:auto;overflow:visible}' +
+    '.ld-q .qb{fill:none;stroke:#3D2F27;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:ld-draw .6s cubic-bezier(.45,.05,.35,1) forwards}' +
+    '.ld-q .qa{fill:none;stroke:#8B4A3C;stroke-width:2;stroke-linecap:round;opacity:0;animation:ld-in .2s ease .38s forwards}' +
+    '.ld-q .qd{fill:#8B4A3C;opacity:0;animation:ld-in .15s ease .58s forwards}' +
     '@keyframes ld-draw{to{stroke-dashoffset:0}}' +
     '@keyframes ld-in{to{opacity:1}}' +
     '@keyframes ld-up{to{opacity:1;transform:none}}' +
@@ -88,22 +92,32 @@
     if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
   }
 
-  function quickBar() {
-    var w = Math.max(320, window.innerWidth), mid = w * 0.5;
-    var d = 'M0 18 H' + (mid - 40) + ' L' + (mid - 34) + ' 13 L' + (mid - 28) + ' 22 L' + (mid - 22) + ' 18 H' + (mid - 8) +
-            ' L' + (mid - 8) + ' 3 L' + (mid + 10) + ' 18 H' + w;
+  // quick loader: paper overlay, one heartbeat with a sando triangle in the middle
+  var QUICK = 'M0 40 H58 L64 34 L70 46 L76 40 H112 L112 8 L148 40 H186 L192 34 L198 46 L204 40 H260';
+  function quickOverlay() {
+    var old = document.querySelector('.ld-q'); if (old) return old;
     var el = document.createElement('div');
     el.className = 'ld-q'; el.setAttribute('aria-hidden', 'true');
-    el.innerHTML = '<svg viewBox="0 0 ' + w + ' 26" preserveAspectRatio="none"><path d="' + d + '"/></svg>';
+    el.innerHTML = '<svg viewBox="0 0 260 52" role="presentation"><path class="qb" d="' + QUICK + '"/>' +
+      '<path class="qa" d="M117 22 L131 36 M117 30 L124 37"/><circle class="qd" cx="260" cy="40" r="3"/></svg>';
     document.body.appendChild(el);
-    setLen(el.querySelector('path'));
+    setLen(el.querySelector('.qb'));
     return el;
   }
 
   function quick() {
+    html.classList.add('ld-quick');
     function run() {
-      var el = quickBar();
-      setTimeout(function () { el.classList.add('out'); setTimeout(function () { el.remove(); }, 300); }, 650);
+      var el = quickOverlay();
+      html.classList.remove('ld-quick');
+      var start = Date.now();
+      function hide() {
+        // show the beat at least once (about 0.7 s), never longer than needed
+        var wait = Math.max(0, 700 - (Date.now() - start));
+        setTimeout(function () { el.classList.add('out'); setTimeout(function () { el.remove(); }, 350); }, wait);
+      }
+      if (document.readyState === 'complete') hide(); else window.addEventListener('load', hide, { once: true });
+      setTimeout(hide, 2500); // safety: never block the page
     }
     if (document.body) run(); else document.addEventListener('DOMContentLoaded', run);
   }
@@ -119,7 +133,7 @@
     if (url.origin !== location.origin) return;
     if (url.pathname === location.pathname && url.hash) return;
     if (/\.(jpe?g|png|pdf|webp)$/i.test(url.pathname)) return;
-    quickBar();
+    quickOverlay();
   });
   // back/forward cache: remove a leftover line
   window.addEventListener('pageshow', function (e) {
