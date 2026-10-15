@@ -1,17 +1,20 @@
 /*
  * shokulab — Loader
- * Erster Besuch (alle 7 Tage einmal): langer Loader — eine Herzschlag-Linie,
+ * Jeder neue Besuch und jedes Neuladen: langer Loader — eine Herzschlag-Linie,
  * deren Ausschläge unsere Sando-Dreiecke, eine Erdbeere und ein Ei sind.
  * Danach, beim Klicken durch die Seite: kurzer Loader oben am Rand.
  * Wer «Bewegung reduzieren» eingestellt hat, sieht keinen Loader.
  */
 (function () {
   var html = document.documentElement;
-  var KEY = 'shokulab-intro', WEEK = 7 * 864e5;
+  var KEY = 'shokulab-intro';
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var seen = 0;
-  try { seen = +localStorage.getItem(KEY) || 0; } catch (e) { seen = Date.now(); }
-  var mode = reduce ? 'none' : (Date.now() - seen > WEEK ? 'intro' : 'quick');
+  // long loader: every new visit (new tab/session) and every reload, quick loader otherwise
+  var seen = false;
+  try { seen = sessionStorage.getItem(KEY) === '1'; } catch (e) { seen = false; }
+  var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || {};
+  var reload = nav.type === 'reload' || (performance.navigation && performance.navigation.type === 1);
+  var mode = reduce ? 'none' : (!seen || reload ? 'intro' : 'quick');
   if (mode === 'none') return;
 
   var css = '' +
@@ -78,7 +81,7 @@
       var done = false;
       function finish() {
         if (done) return; done = true;
-        try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {}
+        try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
         el.classList.add('out');
         document.documentElement.style.overflow = '';
         setTimeout(function () { el.remove(); }, 700);
