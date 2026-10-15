@@ -33,6 +33,7 @@
 
 <link rel="preload" href="/fonts/space-grotesk-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts/fonts.css">
+<script src="/progress.js"></script>
 <link rel="stylesheet" href="/site.css">
 </head>
 <body>
@@ -45,7 +46,6 @@
       <li><a href="/menu">Menü</a></li>
       <li class="hide-s"><a href="/#maerkte">Märkte</a></li>
       <li class="hide-s"><a href="/#methode">Methode</a></li>
-      <li class="hide-s"><a href="/weg">Unser Weg</a></li>
       <li class="hide-s"><a href="/ueber-uns">Über uns</a></li>
       <li><a href="/partner">Wo kaufen</a></li>
       <li><a href="/cafes">Für Cafés</a></li>
@@ -58,12 +58,16 @@
     <p class="sub">Vier Etappen, kein fester Fahrplan. Jede beginnt erst, wenn die davor sitzt.</p>
   </header>
 
-  <ol class="track" aria-label="Die vier Etappen">
-    <li><a href="/weg/markt"><span class="n">01</span><span class="t">Markt</span><span class="st">Jetzt</span></a></li>
-    <li><a href="/weg/backstube"><span class="n">02</span><span class="t">Backstube</span><span class="st">Später</span></a></li>
-    <li><a href="/weg/teilen"><span class="n">03</span><span class="t">Teilen</span><span class="st">Später</span></a></li>
-    <li><a href="/weg/zuhause"><span class="n">04</span><span class="t">Zuhause</span><span class="st">Irgendwann</span></a></li>
-  </ol>
+  <div class="track-wrap">
+    <div class="rail" aria-hidden="true"><span class="fill"></span><span class="dot"></span></div>
+    <ol class="track" aria-label="Die vier Etappen">
+      <li><a href="/weg/markt"><span class="n">01</span><span class="t">Markt</span><span class="st">Jetzt</span></a></li>
+      <li><a href="/weg/backstube"><span class="n">02</span><span class="t">Backstube</span><span class="st">Später</span></a></li>
+      <li><a href="/weg/teilen"><span class="n">03</span><span class="t">Teilen</span><span class="st">Später</span></a></li>
+      <li><a href="/weg/zuhause"><span class="n">04</span><span class="t">Zuhause</span><span class="st">Irgendwann</span></a></li>
+    </ol>
+    <p class="track-note" id="track-note">Wir stehen am Anfang von Etappe 01.</p>
+  </div>
 
   <section aria-labelledby="h-haltung">
     <div class="sec-head">
@@ -72,7 +76,7 @@
     </div>
     <div class="sec-body prose">
       <p>Wir sind nicht die Ersten mit Shokupan, und wir behaupten nicht, in einer einzelnen Technik die Besten zu sein. Unser Unterschied ist ein anderer: Wir lassen keinen Teil der Kette grob. Vom Mehl bis zur Verpackung, vom Marktstand bis zur Bestellung.</p>
-      <p>Angefangen haben wir mit Sando. Aber die Technik dahinter trägt weiter als bis zum Sandwich. Wohin, steht auf den nächsten Seiten.</p>
+      <p>Angefangen haben wir mit Sando. Aber die Technik dahinter trägt weiter als bis zum Sandwich. Wohin, steht hier.</p>
     </div>
   </section>
 
@@ -80,13 +84,50 @@
     <div class="sec-head">
       <div class="label">Etappen</div>
       <h2 id="h-etappen">Von hier bis dort.</h2>
+      <p class="lead">Tippe auf eine Etappe, um mehr zu lesen.</p>
     </div>
     <div class="sec-body">
-      <ol class="stages">
-        <li><a href="/weg/markt"><span class="k">01</span><span class="b"><span class="st">Jetzt</span><strong>Markt — Zeigen, was wir können.</strong><span class="d">Wochenmärkte und die ersten Cafés. Hier lernen uns die Leute kennen — und wir lernen, was sie wirklich wollen.</span></span><span class="go" aria-hidden="true">→</span></a></li>
-        <li><a href="/weg/backstube"><span class="k">02</span><span class="b"><span class="st">Später</span><strong>Backstube — Ein eigener Ort.</strong><span class="d">Eine eigene Backstube mit kleinem Laden davor. Ein Ort, an dem man uns jeden Tag findet.</span></span><span class="go" aria-hidden="true">→</span></a></li>
-        <li><a href="/weg/teilen"><span class="k">03</span><span class="b"><span class="st">Später</span><strong>Teilen — Das Modell weitergeben.</strong><span class="d">Andere führen den gleichen Laden — mit unserem System, unserer Ausbildung, unserem Anspruch.</span></span><span class="go" aria-hidden="true">→</span></a></li>
-        <li><a href="/weg/zuhause"><span class="k">04</span><span class="b"><span class="st">Irgendwann</span><strong>Zuhause — Ein festes Zuhause.</strong><span class="d">Kein weiterer Laden, sondern ein Hauptsitz: ein Labor zum Forschen und ein kleiner Raum, in dem nur das Fertige serviert wird.</span></span><span class="go" aria-hidden="true">→</span></a></li>
+      <ol class="stages acc">
+        <li class="stage current">
+          <button type="button" class="stage-head" aria-expanded="false" aria-controls="sd-markt" id="sh-markt">
+            <span class="k">01</span>
+            <span class="b"><span class="st">Jetzt</span><strong>Markt — Zeigen, was wir können.</strong><span class="d">Wochenmärkte und die ersten Cafés. Hier lernen uns die Leute kennen — und wir lernen, was sie wirklich wollen.</span></span>
+            <span class="pm" aria-hidden="true"></span>
+          </button>
+          <div class="stage-body" id="sd-markt" role="region" aria-labelledby="sh-markt">
+            <div class="inner"><p>Wir stehen an Wochenmärkten, backen in kleinen Chargen und schreiben jede davon ins Laborbuch. Parallel liefern wir an die ersten Cafés in der Region Aarau und Solothurn.</p><p>Es geht nicht nur ums Verkaufen. Es geht ums Zeigen: Leute probieren lassen, zuhören, besser werden. Wer uns jetzt am Markt kennenlernt, soll später zu uns kommen.</p><p>Und vielleicht sind wir bald auch unterwegs.</p><p><a class="textlink" href="/weg/markt">Ganze Etappe lesen →</a></p></div>
+          </div>
+        </li>
+        <li class="stage">
+          <button type="button" class="stage-head" aria-expanded="false" aria-controls="sd-backstube" id="sh-backstube">
+            <span class="k">02</span>
+            <span class="b"><span class="st">Später</span><strong>Backstube — Ein eigener Ort.</strong><span class="d">Eine eigene Backstube mit kleinem Laden davor. Ein Ort, an dem man uns jeden Tag findet.</span></span>
+            <span class="pm" aria-hidden="true"></span>
+          </button>
+          <div class="stage-body" id="sd-backstube" role="region" aria-labelledby="sh-backstube">
+            <div class="inner"><p>Aus dem Marktstand wird ein fester Ort: eine Produktionsküche, in der wir für Cafés backen, und ein kleiner Laden, in dem man direkt bei uns kauft.</p><p>Wir bauen ihn von Anfang an so, dass er sich wiederholen lässt. Jeder Ablauf, jeder Handgriff wird aufgeschrieben. Nicht weil wir es müssen, sondern weil wir es so verstehen.</p><p><a class="textlink" href="/weg/backstube">Ganze Etappe lesen →</a></p></div>
+          </div>
+        </li>
+        <li class="stage">
+          <button type="button" class="stage-head" aria-expanded="false" aria-controls="sd-teilen" id="sh-teilen">
+            <span class="k">03</span>
+            <span class="b"><span class="st">Später</span><strong>Teilen — Das Modell weitergeben.</strong><span class="d">Andere führen den gleichen Laden — mit unserem System, unserer Ausbildung, unserem Anspruch.</span></span>
+            <span class="pm" aria-hidden="true"></span>
+          </button>
+          <div class="stage-body" id="sd-teilen" role="region" aria-labelledby="sh-teilen">
+            <div class="inner"><p>Wenn die eigene Backstube ohne uns jeden Tag hinter der Theke funktioniert, geben wir das Modell weiter. Weitere Standorte, geführt von Menschen, die unseren Anspruch teilen.</p><p>Kein Franchise mit Geheimrezept, sondern ein System, das weitergegeben wird: wie man auswählt, ausbildet, einkauft, misst und dokumentiert. Damit ein Sando überall gleich gut ist.</p><p><a class="textlink" href="/weg/teilen">Ganze Etappe lesen →</a></p></div>
+          </div>
+        </li>
+        <li class="stage">
+          <button type="button" class="stage-head" aria-expanded="false" aria-controls="sd-zuhause" id="sh-zuhause">
+            <span class="k">04</span>
+            <span class="b"><span class="st">Irgendwann</span><strong>Zuhause — Ein festes Zuhause.</strong><span class="d">Kein weiterer Laden, sondern ein Hauptsitz: ein Labor zum Forschen und ein kleiner Raum, in dem nur das Fertige serviert wird.</span></span>
+            <span class="pm" aria-hidden="true"></span>
+          </button>
+          <div class="stage-body" id="sd-zuhause" role="region" aria-labelledby="sh-zuhause">
+            <div class="inner"><p>Ein einziger, fester Ort. Hinten ein Labor, das unordentlich sein darf — dort wird ausprobiert, verworfen und neu angefangen.</p><p>Vorne ein kleiner Raum für wenige Gäste. Dort kommt nur auf den Tisch, was wirklich fertig ist. Es gibt ihn genau einmal.</p><p>Wir rechnen damit, dass die Nachfrage so gross sein wird, dass sich eine Wartezeit von mehreren Monaten ergibt. Nicht weil wir es so wollen, sondern weil der Raum klein bleibt.</p><p><a class="textlink" href="/weg/zuhause">Ganze Etappe lesen →</a></p></div>
+          </div>
+        </li>
       </ol>
     </div>
   </section>
@@ -111,6 +152,7 @@
 
 </div>
 
+<script src="/weg.js"></script>
 <!-- Cloudflare Web Analytics (cookie-free) --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2a99cac866964090a563c295084bc0b3"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
