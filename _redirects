@@ -36,6 +36,12 @@
 # Former preview of the open homepage
 /neu        /   301
 /neu.html   /   301
+
+# Unser Weg: the four stage pages were folded into /weg itself
+/weg/markt       /weg   301
+/weg/backstube   /weg   301
+/weg/teilen      /weg   301
+/weg/zuhause     /weg   301
 /ueber        /ueber-uns   301
 /about        /ueber-uns   301
 /team         /ueber-uns   301

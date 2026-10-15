@@ -431,15 +431,10 @@
   /* roadmap: track of the four stages */
   .track { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--hairline); margin: 0 0 8px; }
   .track li + li { border-left: 1px solid var(--hairline); }
-  .track a { display: grid; gap: 2px; padding: 12px 14px 14px; text-decoration: none; color: var(--ink-soft); height: 100%; }
+  .track .cell { display: grid; gap: 2px; padding: 12px 14px 14px; color: var(--ink-soft); height: 100%; }
   .track .n { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); }
   .track .t { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 16px; color: var(--ink); }
   .track .st { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
-  .track li.on a { background: var(--ink); }
-  .track li.on .t, .track li.on .st { color: var(--paper); }
-  .track li.on .n { color: #E3B8AE; }
-  .track a:hover .t { color: var(--accent); }
-  .track li.on a:hover .t { color: var(--paper); }
   @media (max-width: 640px) { .track { grid-template-columns: 1fr 1fr; } .track li:nth-child(3) { border-left: 0; } .track li:nth-child(n+3) { border-top: 1px solid var(--hairline); } }
 
   /* roadmap: list of stages on the overview */
