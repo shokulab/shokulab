@@ -20,346 +20,32 @@
 
 <link rel="preload" href="/fonts/space-grotesk-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts/fonts.css">
-<style>
-  :root {
-    --paper: #F2DDDB;
-    --ink: #3D2F27;
-    --ink-soft: #6E5747;
-    --accent: #8B4A3C;
-    --hairline: #DDC3C0;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'Inter', system-ui, sans-serif;
-    min-height: 100vh;
-    padding: 72px 32px 56px;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 64px;
-    width: 1px;
-    background: var(--hairline);
-  }
-
-  .wrap {
-    max-width: 520px;
-    width: 100%;
-    padding-left: 48px;
-    animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  @media (max-width: 640px) {
-    body { padding: 48px 20px 40px; }
-    body::before { left: 28px; }
-    .wrap { padding-left: 24px; }
-  }
-
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .mark, .label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    color: var(--accent);
-  }
-
-  .mark { margin-bottom: 26px; }
-  .mark a { color: inherit; text-decoration: none; }
-  .mark a:hover { text-decoration: underline; }
-
-  h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: clamp(2.8rem, 9vw, 4rem);
-    line-height: 1;
-    letter-spacing: -0.015em;
-    margin-bottom: 18px;
-  }
-
-  .sub {
-    font-size: 17px;
-    line-height: 1.55;
-    color: var(--ink-soft);
-    max-width: 40ch;
-    margin-bottom: 30px;
-  }
-
-  .when {
-    border-top: 1px solid var(--hairline);
-    border-bottom: 1px solid var(--hairline);
-    padding: 16px 0;
-    margin-bottom: 40px;
-  }
-
-  .when-date {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: 22px;
-  }
-
-  .when-where {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--ink-soft);
-    margin-top: 4px;
-  }
-
-  section.group { margin-bottom: 36px; }
-  section.group .label { margin-bottom: 14px; font-weight: 400; }
-
-  ul { list-style: none; display: flex; flex-direction: column; gap: 16px; }
-
-  .row {
-    display: flex;
-    align-items: baseline;
-  }
-
-  .name {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: 20px;
-  }
-
-  .jp {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    color: var(--ink-soft);
-    margin-left: 8px;
-  }
-
-  .dots {
-    flex: 1;
-    min-width: 16px;
-    border-bottom: 1px dotted var(--hairline);
-    margin: 0 10px;
-    transform: translateY(-5px);
-  }
-
-  .price {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 15px;
-    white-space: nowrap;
-  }
-
-  .desc {
-    font-size: 13.5px;
-    color: var(--ink-soft);
-    margin-top: 3px;
-  }
-
-  .spec {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12.5px;
-    color: var(--ink-soft);
-    border-top: 1px solid var(--hairline);
-    padding-top: 14px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 18px;
-    margin-bottom: 10px;
-  }
-
-  .spec b { color: var(--accent); font-weight: 500; }
-
-  .allergen {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11.5px;
-    color: var(--ink-soft);
-    margin-bottom: 44px;
-  }
-
-  .test {
-    background: #F8E9E7;
-    border: 1px solid var(--hairline);
-    border-radius: 4px;
-    padding: 20px 22px;
-    margin-bottom: 48px;
-  }
-
-  .test p {
-    font-size: 15px;
-    line-height: 1.55;
-    color: var(--ink);
-    margin-top: 8px;
-  }
-
-
-  .fb { margin-top: 16px; display: flex; flex-direction: column; gap: 20px; }
-  .fb fieldset { border: none; padding: 0; margin: 0; min-width: 0; }
-  .fb legend {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11.5px;
-    letter-spacing: 0.06em;
-    color: var(--ink-soft);
-    margin-bottom: 10px;
-    padding: 0;
-  }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chips label { position: relative; }
-  .chips input {
-    position: absolute;
-    opacity: 0;
-    width: 1px;
-    height: 1px;
-  }
-  .chips span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    min-width: 44px;
-    padding: 0 16px;
-    border: 1px solid var(--hairline);
-    border-radius: 999px;
-    background: var(--paper);
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 500;
-    font-size: 15px;
-    color: var(--ink);
-    cursor: pointer;
-    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-  }
-  .chips span:hover { border-color: var(--accent); }
-  .chips input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--paper); }
-  .chips input:focus-visible + span { outline: 1.5px solid var(--accent); outline-offset: 3px; }
-  .chips.rating span { padding: 0; width: 44px; font-family: 'IBM Plex Mono', monospace; }
-  .scale-hint {
-    display: flex;
-    justify-content: space-between;
-    max-width: 252px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--ink-soft);
-    margin-top: 6px;
-  }
-  .fb textarea {
-    width: 100%;
-    min-height: 88px;
-    resize: vertical;
-    border: none;
-    border-bottom: 1.5px solid var(--ink);
-    background: transparent;
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    line-height: 1.5;
-    color: var(--ink);
-    padding: 6px 0;
-    outline: none;
-  }
-  .fb textarea::placeholder { color: #A17C77; }
-  .fb textarea:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 4px; }
-  .fb-send {
-    align-self: flex-start;
-    min-height: 44px;
-    padding: 0 22px;
-    border: none;
-    border-radius: 999px;
-    background: var(--ink);
-    color: var(--paper);
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: 15px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-  }
-  .fb-send:hover:not(:disabled) { background: var(--accent); }
-  .fb-send:disabled { opacity: 0.6; cursor: default; }
-  .fb-send:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; }
-  .fb-done {
-    display: none;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--accent);
-    margin-top: 14px;
-  }
-  .fb-done.show { display: block; }
-  .fallback { font-size: 12.5px !important; color: var(--ink-soft) !important; margin-top: 18px !important; }
-
-  a.link {
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--accent);
-  }
-
-  a.link:hover { color: var(--accent); }
-
-  footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 8px 16px;
-    font-size: 12.5px;
-    color: var(--ink-soft);
-  }
-
-  footer .slogan {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 500;
-    font-size: 15px;
-    color: var(--ink);
-  }
-
-  footer a { color: var(--ink-soft); text-decoration: none; border-bottom: 1px solid var(--hairline); }
-
-  a:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .wrap { animation: none; }
-  }
-
-  .points { list-style: none; display: flex; flex-direction: column; gap: 0; margin-bottom: 40px; border-top: 1px solid var(--hairline); }
-  .points li { display: grid; grid-template-columns: 40px 1fr; gap: 0 12px; padding: 16px 0; border-bottom: 1px solid var(--hairline); }
-  .points .n { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); padding-top: 4px; }
-  .points h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 18px; margin-bottom: 4px; }
-  .points p { font-size: 14.5px; line-height: 1.55; color: var(--ink-soft); }
-  .field { display: flex; flex-direction: column; gap: 4px; }
-  .field label { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: var(--ink-soft); }
-  .field input, .field textarea {
-    width: 100%; border: none; border-bottom: 1.5px solid var(--ink); background: transparent;
-    font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.5; color: var(--ink); padding: 6px 0; outline: none; border-radius: 0;
-  }
-  .field textarea { min-height: 96px; resize: vertical; }
-  .field input::placeholder, .field textarea::placeholder { color: #A17C77; }
-  .field input:focus-visible, .field textarea:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 4px; }
-  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
-
-  .legal h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px; margin: 34px 0 8px; }
-  .legal p, .legal li { font-size: 15px; line-height: 1.65; color: var(--ink); }
-  .legal p + p { margin-top: 10px; }
-  .legal ul { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
-  .legal ul li { padding-left: 16px; position: relative; }
-  .legal ul li::before { content: "–"; position: absolute; left: 0; color: var(--accent); }
-  .legal a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--accent); }
-  .legal .soft { color: var(--ink-soft); font-size: 13.5px; }
-  .address { font-style: normal; font-size: 16px; line-height: 1.6; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); padding: 16px 0; margin-bottom: 8px; }
-</style>
+<link rel="stylesheet" href="/site.css">
 </head>
 <body>
 
-  <main class="wrap">
-    <div class="mark"><a href="/">SHOKULAB</a> · DATENSCHUTZ</div>
+<div class="wrap">
 
-    <h1>Datenschutz</h1>
+  <nav class="nav" aria-label="Hauptnavigation">
+    <a class="brand" href="/">shokulab</a>
+    <ul>
+      <li><a href="/menu">Menü</a></li>
+      <li class="hide-s"><a href="/#maerkte">Märkte</a></li>
+      <li class="hide-s"><a href="/#methode">Methode</a></li>
+      <li class="hide-s"><a href="/ueber-uns">Über uns</a></li>
+      <li><a href="/partner">Wo kaufen</a></li>
+      <li><a href="/cafes">Für Cafés</a></li>
+    </ul>
+  </nav>
 
-    <div class="legal">
-      <p>Wir nehmen den Schutz deiner Daten ernst und bearbeiten sie nach dem Schweizer Datenschutzgesetz (DSG). Hier steht, welche Daten wir über diese Website erhalten, wofür wir sie brauchen und wer daran beteiligt ist.</p>
+  <header class="page-head reveal">
+    <div class="mark">SHOKULAB · DATENSCHUTZ</div>
+    <h1>Datenschutz.</h1>
+  </header>
+
+  <section class="legal-page" aria-label="Datenschutz">
+    <div class="sec-body prose legal">
+<p>Wir nehmen den Schutz deiner Daten ernst und bearbeiten sie nach dem Schweizer Datenschutzgesetz (DSG). Hier steht, welche Daten wir über diese Website erhalten, wofür wir sie brauchen und wer daran beteiligt ist.</p>
 
       <h2>1. Verantwortlich</h2>
       <p>Quang Minh Huynh, shokulab, Bahnhofstrasse 46b, 5012 Schönenwerd, Schweiz<br>
@@ -368,11 +54,11 @@
       <h2>2. Formulare</h2>
       <p>Auf dieser Website gibt es drei Formulare:</p>
       <ul>
-        <li><strong>Warteliste / Markttermine per Mail</strong>: deine E-Mail-Adresse, damit wir dich informieren können, sobald es losgeht oder wir am Markt sind.</li>
+        <li><strong>Markttermine per Mail</strong> (Startseite): deine E-Mail-Adresse, damit wir dich informieren können, wenn wir am Markt sind oder es Neues gibt.</li>
         <li><strong>Feedback</strong> (Menü): Lieblingssorte, Bewertung und optionaler Kommentar. Wir verwenden das nur, um unsere Rezepte zu verbessern.</li>
         <li><strong>Café-Anfrage</strong>: Name des Cafés, Ort, E-Mail-Adresse und Nachricht, damit wir eure Anfrage beantworten können.</li>
       </ul>
-      <p>Die Formulare werden über den Dienst Formspree (Formspree, Inc., USA) an uns übermittelt und dort gespeichert. Wir geben deine Angaben nicht an Dritte weiter und verkaufen sie nicht. Wir bewahren sie nur so lange auf, wie wir sie für den jeweiligen Zweck brauchen. Von der Warteliste kannst du dich jederzeit per E-Mail an uns abmelden.</p>
+      <p>Die Formulare werden über den Dienst Formspree (Formspree, Inc., USA) an uns übermittelt und dort gespeichert. Wir geben deine Angaben nicht an Dritte weiter und verkaufen sie nicht. Wir bewahren sie nur so lange auf, wie wir sie für den jeweiligen Zweck brauchen. Von den Marktterminen per Mail kannst du dich jederzeit per E-Mail an uns abmelden.</p>
 
       <h2>3. Hosting und Schutz vor Missbrauch</h2>
       <p>Diese Website wird über Cloudflare (Cloudflare, Inc., USA) ausgeliefert. Dabei werden technisch notwendige Daten wie IP-Adresse, Datum und Uhrzeit, aufgerufene Seite und Browsertyp verarbeitet, um die Website sicher und zuverlässig bereitzustellen.</p>
@@ -396,19 +82,23 @@
       <p>Formspree und Cloudflare können Daten auch in den USA bearbeiten. Nach eigenen Angaben stützen sich diese Anbieter dafür auf anerkannte Garantien wie Standardvertragsklauseln bzw. das Swiss-U.S. Data Privacy Framework.</p>
 
       <h2>9. Cookies und lokaler Speicher</h2>
-      <p>Wir setzen keine Cookies zu Werbe- oder Analysezwecken. Ein kleiner Eintrag im Speicher deines Browsers merkt sich nur, ob du den Markt-Hinweis auf der Startseite geschlossen hast. Kartendaten werden eventuell von deinem Browser zwischengespeichert; deinen Standort speichern wir nicht. Turnstile kann technisch notwendige Daten verwenden, um Spam zu verhindern.</p>
+      <p>Wir setzen keine Cookies zu Werbe- oder Analysezwecken. Ein kleiner Eintrag im Sitzungsspeicher deines Browsers merkt sich nur, ob du die Lade-Animation in diesem Tab schon gesehen hast. Er wird gelöscht, sobald du den Tab schliesst, und nicht an uns übermittelt. Kartendaten werden eventuell von deinem Browser zwischengespeichert; deinen Standort speichern wir nicht. Turnstile kann technisch notwendige Daten verwenden, um Spam zu verhindern.</p>
 
       <h2>10. Deine Rechte</h2>
       <p>Du kannst jederzeit Auskunft über deine bei uns gespeicherten Daten verlangen und deren Berichtigung oder Löschung fordern. Schreib uns dafür an <a href="mailto:hello@shokulab.ch">hello@shokulab.ch</a>. Wenn du der Meinung bist, dass wir deine Daten nicht korrekt bearbeiten, kannst du dich beim Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB) melden.</p>
 
       <p class="soft" style="margin-top:28px;">Stand: Oktober 2026 · <a href="/impressum">Impressum</a></p>
     </div>
+  </section>
 
-    <footer style="margin-top:56px;">
-      <span class="slogan">Scientifically good.</span>
-      <a href="/">shokulab.ch</a> · <a href="/menu">Menü</a> · <a href="/partner">Wo kaufen</a> · <a href="/cafes">Für Cafés</a> · <a href="/ueber-uns">Über uns</a>
-    </footer>
-  </main>
+  <footer>
+    <div class="slogan">Scientifically good.</div>
+    <div><a href="mailto:hello@shokulab.ch">hello@shokulab.ch</a> · <a href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">@shokulab.ch</a></div>
+    <div><a href="/menu">Menü</a> · <a href="/partner">Wo kaufen</a> · <a href="/cafes">Für Cafés</a> · <a href="/ueber-uns">Über uns</a> · <a href="/weg">Unser Weg</a></div>
+    <div class="small"><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a></div>
+  </footer>
+
+</div>
 
 <!-- Cloudflare Web Analytics (cookie-free) --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2a99cac866964090a563c295084bc0b3"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

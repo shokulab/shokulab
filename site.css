@@ -502,3 +502,13 @@
   .stage.js.open .stage-body .inner { visibility: visible; }
   @media (max-width: 520px) { .stage-head { grid-template-columns: 40px 1fr 18px; gap: 10px; } .stage-body .inner { padding-left: 50px; } }
   @media (prefers-reduced-motion: reduce) { .stage.js .stage-body, .stage-head .pm::before, .stage-head .pm::after { transition: none; } }
+
+  /* legal pages */
+  .legal-page { display: block; border-top: 1px solid var(--hairline); padding-top: 40px; }
+  .legal h2 { font-size: 19px; margin: 32px 0 8px; }
+  .legal h2:first-child { margin-top: 0; }
+  .legal p, .legal li { font-size: 15.5px; line-height: 1.65; max-width: 68ch; }
+  .legal ul { padding-left: 20px; margin: 8px 0; display: grid; gap: 6px; }
+  .legal a { color: var(--ink); text-decoration-color: var(--accent); text-underline-offset: 3px; }
+  .legal .soft { color: var(--ink-soft); font-size: 13.5px; }
+  footer a { display: inline-block; padding: 3px 0; }
