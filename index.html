@@ -161,7 +161,7 @@
       <div class="spec">
         <span>Yudane <b>15%</b></span>
         <span>Hydration <b>83%</b></span>
-        <span>Status <b>im Testlauf</b></span>
+        <span>Status <b>am Markt</b></span>
       </div>
       <div class="ctas">
         <a class="btn" href="#maerkte">Nächster Markt</a>
@@ -307,8 +307,8 @@
       <p class="lead">Jeder Markt ist ein Testlauf. Hier halten wir fest, was wir gelernt haben.</p>
     </div>
     <div class="sec-body">
-      <div class="log" id="log"></div>
-      <p class="log-empty" id="log-empty">Noch kein Eintrag — der erste Markt steht bevor.</p>
+      <div class="log" id="log"><!-- statische Fassung für Suchmaschinen; das Script unten baut sie aus events.js neu --><div class="log-row"><span class="c">#002</span><span class="d">10.10.2026</span><span class="t"><b>Wochenmarkt Wohlen</b><span>Erster Marktstand. Kurz vor 13:00 ausverkauft. Am meisten gefragt: Tamago.</span><span class="counts"><span class="nw"><strong>80</strong> Sando</span> · <span class="nw">Ichigo <strong>36</strong></span> · <span class="nw">Tamago <strong>28</strong></span> · <span class="nw">Kiwi <strong>16</strong></span></span><span class="thanks">Danke an <a href="https://satocoffee.com" target="_blank" rel="noopener">SATÕ Coffee</a> für Kaffee und Maschine.</span><span class="shots"><a href="/fotos/2026-10-10-wohlen-1.jpg" aria-label="Foto gross ansehen: Ichigo-Sando im Anschnitt, drei Erdbeeren in Mascarpone-Rahm"><img src="/fotos/2026-10-10-wohlen-1.jpg" alt="Ichigo-Sando im Anschnitt, drei Erdbeeren in Mascarpone-Rahm" loading="lazy" width="400" height="400"></a><a href="/fotos/2026-10-10-wohlen-2.jpg" aria-label="Foto gross ansehen: Das Team hinter dem Stand in Wohlen"><img src="/fotos/2026-10-10-wohlen-2.jpg" alt="Das Team hinter dem Stand in Wohlen" loading="lazy" width="400" height="400"></a><a href="/fotos/2026-10-10-wohlen-3.jpg" aria-label="Foto gross ansehen: Hinter der Kaffeemaschine am Stand"><img src="/fotos/2026-10-10-wohlen-3.jpg" alt="Hinter der Kaffeemaschine am Stand" loading="lazy" width="400" height="400"></a></span></span></div></div>
+      <p class="log-empty" id="log-empty" hidden>Noch kein Eintrag — der erste Markt steht bevor.</p>
     </div>
   </section>
 
@@ -416,6 +416,7 @@
     var charge = up.length ? up[0].charge : '#' + ('00' + (last + 1)).slice(-3);
     document.getElementById('hero-mark').textContent = 'CHARGE ' + charge + ' · AARAU, CH';
 
+    if (!past.length) { document.getElementById('log').innerHTML = ''; document.getElementById('log-empty').hidden = false; }
     if (past.length) {
       document.getElementById('log-empty').hidden = true;
       document.getElementById('log').innerHTML = past.map(function (x) {

@@ -20,7 +20,3 @@
   Cache-Control: public, max-age=2592000
 /fotos/*
   Cache-Control: public, max-age=604800
-
-/gbp/*
-  Access-Control-Allow-Origin: *
-  X-Robots-Tag: noindex
