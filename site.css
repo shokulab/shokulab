@@ -532,3 +532,8 @@
 .qa .a p { margin: 0 0 8px; }
 .qa summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 @media (max-width: 640px) { .qa summary { grid-template-columns: 34px 1fr 18px; } .qa .a { padding-left: 46px; padding-right: 0; } .qa .q { font-size: 16px; } }
+
+/* WhatsApp / Vorbestellen */
+.wa-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+.wa-no { font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: .04em; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--hairline); padding: 4px 0; }
+.wa-alt { margin-top: 18px; font-size: 14px; color: var(--ink-soft); }
