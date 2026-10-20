@@ -14,4 +14,5 @@
 - [Für Cafés](https://shokulab.ch/cafes): Angebot und Anfrage
 - [Wo es uns gibt](https://shokulab.ch/partner): Markt und Partner-Cafés mit Karte
 - [Über uns](https://shokulab.ch/ueber-uns): Gründer und Herkunft des Namens
+- [Fragen](https://shokulab.ch/faq): Haltbarkeit (am besten innerhalb von 2 Tagen, Kühlschrank), vegetarisch, Allergene, Vorbestellungen
 - [Unser Weg](https://shokulab.ch/weg): die vier Etappen — Markt, Backstube, Teilen, Zuhause

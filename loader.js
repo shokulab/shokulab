@@ -3,6 +3,7 @@
  * Jeder neue Besuch und jedes Neuladen: langer Loader — eine Herzschlag-Linie,
  * deren Ausschläge unsere Sando-Dreiecke, eine Erdbeere und ein Ei sind.
  * Danach, beim Klicken durch die Seite: kurzer Loader oben am Rand.
+ * Ausnahme: wer per QR-Code oder direkt auf /menu landet, sieht nur den kurzen.
  * Wer «Bewegung reduzieren» eingestellt hat, sieht keinen Loader.
  */
 (function () {
@@ -14,6 +15,9 @@
   try { seen = sessionStorage.getItem(KEY) === '1'; } catch (e) { seen = false; }
   var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || {};
   var reload = nav.type === 'reload' || (performance.navigation && performance.navigation.type === 1);
+  // QR-Code am Stand oder direkt aufs Menü: kein langer Loader, die Leute stehen in der Schlange
+  var direct = /^\/menu(\.html)?\/?$/.test(location.pathname) || /[?&]utm_source=qr\b/.test(location.search);
+  if (direct && !reload) { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} seen = true; }
   var mode = reduce ? 'none' : (!seen || reload ? 'intro' : 'quick');
   if (mode === 'none') return;
 

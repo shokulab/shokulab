@@ -157,7 +157,7 @@
   <footer>
     <div class="slogan">Scientifically good.</div>
     <div><a href="mailto:hello@shokulab.ch">hello@shokulab.ch</a> · <a href="https://instagram.com/shokulab.ch" target="_blank" rel="noopener">@shokulab.ch</a></div>
-    <div><a href="/menu">Menü</a> · <a href="/partner">Wo kaufen</a> · <a href="/cafes">Für Cafés</a> · <a href="/ueber-uns">Über uns</a> · <a href="/weg">Unser Weg</a></div>
+    <div><a href="/menu">Menü</a> · <a href="/partner">Wo kaufen</a> · <a href="/cafes">Für Cafés</a> · <a href="/ueber-uns">Über uns</a> · <a href="/weg">Unser Weg</a> · <a href="/faq">Fragen</a></div>
     <div class="small"><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a></div>
   </footer>
 
@@ -302,6 +302,14 @@
     function webgl() {
       try { var c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; }
     }
+    function mapFail() {
+      if (!map) return;
+      try { map.remove(); } catch (e) {}
+      map = null; markers = [];
+      var el = document.getElementById('map');
+      el.innerHTML = '<p class="map-off">Die Karte lädt gerade nicht. Markt und Verkaufsstellen stehen unten, jeweils mit Link zur Route.</p>';
+      el.classList.add('is-off');
+    }
     function initMap() {
       if (!window.maplibregl || !webgl()) {
         document.getElementById('map').innerHTML = '<p class="map-off">Die Karte braucht WebGL. Die Liste unten funktioniert trotzdem.</p>';
@@ -318,6 +326,11 @@
       map.touchZoomRotate.disableRotation();
       map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-left');
       map.on('style.load', restyle);
+      // Fallback: swisstopo nicht erreichbar → Karte durch Hinweis ersetzen, Liste bleibt
+      var ready = false;
+      map.on('load', function () { ready = true; });
+      map.on('error', function () { if (!ready && !map.isStyleLoaded()) mapFail(); });
+      setTimeout(function () { if (!ready) mapFail(); }, 10000);
       if (/debugmap/.test(location.search)) window._map = map;
       places.filter(hasPos).forEach(function (x) {
         var no = x.p && x.p.no;
