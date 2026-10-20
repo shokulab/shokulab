@@ -160,21 +160,6 @@
     </div>
   </section>
 
-  <section id="vorbestellen" aria-labelledby="h-vor">
-    <div class="sec-head">
-      <div class="label">Vorbestellen</div>
-      <h2 id="h-vor">Schreib uns auf WhatsApp.</h2>
-      <p class="lead">Für einen Anlass, fürs Büro oder damit am nächsten Markt sicher eins für dich bereitliegt. Wir antworten persönlich.</p>
-    </div>
-    <div class="sec-body">
-      <div class="wa-cta">
-        <a class="btn" href="https://wa.me/41762273366?text=Hallo%20shokulab%2C%20ich%20m%C3%B6chte%20gern%20vorbestellen%3A%20" target="_blank" rel="noopener">Auf WhatsApp schreiben →</a>
-        <a class="wa-no mono" href="https://wa.me/41762273366" target="_blank" rel="noopener">+41 76 227 33 66</a>
-      </div>
-      <p class="wa-alt">Lieber Mail? <a class="textlink" href="mailto:hello@shokulab.ch?subject=Vorbestellung">hello@shokulab.ch</a></p>
-    </div>
-  </section>
-
   <section aria-labelledby="h-kaffee">
     <div class="sec-head">
       <div class="label">Kaffee</div>
@@ -189,6 +174,21 @@
       </ul>
       <div class="spec" style="margin-top:22px;"><span>Yudane <b>15%</b></span><span>Hydration <b>83%</b></span><span>Pullman <b>randlos</b></span></div>
       <p class="after-sorts"><a class="textlink" href="/#methode">So backen wir →</a></p>
+    </div>
+  </section>
+
+  <section id="vorbestellen" aria-labelledby="h-vor">
+    <div class="sec-head">
+      <div class="label">Vorbestellen</div>
+      <h2 id="h-vor">Schreib uns auf WhatsApp.</h2>
+      <p class="lead">Für einen Anlass, fürs Büro oder damit am nächsten Markt sicher eins für dich bereitliegt. Wir antworten persönlich.</p>
+    </div>
+    <div class="sec-body">
+      <div class="wa-cta">
+        <a class="btn" href="https://wa.me/41762273366?text=Hallo%20shokulab%2C%20ich%20m%C3%B6chte%20gern%20vorbestellen%3A%20" target="_blank" rel="noopener">Auf WhatsApp schreiben →</a>
+        <a class="wa-no mono" href="https://wa.me/41762273366" target="_blank" rel="noopener">+41 76 227 33 66</a>
+      </div>
+      <p class="wa-alt">Lieber Mail? <a class="textlink" href="mailto:hello@shokulab.ch?subject=Vorbestellung">hello@shokulab.ch</a></p>
     </div>
   </section>
 
@@ -290,6 +290,29 @@
   })();
 </script>
 
+<a class="wa-float" id="wa-float" href="https://wa.me/41762273366?text=Hallo%20shokulab%2C%20ich%20m%C3%B6chte%20gern%20vorbestellen%3A%20" target="_blank" rel="noopener" aria-label="Auf WhatsApp schreiben" hidden>WhatsApp <span aria-hidden="true">→</span></a>
+<script>
+  // Mobile only: small WhatsApp button after some scrolling, hidden when the WhatsApp section, the form or the footer is visible
+  (function () {
+    var b = document.getElementById('wa-float');
+    if (!b || !('IntersectionObserver' in window)) return;
+    var mq = matchMedia('(max-width: 760px)'), blocking = new Set();
+    function update() {
+      var on = mq.matches && window.scrollY > 360 && blocking.size === 0;
+      b.hidden = false;
+      b.classList.toggle('on', on);
+      b.tabIndex = on ? 0 : -1;
+    }
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { e.isIntersecting ? blocking.add(e.target) : blocking.delete(e.target); });
+      update();
+    });
+    ['#vorbestellen .wa-cta', '#feedback-form', 'footer'].forEach(function (q) { var el = document.querySelector(q); if (el) io.observe(el); });
+    window.addEventListener('scroll', update, { passive: true });
+    mq.addEventListener && mq.addEventListener('change', update);
+    update();
+  })();
+</script>
 <!-- Cloudflare Web Analytics (cookie-free) --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2a99cac866964090a563c295084bc0b3"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
